@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Screens/Home.dart';
 import 'Model.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class OnBoard_Page extends StatefulWidget {
   final OnBoardPageModel pageModel;
@@ -69,7 +70,7 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
               child: Icon(
                   Icons.arrow_forward_ios
               ),
-              onPressed: () {
+              onPressed: () async{
                 if (widget.pageModel.pageNumber == 1) {
                   print(widget.pageModel.pageNumber);
                   widget.pageController.nextPage(
@@ -78,9 +79,12 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
                   );
                 } else if (widget.pageModel.pageNumber == 2) {
                   print(widget.pageModel.pageNumber);
-
-                  Navigator.of(context).pushReplacement(
-                      new MaterialPageRoute(builder: (context) => new Home()));
+                  Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+                  PermissionStatus permission = await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
+                  if(permission == PermissionStatus.granted){
+                    Navigator.of(context).pushReplacement(
+                        new MaterialPageRoute(builder: (context) => new Home()));
+                  }
                 }
               },
             ),

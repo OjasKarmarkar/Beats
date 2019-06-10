@@ -11,17 +11,14 @@ class OnBoarding extends StatefulWidget {
 
 class _OnBoardingState extends State<OnBoarding> {
 
-
-
 final PageController pageController = PageController();
-
 final _currentPageNotifier = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
 
    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+   double height = MediaQuery.of(context).size.height;
 
     return Stack(
       children: <Widget>[
@@ -31,7 +28,7 @@ final _currentPageNotifier = ValueNotifier<int>(0);
           itemBuilder: (BuildContext context, int index) {
             return OnBoard_Page(
               pageModel: onboardData[index],
-               pageController: pageController,
+              pageController: pageController,
                
               );
           },
@@ -47,7 +44,7 @@ final _currentPageNotifier = ValueNotifier<int>(0);
             child: CirclePageIndicator(
               currentPageNotifier: _currentPageNotifier,
               itemCount: onboardData.length,
-              dotColor: Colors.blue,
+              selectedDotColor: Colors.blue,
             ),
           ),
           ),
