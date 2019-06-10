@@ -43,7 +43,7 @@ Future checkFirstSeen() async {
 
     if (_seen) {
     Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new OnBoarding()));
+        new MaterialPageRoute(builder: (context) => new Home()));
     } else {
     prefs.setBool('seen', true);
     Navigator.of(context).pushReplacement(

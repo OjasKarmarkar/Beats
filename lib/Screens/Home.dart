@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Onboarding/Onboarding.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -7,6 +6,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  
 
   @override
   Widget build(BuildContext context) {
