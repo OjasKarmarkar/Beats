@@ -1,6 +1,5 @@
-import 'dart:ui' as prefix0;
-
 import 'package:flutter/material.dart';
+import 'package:expanding_bottom_bar/expanding_bottom_bar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,6 +7,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  var Index=0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +45,19 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
+    bottomNavigationBar: ExpandingBottomBar(
+      items: [
+        ExpandingBottomBarItem(icon: Icons.bookmark_border, text: "Home", selectedColor: Colors.pinkAccent),
+        ExpandingBottomBarItem(icon: Icons.music_note, text: "Library", selectedColor: Colors.red),
+        ExpandingBottomBarItem(icon: Icons.settings, text: "Settings", selectedColor: Colors.black)
+      ],
+      selectedIndex: this.Index,
+      onIndexChanged: (i){
+        setState(() {
+          Index=i;
+        });
+      }
+    )
     );
   }
 }
