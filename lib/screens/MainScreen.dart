@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:expanding_bottom_bar/expanding_bottom_bar.dart';
 import 'HomeScreen.dart';
+import 'Settings.dart';
+import 'MusicLibrary.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -10,13 +12,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
 
   var index=0;
-  var screens = [HomeScreen()];
+  var screens = [HomeScreen() , Library() , SettingsScreen()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[index],
       bottomNavigationBar: ExpandingBottomBar(
+        navBarHeight: 75,
         items: [
           ExpandingBottomBarItem(icon: Icons.bookmark_border, text: "Home", selectedColor: Colors.pinkAccent),
           ExpandingBottomBarItem(icon: Icons.music_note, text: "Library", selectedColor: Colors.red),
