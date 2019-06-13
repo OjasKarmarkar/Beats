@@ -1,5 +1,5 @@
-import 'package:beats/Onboarding/Data_Model.dart';
-import 'package:beats/Onboarding/OnBoard_page.dart';
+import 'Data_Model.dart';
+import 'OnBoard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 

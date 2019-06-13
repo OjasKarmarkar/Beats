@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Screens/Home.dart';
+import '../screens/MainScreen.dart';
 import 'Model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -83,7 +83,7 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
                   PermissionStatus permission = await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
                   if(permission == PermissionStatus.granted){
                     Navigator.of(context).pushReplacement(
-                        new MaterialPageRoute(builder: (context) => new Home()));
+                        new MaterialPageRoute(builder: (context) => new MainScreen()));
                   }
                 }
               },

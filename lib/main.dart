@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:beats/Onboarding/Onboarding.dart';
+import 'package:beats/onboarding/Onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import './Screens/Home.dart';
+import './screens/MainScreen.dart';
 
 void main(List<String> args) {
   
@@ -31,9 +31,9 @@ class SplashState extends State<Splash> {
 @override
   Widget build(BuildContext context) {
     return new Scaffold(
-    body: new Center(
+      body: new Center(
         child: new Text('Loading...'),
-    ),
+      ),
     );
   }
 
@@ -43,7 +43,7 @@ Future checkFirstSeen() async {
 
     if (_seen) {
     Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new Home()));
+        new MaterialPageRoute(builder: (context) => new MainScreen()));
     } else {
     prefs.setBool('seen', true);
     Navigator.of(context).pushReplacement(
