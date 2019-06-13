@@ -60,6 +60,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             )
           )
+        ),
+        Text("Recently Played",textAlign: TextAlign.left,),
+        SizedBox(
+          height: height*0.2,
+          child:ListView(
+            children: <Widget>[
+              ListTile(
+                leading: CircleAvatar(backgroundColor: Colors.blue,),
+                title: Text("Song 1"),
+              )
+            ],
+          )
         )
       ],
     );
