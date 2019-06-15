@@ -14,7 +14,7 @@ class CustomShapeClipper extends CustomClipper<Path>{
    var firstEndPoint = Offset(size.width*0.30, util.height*0.4-30);
 
    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy, firstEndPoint.dx, firstEndPoint.dy);
-   path.lineTo(util.width, util.height*0.45-60);
+   path.lineTo(util.width, util.height*0.45-68);
    path.lineTo(util.width, 0);
    
    path.close();
