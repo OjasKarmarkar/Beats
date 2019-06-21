@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'PLayList.dart';
+import 'PlayList.dart';
 import '../widgets/welcome.dart';
 
 double height, width;

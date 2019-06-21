@@ -1,7 +1,7 @@
 import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
-import '../Models/CustomShapeClipper.dart';
-import '../Models/SongClipper.dart';
+import 'package:beats/widgets/CustomShapeClipper.dart';
+import 'package:beats/widgets/SongClipper.dart';
 
 class PLayListScreen extends StatefulWidget {
   @override
