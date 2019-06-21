@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
 import 'package:line_icons/line_icons.dart';
+import 'SetttingsSubScreens/Theme.dart';
+import 'SetttingsSubScreens/PlayBack.dart';
+import 'SetttingsSubScreens/About_Us.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -89,6 +92,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: ListTile(
+                          onTap: () {
+                            switch (index) {
+                              case 0:
+                                Navigator.of(context).push(
+                                  new MaterialPageRoute(
+                                      builder: (context) => new Themes()),
+                                );
+                                break;
+                               case 1:  Navigator.of(context).push(
+                                new MaterialPageRoute(builder: (context) => new PlayBack())
+                              );
+                              break;
+                              case 2:  Navigator.of(context).push(
+                                new MaterialPageRoute(builder: (context) => new About_Us())
+                              );
+                              break;
+                              
+                            }
+                          },
                           leading: Icon(icons[index]),
                           title: Text(titles[index]),
                           subtitle: Text(subtitles[index]),

@@ -13,17 +13,13 @@ class _LibraryState extends State<Library> {
   SongsModel model;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
     model.fetchSongs();
     return Scaffold(
       appBar: AppBar(title: Text("Songs"),),
-      body: ListView.builder(
+      body: 
+      ListView.builder(
         itemBuilder: (context,pos){
           return ListTile(
             leading: CircleAvatar(child: getImage(pos)),
