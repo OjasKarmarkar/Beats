@@ -28,6 +28,8 @@ dependencies:
   page_view_indicators: ^1.2.0
   permission_handler:
   expanding_bottom_bar:
+  flute_music_player:
+  provider:
 
 flutter_icons:
   android: "launcher_icon"

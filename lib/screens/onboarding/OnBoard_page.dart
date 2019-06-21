@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../screens/MainScreen.dart';
+import 'package:flutter/services.dart';
+import '../MainScreen.dart';
 import 'Model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -20,7 +21,7 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-   
+
     return Material(
       color: Colors.white,
       child: Column(
@@ -67,10 +68,8 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
             child: FloatingActionButton(
               elevation: 4.0,
               backgroundColor: Colors.blue,
-              child: Icon(
-                  Icons.arrow_forward_ios
-              ),
-              onPressed: () async{
+              child: Icon(Icons.arrow_forward_ios),
+              onPressed: () async {
                 if (widget.pageModel.pageNumber == 1) {
                   print(widget.pageModel.pageNumber);
                   widget.pageController.nextPage(
@@ -79,11 +78,16 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
                   );
                 } else if (widget.pageModel.pageNumber == 2) {
                   print(widget.pageModel.pageNumber);
-                  Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
-                  PermissionStatus permission = await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
-                  if(permission == PermissionStatus.granted){
-                    Navigator.of(context).pushReplacement(
-                        new MaterialPageRoute(builder: (context) => new MainScreen()));
+                  Map<PermissionGroup, PermissionStatus> permissions =
+                      await PermissionHandler()
+                          .requestPermissions([PermissionGroup.storage]);
+                  PermissionStatus permission = await PermissionHandler()
+                      .checkPermissionStatus(PermissionGroup.storage);
+                  if (permission == PermissionStatus.granted) {
+                    SystemChrome.setEnabledSystemUIOverlays(
+                        SystemUiOverlay.values);
+                    Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                        builder: (context) => new MainScreen()));
                   }
                 }
               },
