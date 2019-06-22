@@ -19,7 +19,9 @@ class Themes extends StatelessWidget {
                   LineIcons.arrow_circle_left,
                   color: Colors.black,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                   Navigator.pop(context);
+                },
               ),
             ),
             backgroundColor: Colors.white,
