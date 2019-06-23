@@ -7,14 +7,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './screens/MainScreen.dart';
+import 'models/ThemeModel.dart';
 
 void main(List<String> args) {
-  runApp(ChangeNotifierProvider(
-      builder: (context) => SongsModel(),
-      child: new MaterialApp(
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(),),
+        ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger(ThemeData.light()))
+      ],
+      child: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    ThemeChanger theme = Provider.of<ThemeChanger>(context);
+    return new MaterialApp(
         home: new Splash(),
+        theme: theme.getTheme(),
         debugShowCheckedModeBanner: false,
-      )));
+      );
+  }
 }
 
 class Splash extends StatefulWidget {

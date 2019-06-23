@@ -1,12 +1,15 @@
-import 'package:beats/Themes/Theme_Model.dart';
+import '../../models/ThemeModel.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import '../HomeScreen.dart';
 
 class Themes extends StatelessWidget {
+  ThemeChanger themeChanger;
+
   @override
   Widget build(BuildContext context) {
+    themeChanger = Provider.of<ThemeChanger>(context);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -20,7 +23,7 @@ class Themes extends StatelessWidget {
                   color: Colors.black,
                 ),
                 onPressed: () {
-                   Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
             ),
@@ -58,15 +61,12 @@ class Themes extends StatelessWidget {
       ),
     );
   }
-}
 
-void _settingModalBottomSheet(context) {
-  showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return ChangeNotifierProvider<Theme_Model>(
-          builder: (_) => Theme_Model(ThemeData.dark()),
-                  child: ClipRRect(
+  void _settingModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
             child: Container(
               child: new Wrap(
@@ -74,11 +74,11 @@ void _settingModalBottomSheet(context) {
                   new ListTile(
                       leading: new Icon(Icons.brush),
                       title: new Text('White'),
-                      onTap: () => {}),
+                      onTap: () => {themeChanger.setTheme(ThemeData.light())}),
                   new ListTile(
                     leading: new Icon(Icons.brush),
                     title: new Text('Black'),
-                    onTap: () => {},
+                    onTap: () => {themeChanger.setTheme(ThemeData.dark())},
                   ),
                   new ListTile(
                     leading: new Icon(Icons.brush),
@@ -88,9 +88,7 @@ void _settingModalBottomSheet(context) {
                 ],
               ),
             ),
-          ), 
-        );
-      });
+          );
+        });
+  }
 }
-
-
