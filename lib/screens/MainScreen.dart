@@ -15,12 +15,13 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   var index = 0;
   var screens = [HomeScreen(), Library(), SettingsScreen()];
-
+  ThemeData _themeData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
           body: screens[index],
           bottomNavigationBar: ExpandingBottomBar(
+            backgroundColor: Theme.of(context).backgroundColor,
               navBarHeight: 75,
               items: [
                 ExpandingBottomBarItem(
@@ -34,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
                 ExpandingBottomBarItem(
                     icon: Icons.settings,
                     text: "Settings",
-                    selectedColor: Colors.black)
+                    selectedColor: Colors.blueAccent)
               ],
               selectedIndex: index,
               onIndexChanged: (i) {

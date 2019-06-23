@@ -5,7 +5,10 @@ import 'package:provider/provider.dart';
 import '../HomeScreen.dart';
 
 class Themes extends StatelessWidget {
-  ThemeChanger themeChanger;
+
+  ThemeChanger themeChanger; 
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,25 +23,19 @@ class Themes extends StatelessWidget {
                 iconSize: 35.0,
                 icon: Icon(
                   LineIcons.arrow_circle_left,
-                  color: Colors.black,
+                  color: IconThemeData().color,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).backgroundColor,
             centerTitle: true,
             title: Padding(
               padding: EdgeInsets.only(top: height * 0.022),
-              child: Text(
-                "Themes",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35.0,
-                    fontFamily: 'sans-serif'),
-              ),
+              child:
+                  Text("Themes", style: Theme.of(context).textTheme.display1),
             ),
           ),
           Padding(
@@ -47,11 +44,10 @@ class Themes extends StatelessWidget {
               trailing: Icon(
                 Icons.brush,
                 size: 25.0,
+                color: IconThemeData().color,
               ),
-              title: Text(
-                "Current Theme",
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
+              title: Text("Current Theme",
+                  style: Theme.of(context).textTheme.display1),
               onTap: () {
                 _settingModalBottomSheet(context);
               },
@@ -74,11 +70,26 @@ class Themes extends StatelessWidget {
                   new ListTile(
                       leading: new Icon(Icons.brush),
                       title: new Text('White'),
-                      onTap: () => {themeChanger.setTheme(ThemeData.light())}),
+                      onTap: () => {
+                            themeChanger.setTheme(ThemeData(
+                                textTheme: TextTheme(
+                                  display1: TextStyle(
+                                      color: Colors.black, fontSize: 20.0),
+                                ),
+                                iconTheme: IconThemeData(color: Colors.black),
+                                backgroundColor: Colors.white))
+                          }),
                   new ListTile(
                     leading: new Icon(Icons.brush),
                     title: new Text('Black'),
-                    onTap: () => {themeChanger.setTheme(ThemeData.dark())},
+                    onTap: () => {
+                          themeChanger.setTheme(ThemeData(
+                              iconTheme: IconThemeData(color: Colors.white),
+                              backgroundColor: Colors.black,
+                              textTheme: TextTheme(
+                                  display1: TextStyle(
+                                      color: Colors.white, fontSize: 20.0))))
+                        },
                   ),
                   new ListTile(
                     leading: new Icon(Icons.brush),

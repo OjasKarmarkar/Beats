@@ -1,3 +1,4 @@
+import 'package:beats/Models/ThemeModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
@@ -12,6 +13,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  ThemeData _themeData;
   @override
   Widget build(BuildContext context) {
     final subtitles = [
@@ -43,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     iconSize: 35.0,
                     icon: Icon(
                       LineIcons.share_alt,
-                      color: Colors.black,
+                      color: IconThemeData().color,
                     ),
                     onPressed: () {},
                   ),
@@ -56,25 +58,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   iconSize: 35.0,
                   icon: Icon(
                     LineIcons.user,
-                    color: Colors.black,
+                    color: IconThemeData().color,
                   ),
                   onPressed: () {},
                 ),
               )
             ],
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).backgroundColor,
             centerTitle: true,
             title: Padding(
               padding: EdgeInsets.only(top: height * 0.022),
               child: Text(
                 "Settings",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35.0,
-                    fontFamily: 'sans-serif'),
-              ),
+                style: Theme.of(context).textTheme.display1
             ),
+            )
           ),
           Padding(
             padding: EdgeInsets.only(top: 100.0),
