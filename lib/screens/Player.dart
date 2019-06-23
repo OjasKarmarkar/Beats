@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:beats/Models/SongsModel.dart';
+import 'package:beats/models/SongsModel.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -16,9 +16,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
   SongsModel model;
   @override
   Widget build(BuildContext context) {
-    
-    model = Provider.of<SongsModel>(context);
-  MusicFinder player = new MusicFinder();
+  model = Provider.of<SongsModel>(context);
 
     return Scaffold(
       body: Stack(

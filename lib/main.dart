@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'models/SongsModel.dart';
+import 'package:provider/provider.dart';
 
 import 'package:beats/screens/onboarding/Onboarding.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +9,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './screens/MainScreen.dart';
 
 void main(List<String> args) {
-  runApp(new MaterialApp(
-    home: new Splash(),
-    debugShowCheckedModeBanner: false,
-  ));
+  runApp(ChangeNotifierProvider(
+      builder: (context) => SongsModel(),
+      child: new MaterialApp(
+        home: new Splash(),
+        debugShowCheckedModeBanner: false,
+      )));
 }
 
 class Splash extends StatefulWidget {

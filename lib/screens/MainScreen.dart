@@ -18,9 +18,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SongsModel>(
-      builder: (context) => SongsModel(),
-      child: Scaffold(
+    return Scaffold(
           body: screens[index],
           bottomNavigationBar: ExpandingBottomBar(
               navBarHeight: 75,
@@ -43,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
                 setState(() {
                   index = i;
                 });
-              })),
+              })
     );
   }
 }
