@@ -1,4 +1,3 @@
-import 'package:beats/Models/ThemeModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
@@ -13,7 +12,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  ThemeData _themeData;
   @override
   Widget build(BuildContext context) {
     final subtitles = [
@@ -103,7 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               );
                               break;
                               case 2:  Navigator.of(context).push(
-                                new MaterialPageRoute(builder: (context) => new About_Us())
+                                new MaterialPageRoute(builder: (context) => new AboutUs())
                               );
                               break;
                               

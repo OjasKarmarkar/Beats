@@ -2,7 +2,7 @@ import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
-class About_Us extends StatelessWidget {
+class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

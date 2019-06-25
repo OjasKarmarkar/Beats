@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import '../HomeScreen.dart';
+import 'package:beats/themes/Themes.dart';
 
 class Themes extends StatelessWidget {
 
@@ -71,24 +72,13 @@ class Themes extends StatelessWidget {
                       leading: new Icon(Icons.brush),
                       title: new Text('White'),
                       onTap: () => {
-                            themeChanger.setTheme(ThemeData(
-                                textTheme: TextTheme(
-                                  display1: TextStyle(
-                                      color: Colors.black, fontSize: 20.0),
-                                ),
-                                iconTheme: IconThemeData(color: Colors.black),
-                                backgroundColor: Colors.white))
+                            themeChanger.setTheme(lightTheme())
                           }),
                   new ListTile(
                     leading: new Icon(Icons.brush),
                     title: new Text('Black'),
                     onTap: () => {
-                          themeChanger.setTheme(ThemeData(
-                              iconTheme: IconThemeData(color: Colors.white),
-                              backgroundColor: Colors.black,
-                              textTheme: TextTheme(
-                                  display1: TextStyle(
-                                      color: Colors.white, fontSize: 20.0))))
+                          themeChanger.setTheme(darkTheme())
                         },
                   ),
                   new ListTile(
