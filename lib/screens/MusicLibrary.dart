@@ -1,4 +1,3 @@
-
 import 'package:beats/screens/HomeScreen.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
@@ -15,27 +14,33 @@ class Library extends StatefulWidget {
 }
 
 class _LibraryState extends State<Library> {
-
-  SongsModel model;
+  SongsModel model = new SongsModel();
+  MusicFinder player;
   TextEditingController editingController;
-  
+
+  void initState() {
+    super.initState();
+    player = new MusicFinder();
+  }
 
   @override
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
     model.fetchSongs();
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: width*0.05 , right: width*0.05 , top: height*0.06),
+            padding: EdgeInsets.only(
+                left: width * 0.05, right: width * 0.05, top: height * 0.06),
             child: TextField(
-              controller: editingController,
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: Icon(LineIcons.search),
-                border: OutlineInputBorder()
-                )),
+                controller: editingController,
+                decoration: InputDecoration(
+                    hintStyle: TextStyle(),
+                    hintText: "Search",
+                    prefixIcon: Icon(LineIcons.search),
+                    border: OutlineInputBorder())),
           ),
           Expanded(
             child: ListView.builder(
@@ -43,13 +48,19 @@ class _LibraryState extends State<Library> {
                 return ListTile(
                   onTap: () {
                     model.currentSong = pos;
+                    model.play(model);
+                    setState(() {});
+
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return PlayBackPage();
                     }));
                   },
                   leading: CircleAvatar(child: getImage(pos)),
-                  title: Text(model.songs[pos].title),
+                  title: Text(
+                    model.songs[pos].title,
+                    style: Theme.of(context).textTheme.display1,
+                  ),
                 );
               },
               itemCount: model.songs.length,
@@ -59,8 +70,6 @@ class _LibraryState extends State<Library> {
       ),
     );
   }
-
-  
 
   getImage(pos) {
     if (model.songs[pos].albumArt != null) {

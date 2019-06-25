@@ -7,10 +7,23 @@ class SongsModel extends ChangeNotifier{
   var songs = <Song>[];
   var currentSong;
   var currentState;
+  MusicFinder player = new MusicFinder();
+
 
   fetchSongs() async{
     songs = await MusicFinder.allSongs();
     notifyListeners();
+  }
+
+   play(model) {
+    var song = model.songs[model.currentSong];
+    player.play(song.uri, isLocal: true);
+    model.currentState = PlayerState.PLAYING;
+  }
+
+  pause(model){
+    player.pause();
+    model.currentState = PlayerState.PAUSED;
   }
 
   next(){
