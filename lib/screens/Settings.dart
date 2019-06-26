@@ -43,7 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     iconSize: 35.0,
                     icon: Icon(
                       LineIcons.share_alt,
-                      color: IconThemeData().color,
+                      color: Colors.grey,
                     ),
                     onPressed: () {},
                   ),
@@ -56,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   iconSize: 35.0,
                   icon: Icon(
                     LineIcons.user,
-                    color: IconThemeData().color,
+                    color: Colors.grey,
                   ),
                   onPressed: () {},
                 ),
@@ -81,6 +81,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Card(
+                      
+                      color: Theme.of(context).cardColor,
                       shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
@@ -107,9 +109,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               
                             }
                           },
-                          leading: Icon(icons[index]),
-                          title: Text(titles[index]),
-                          subtitle: Text(subtitles[index]),
+                          leading: Icon(icons[index] , color:Colors.grey),
+                          title: Text(titles[index],style: Theme.of(context).textTheme.display1,),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(subtitles[index],style: Theme.of(context).textTheme.display2,),
+                          ),
                         ),
                       ),
                     ),

@@ -37,10 +37,13 @@ class _LibraryState extends State<Library> {
             child: TextField(
                 controller: editingController,
                 decoration: InputDecoration(
+                   disabledBorder: InputBorder.none,
                     hintStyle: TextStyle(),
                     hintText: "Search",
                     prefixIcon: Icon(LineIcons.search),
-                    border: OutlineInputBorder())),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color:Colors.grey)
+                    ))),
           ),
           Expanded(
             child: ListView.builder(
@@ -59,7 +62,7 @@ class _LibraryState extends State<Library> {
                   leading: CircleAvatar(child: getImage(pos)),
                   title: Text(
                     model.songs[pos].title,
-                    style: Theme.of(context).textTheme.display1,
+                    style: Theme.of(context).textTheme.display2,
                   ),
                 );
               },

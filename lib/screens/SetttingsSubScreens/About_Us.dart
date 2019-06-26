@@ -14,21 +14,17 @@ class AboutUs extends StatelessWidget {
             padding: EdgeInsets.only(top: height * 0.022),
             child: Text(
               "About Us",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35.0,
-                  fontFamily: 'sans-serif'),
+              style: Theme.of(context).textTheme.display1
             ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).backgroundColor,
           leading: Padding(
             padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
             child: IconButton(
               iconSize: 35.0,
               icon: Icon(
                 LineIcons.arrow_circle_o_left,
-                color: Colors.black,
+                color: Colors.grey,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -65,9 +61,9 @@ class AboutUs extends StatelessWidget {
                         ),
                         title: Text(
                           "Selva",
-                          style: TextStyle(fontSize: 19.0),
+                          style: Theme.of(context).textTheme.display1
                         ),
-                        subtitle: Text("Lead Dev"),
+                        subtitle: Text("Lead Dev" , style: Theme.of(context).textTheme.display2,),
                       ),
                     ),
                     Padding(
@@ -80,9 +76,9 @@ class AboutUs extends StatelessWidget {
                         ),
                         title: Text(
                           "OjasK",
-                          style: TextStyle(fontSize: 19.0),
+                          style: Theme.of(context).textTheme.display1
                         ),
-                        subtitle: Text("Lead Dev"),
+                        subtitle: Text("Lead Dev" , style: Theme.of(context).textTheme.display2,),
                       ),
                     )
                   ],

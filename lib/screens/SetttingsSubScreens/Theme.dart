@@ -24,7 +24,7 @@ class Themes extends StatelessWidget {
                 iconSize: 35.0,
                 icon: Icon(
                   LineIcons.arrow_circle_left,
-                  color: IconThemeData().color,
+                  color: Colors.grey,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -45,10 +45,10 @@ class Themes extends StatelessWidget {
               trailing: Icon(
                 Icons.brush,
                 size: 25.0,
-                color: IconThemeData().color,
+                color: Colors.grey,
               ),
               title: Text("Current Theme",
-                  style: Theme.of(context).textTheme.display1),
+                  style: Theme.of(context).textTheme.display2),
               onTap: () {
                 _settingModalBottomSheet(context);
               },
@@ -61,6 +61,7 @@ class Themes extends StatelessWidget {
 
   void _settingModalBottomSheet(context) {
     showModalBottomSheet(
+      backgroundColor: Theme.of(context).backgroundColor,
         context: context,
         builder: (BuildContext bc) {
           return ClipRRect(
@@ -69,21 +70,28 @@ class Themes extends StatelessWidget {
               child: new Wrap(
                 children: <Widget>[
                   new ListTile(
-                      leading: new Icon(Icons.brush),
-                      title: new Text('White'),
+                      leading: new Icon(Icons.brush ,  color: Colors.grey,),
+                      title: new Text('White'
+                      , style: Theme.of(context).textTheme.display2,
+                      ),
                       onTap: () => {
                             themeChanger.setTheme(lightTheme())
                           }),
                   new ListTile(
-                    leading: new Icon(Icons.brush),
-                    title: new Text('Black'),
+                    leading: new Icon(Icons.brush, color: Colors.grey,),
+                    title: new Text('Black'
+                    ,style: Theme.of(context).textTheme.display2,),
                     onTap: () => {
                           themeChanger.setTheme(darkTheme())
+                          
                         },
                   ),
                   new ListTile(
-                    leading: new Icon(Icons.brush),
-                    title: new Text('Black AF'),
+                    leading: new Icon(Icons.brush,
+                    color: Colors.grey,
+                    ),
+                    title: new Text('Black AF',
+                    style: Theme.of(context).textTheme.display2,),
                     onTap: () => {},
                   ),
                 ],

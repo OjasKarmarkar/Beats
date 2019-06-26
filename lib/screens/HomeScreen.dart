@@ -95,9 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             title: Text(
                               "Suckers",
-                              style: TextStyle(fontSize: 19.0),
+                              style: Theme.of(context).textTheme.display1
                             ),
-                            subtitle: Text("Jonas Brothers"),
+                            subtitle: Text("Jonas Brothers" , style:Theme.of(context).textTheme.display2),
                           ),
                   ),
                   Padding(
@@ -109,9 +109,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             title: Text(
                               "On My Way",
-                              style: TextStyle(fontSize: 19.0),
+                              style: Theme.of(context).textTheme.display1
                             ),
-                            subtitle: Text("Alan Walker"),
+                            subtitle: Text("Alan Walker" , style:Theme.of(context).textTheme.display2),
                           ),
                   )
                 ],
