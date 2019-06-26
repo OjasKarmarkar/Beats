@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'models/SongsModel.dart';
 import 'package:provider/provider.dart';
 
@@ -8,12 +9,13 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './screens/MainScreen.dart';
 import 'models/ThemeModel.dart';
+import 'package:beats/themes/Themes.dart';
 
 void main(List<String> args) {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(),),
-        ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger(ThemeData.light()))
+        ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger(lightTheme()))
       ],
       child: MyApp()));
 }
