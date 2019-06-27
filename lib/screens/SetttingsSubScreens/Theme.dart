@@ -61,7 +61,6 @@ class Themes extends StatelessWidget {
 
   void _settingModalBottomSheet(context) {
     showModalBottomSheet(
-      backgroundColor: Theme.of(context).backgroundColor,
         context: context,
         builder: (BuildContext bc) {
           return ClipRRect(

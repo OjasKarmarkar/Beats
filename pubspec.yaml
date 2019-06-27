@@ -58,7 +58,6 @@ flutter:
   assets:
      - assets/img1.gif
      - assets/img2.gif
-     - assets/launcher.jpg
      - assets/headphone.png
      - assets/selva.jpg
      - assets/Ojas.jpg

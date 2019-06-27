@@ -9,6 +9,9 @@ class SongsModel extends ChangeNotifier{
   var currentState;
   MusicFinder player = new MusicFinder();
 
+  SongsModel(){
+    fetchSongs();
+  }
 
   fetchSongs() async{
     songs = await MusicFinder.allSongs();
