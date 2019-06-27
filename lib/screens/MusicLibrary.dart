@@ -17,6 +17,7 @@ class _LibraryState extends State<Library> {
 
   TextEditingController editingController;
   var duplicateItem = <Song>[];
+  MusicFinder player = new MusicFinder();
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,7 @@ class _LibraryState extends State<Library> {
               itemBuilder: (context, pos) {
                 return ListTile(
                   onTap: () {
+                    player.stop();
                     model.currentSong = pos;
                     model.play(model);
 
