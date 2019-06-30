@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:beats/Models/SongsModel.dart' as prefix0;
 import 'package:beats/models/SongsModel.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +24,12 @@ class _PlayBackPageState extends State<PlayBackPage> {
           if (details.delta.dx < 0) {
             player.stop();
             model.next();
-            model.play(model);
+            model.play();
           }
           else if (details.delta.dx > 0) {
             player.stop();
             model.previous();
-            model.play(model);
+            model.play();
           }
         },
         child: Stack(
@@ -69,11 +68,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               width: 300,
                               child: ClipOval(
                                 child:
-                                    model.songs[model.currentSong].albumArt !=
+                                    model.currentSong.albumArt !=
                                             null
                                         ? Image.file(
-                                            File.fromUri(Uri.parse(model
-                                                .songs[model.currentSong]
+                                            File.fromUri(Uri.parse(model.currentSong
                                                 .albumArt)),
                                             width: 100,
                                             height: 100,
@@ -89,7 +87,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                     padding: EdgeInsets.only(top: 14),
                     child: Center(
                       child: Text(
-                        model.songs[model.currentSong].title +
+                        model.currentSong.title +
                             model.currentSong.toString(),
                         style: TextStyle(
                             fontSize: 20,
@@ -105,7 +103,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                     padding: EdgeInsets.only(top: 1.0),
                     child: Center(
                       child: Text(
-                        model.songs[model.currentSong].artist.toString(),
+                        model.currentSong.artist.toString(),
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.grey,
@@ -125,7 +123,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                           onPressed: () {
                             player.stop();
                             model.previous();
-                            model.play(model);
+                            model.play();
                             setState(() {});
                           },
                           icon: Icon(
@@ -142,9 +140,9 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             onTap: () {
                               if (model.currentState == PlayerState.PAUSED ||
                                   model.currentState == PlayerState.STOPPED) {
-                                model.play(model);
+                                model.play();
                               } else {
-                                model.pause(model);
+                                model.pause();
                               }
                               setState(() {});
                             },
@@ -165,7 +163,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                           onPressed: () {
                             player.stop();
                             model.next();
-                            model.play(model);
+                            model.play();
                           },
                           icon: Icon(
                             LineIcons.forward,
