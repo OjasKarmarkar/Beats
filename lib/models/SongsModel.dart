@@ -1,47 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 
-enum PlayerState{PLAYING,PAUSED,STOPPED}
+enum PlayerState { PLAYING, PAUSED, STOPPED }
 
-class SongsModel extends ChangeNotifier{
+class SongsModel extends ChangeNotifier {
   var songs = <Song>[];
+  var duplicate = <Song>[]; // Duplicate of songs variable
   var currentSong;
   var currentState;
   MusicFinder player = new MusicFinder();
 
-  SongsModel(){
+  SongsModel() {
     fetchSongs();
   }
 
-  fetchSongs() async{
+  fetchSongs() async {
     songs = await MusicFinder.allSongs();
+    songs.forEach((item){
+      duplicate.add(item);
+    });
     notifyListeners();
   }
 
-   play(model) {
-    var song = model.songs[model.currentSong];
-    player.play(song.uri, isLocal: true);
-    model.currentState = PlayerState.PLAYING;
-  }
-
-  pause(model){
-    player.pause();
-    model.currentState = PlayerState.PAUSED;
-  }
-
-  next(){
-    if(currentSong==songs.length){
-      currentSong = 0;
+  filterResults(String value) {
+    if (value.isNotEmpty) {
+      String low = value.toLowerCase();
+      List<Song> dummy = <Song>[];
+      duplicate.forEach((item) {
+        if (item.title.toLowerCase().startsWith(low)) {
+          dummy.add(item);
+        }
+      });
+      songs.clear();
+      songs.addAll(dummy);
+      notifyListeners();
     }else{
+      songs.clear();
+      songs.addAll(duplicate);
+      notifyListeners();
+    }
+  }
+
+  play() {
+    var song = currentSong;
+    player.play(song.uri, isLocal: true);
+    currentState = PlayerState.PLAYING;
+  }
+
+  pause() {
+    player.pause();
+    currentState = PlayerState.PAUSED;
+  }
+
+  next() {
+    if (currentSong == songs.length) {
+      currentSong = 0;
+    } else {
       currentSong++;
     }
     notifyListeners();
   }
 
-  previous(){
-    if(currentSong==0){
-      currentSong==songs.length;
-    }else{
+  previous() {
+    if (currentSong == 0) {
+      currentSong == songs.length;
+    } else {
       currentSong--;
     }
     notifyListeners();
