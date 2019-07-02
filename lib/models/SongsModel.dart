@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
+import 'package:beats/models/ProgressModel.dart';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
@@ -8,17 +9,18 @@ class SongsModel extends ChangeNotifier {
   var duplicate = <Song>[]; // Duplicate of songs variable
   var currentSong;
   var currentState;
-  int duration;
-  int currentPos;
   MusicFinder player;
+  ProgressModel prog;
 
-  SongsModel() {
+  SongsModel(prov){
     fetchSongs();
-    player = new MusicFinder();
+    prog = prov;
   }
 
   fetchSongs() async {
     songs = await MusicFinder.allSongs();
+    player = new MusicFinder();
+    initValues();
     songs.forEach((item) {
       duplicate.add(item);
     });
@@ -44,6 +46,15 @@ class SongsModel extends ChangeNotifier {
     }
   }
 
+  initValues(){
+    player.setDurationHandler((d){
+      prog.setDuration(d.inSeconds);
+    });
+    player.setPositionHandler((p){
+      prog.setPosition(p.inSeconds);
+    });
+  }
+
 
   seek(pos){
     player.seek(pos);
@@ -53,11 +64,13 @@ class SongsModel extends ChangeNotifier {
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
+    notifyListeners();
   }
 
   pause() {
     player.pause();
     currentState = PlayerState.PAUSED;
+    notifyListeners();
   }
 
   next() {

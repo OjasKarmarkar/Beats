@@ -10,11 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './screens/MainScreen.dart';
 import 'models/ThemeModel.dart';
 import 'package:beats/themes/Themes.dart';
+import 'package:beats/models/ProgressModel.dart';
 
 void main(List<String> args) {
+  var prov = ProgressModel();
   runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(),),
+        ChangeNotifierProvider<ProgressModel>(builder: (context)=>prov,),
+        ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(prov),),
         ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger(lightTheme()))
       ],
       child: MyApp()));
