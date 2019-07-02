@@ -83,6 +83,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_circular_slider:
+    dependency: "direct main"
+    description:
+      name: flutter_circular_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.5.0"
   flutter_launcher_icons:
     dependency: "direct main"
     description:

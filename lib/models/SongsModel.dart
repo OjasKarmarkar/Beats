@@ -8,15 +8,18 @@ class SongsModel extends ChangeNotifier {
   var duplicate = <Song>[]; // Duplicate of songs variable
   var currentSong;
   var currentState;
-  MusicFinder player = new MusicFinder();
+  int duration;
+  int currentPos;
+  MusicFinder player;
 
   SongsModel() {
     fetchSongs();
+    player = new MusicFinder();
   }
 
   fetchSongs() async {
     songs = await MusicFinder.allSongs();
-    songs.forEach((item){
+    songs.forEach((item) {
       duplicate.add(item);
     });
     notifyListeners();
@@ -34,11 +37,16 @@ class SongsModel extends ChangeNotifier {
       songs.clear();
       songs.addAll(dummy);
       notifyListeners();
-    }else{
+    } else {
       songs.clear();
       songs.addAll(duplicate);
       notifyListeners();
     }
+  }
+
+
+  seek(pos){
+    player.seek(pos);
   }
 
   play() {

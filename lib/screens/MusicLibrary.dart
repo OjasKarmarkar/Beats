@@ -10,7 +10,6 @@ import 'Player.dart';
 
 class Library extends StatelessWidget {
   TextEditingController editingController;
-  MusicFinder player = new MusicFinder();
   SongsModel model;
 
   @override
@@ -55,7 +54,7 @@ class Library extends StatelessWidget {
           itemBuilder: (context, pos) {
             return ListTile(
               onTap: () {
-                player.stop();
+                model.player.stop();
                 model.currentSong = model.songs[pos];
                 model.play();
 

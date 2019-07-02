@@ -31,6 +31,7 @@ dependencies:
   flute_music_player:
   provider:
   line_icons: ^0.2.0
+  flutter_circular_slider:
 
 flutter_icons:
   android: "launcher_icon"
