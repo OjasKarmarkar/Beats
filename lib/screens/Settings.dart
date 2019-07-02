@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
 import 'package:line_icons/line_icons.dart';
+import 'SetttingsSubScreens/Donate.dart';
 import 'SetttingsSubScreens/Theme.dart';
 import 'SetttingsSubScreens/PlayBack.dart';
 import 'SetttingsSubScreens/About_Us.dart';
@@ -37,41 +38,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: Stack(
         children: <Widget>[
           AppBar(
-            leading: Padding(
-              padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
-              child: IconButton(
-                    iconSize: 35.0,
-                    icon: Icon(
-                      LineIcons.share_alt,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {},
-                  ),
-            ),
-            actions: <Widget>[
-              Padding(
+              leading: Padding(
                 padding:
                     EdgeInsets.only(top: height * 0.012, left: width * 0.03),
                 child: IconButton(
                   iconSize: 35.0,
                   icon: Icon(
-                    LineIcons.user,
+                    LineIcons.share_alt,
                     color: Colors.grey,
                   ),
                   onPressed: () {},
                 ),
-              )
-            ],
-            backgroundColor: Theme.of(context).backgroundColor,
-            centerTitle: true,
-            title: Padding(
-              padding: EdgeInsets.only(top: height * 0.022),
-              child: Text(
-                "Settings",
-                style: Theme.of(context).textTheme.display1
-            ),
-            )
-          ),
+              ),
+              actions: <Widget>[
+                Padding(
+                  padding:
+                      EdgeInsets.only(top: height * 0.012, left: width * 0.03),
+                  child: IconButton(
+                    iconSize: 35.0,
+                    icon: Icon(
+                      LineIcons.user,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {},
+                  ),
+                )
+              ],
+              backgroundColor: Theme.of(context).backgroundColor,
+              centerTitle: true,
+              title: Padding(
+                padding: EdgeInsets.only(top: height * 0.022),
+                child: Text("Settings",
+                    style: Theme.of(context).textTheme.display1),
+              )),
           Padding(
             padding: EdgeInsets.only(top: 100.0),
             child: Container(
@@ -79,13 +78,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 itemCount: titles.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Card(
-                      
                       color: Theme.of(context).cardColor,
                       shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
                       elevation: 5.0,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
@@ -98,22 +96,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       builder: (context) => new Themes()),
                                 );
                                 break;
-                               case 1:  Navigator.of(context).push(
-                                new MaterialPageRoute(builder: (context) => new PlayBack())
-                              );
-                              break;
-                              case 2:  Navigator.of(context).push(
-                                new MaterialPageRoute(builder: (context) => new AboutUs())
-                              );
-                              break;
-                              
+                              case 1:
+                                Navigator.of(context).push(
+                                    new MaterialPageRoute(
+                                        builder: (context) => new PlayBack()));
+                                break;
+                              case 2:
+                                Navigator.of(context).push(
+                                    new MaterialPageRoute(
+                                        builder: (context) => new AboutUs()));
+                                break;
+
+                              case 3:
+                                Navigator.of(context).push(
+                                    new MaterialPageRoute(
+                                        builder: (context) =>  Donate()));
+                                break;
                             }
                           },
-                          leading: Icon(icons[index] , color:Colors.grey),
-                          title: Text(titles[index],style: Theme.of(context).textTheme.display1,),
-                          subtitle: Padding(
+                          leading: Padding(
                             padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(subtitles[index],style: Theme.of(context).textTheme.display2,),
+                            child: Icon(icons[index], color: Colors.grey),
+                          ),
+                          title: Text(
+                            titles[index],
+                            style: Theme.of(context).textTheme.display3,
+                          ),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Text(
+                              subtitles[index],
+                              style: Theme.of(context).textTheme.display2,
+                            ),
                           ),
                         ),
                       ),

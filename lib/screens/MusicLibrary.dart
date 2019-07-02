@@ -25,7 +25,7 @@ class Library extends StatelessWidget {
                 left: width * 0.05, right: width * 0.05, top: height * 0.06),
             child: TextField(
                 onChanged: (value) {
-                  model.filterResults(value);
+                   model.filterResults(value);
                 },
                 controller: editingController,
                 decoration: InputDecoration(

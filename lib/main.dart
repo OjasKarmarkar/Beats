@@ -52,6 +52,7 @@ class SplashState extends State<Splash> {
     bool _seen = (prefs.getBool('seen') ?? false);
 
     if (_seen) {
+      SystemChrome.setEnabledSystemUIOverlays([]);
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new MainScreen()));
     } else {

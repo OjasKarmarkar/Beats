@@ -4,16 +4,16 @@ import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import '../HomeScreen.dart';
 import 'package:beats/themes/Themes.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 class Themes extends StatelessWidget {
-
-  ThemeChanger themeChanger; 
-  
-
+  ThemeChanger themeChanger;
+  MaterialColor color = Colors.blue;
 
   @override
   Widget build(BuildContext context) {
     themeChanger = Provider.of<ThemeChanger>(context);
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -53,7 +53,66 @@ class Themes extends StatelessWidget {
                 _settingModalBottomSheet(context);
               },
             ),
-          )
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 190.0, left: width * 0.02),
+            child: ListTile(
+              title: Text("Accent Color",
+                  style: Theme.of(context).textTheme.display2),
+              trailing: CircleColor(
+                color: color,
+                circleSize: 25.0,
+              ),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: height * 0.2, horizontal: width * 0.15),
+                    child: Container(
+                      color: Theme.of(context).backgroundColor,
+                      height: height * 0.2,
+                      width: width * 0.4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Color Picker",
+                                  style: Theme.of(context).textTheme.display1),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: MaterialColorPicker(
+                                allowShades: false,
+                                selectedColor: color,
+                                circleSize: 70,
+                                onMainColorChange: (ColorSwatch SelectedColor) {
+                                  debugPrint(SelectedColor.toString());
+                                  color = SelectedColor;
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: FloatingActionButton(
+                                child: Icon(LineIcons.leaf),
+                                onPressed: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop('dialog');
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -63,38 +122,43 @@ class Themes extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.brush ,  color: Colors.grey,),
-                      title: new Text('White'
-                      , style: Theme.of(context).textTheme.display2,
-                      ),
-                      onTap: () => {
-                            themeChanger.setTheme(lightTheme())
-                          }),
-                  new ListTile(
-                    leading: new Icon(Icons.brush, color: Colors.grey,),
-                    title: new Text('Black'
-                    ,style: Theme.of(context).textTheme.display2,),
-                    onTap: () => {
-                          themeChanger.setTheme(darkTheme())
-                          
-                        },
-                  ),
-                  new ListTile(
-                    leading: new Icon(Icons.brush,
-                    color: Colors.grey,
+          return Container(
+            color: Theme.of(context).backgroundColor,
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    leading: new Icon(
+                      Icons.brush,
+                      color: Colors.grey,
                     ),
-                    title: new Text('Black AF',
-                    style: Theme.of(context).textTheme.display2,),
-                    onTap: () => {},
+                    title: new Text(
+                      'White',
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                    onTap: () => {themeChanger.setTheme(lightTheme())}),
+                new ListTile(
+                  leading: new Icon(
+                    Icons.brush,
+                    color: Colors.grey,
                   ),
-                ],
-              ),
+                  title: new Text(
+                    'Dark',
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                  onTap: () => {themeChanger.setTheme(darkTheme())},
+                ),
+                new ListTile(
+                  leading: new Icon(
+                    Icons.brush,
+                    color: Colors.grey,
+                  ),
+                  title: new Text(
+                    'Dark AF',
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                  onTap: () => {themeChanger.setTheme(darkAFTheme())},
+                ),
+              ],
             ),
           );
         });
