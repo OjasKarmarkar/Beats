@@ -56,6 +56,7 @@ class Library extends StatelessWidget {
               onTap: () {
                 model.player.stop();
                 model.currentSong = model.songs[pos];
+                model.filterResults(""); //Reset the list. So we can change to next song.
                 model.play();
 
                 Navigator.push(context, MaterialPageRoute(builder: (context) {

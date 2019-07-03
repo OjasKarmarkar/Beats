@@ -6,7 +6,7 @@ enum PlayerState { PLAYING, PAUSED, STOPPED }
 
 class SongsModel extends ChangeNotifier {
   var songs = <Song>[];
-  var duplicate = <Song>[]; // Duplicate of songs variable
+  var duplicate = <Song>[]; // Duplicate of songs variable for Search function
   var currentSong;
   var currentState;
   MusicFinder player;
@@ -53,8 +53,10 @@ class SongsModel extends ChangeNotifier {
     player.setPositionHandler((p){
       prog.setPosition(p.inSeconds);
     });
+    player.setCompletionHandler((){
+      next();
+    });
   }
-
 
   seek(pos){
     player.seek(pos);
@@ -68,25 +70,25 @@ class SongsModel extends ChangeNotifier {
   }
 
   pause() {
-    player.pause();
+    player?.pause();
     currentState = PlayerState.PAUSED;
     notifyListeners();
   }
 
   next() {
-    if (currentSong == songs.length) {
-      currentSong = 0;
+    if (currentSong == songs[songs.length-1]) {
+      currentSong == songs[0];
     } else {
-      currentSong++;
+      currentSong = songs[songs.indexOf(currentSong) + 1];
     }
     notifyListeners();
   }
 
   previous() {
-    if (currentSong == 0) {
-      currentSong == songs.length;
+    if (currentSong == songs[0]) {
+      currentSong == songs[songs.length-1];
     } else {
-      currentSong--;
+      currentSong = songs[songs.indexOf(currentSong) - 1];
     }
     notifyListeners();
   }

@@ -93,11 +93,12 @@ class PlayBackPage extends StatelessWidget {
                   ),
                 ),
                 Consumer<ProgressModel>(builder: (context, a, _) {
-                  print("fucking a " + a.duration.toString());
-                  print("fucking b " + a.position.toString());
                   return Slider(
                     max: a.duration.toDouble(),
-                    onChanged: (double value) {},
+                    onChanged: (double value) {
+                      a.setPosition(value);
+                      model.seek(value);
+                    },
                     value: a.position.toDouble(),
                   );
                 }),
@@ -115,8 +116,8 @@ class PlayBackPage extends StatelessWidget {
                             model.play();
                           },
                           icon: Icon(
-                            LineIcons.step_backward,
-                            color: Colors.grey,
+                            Icons.skip_previous,
+                            color: Colors.black,
                             size: 40.0,
                           ),
                         ),
@@ -153,8 +154,8 @@ class PlayBackPage extends StatelessWidget {
                             model.play();
                           },
                           icon: Icon(
-                            LineIcons.forward,
-                            color: Colors.grey,
+                            Icons.skip_next,
+                            color: Colors.black,
                             size: 40.0,
                           ),
                         ),
