@@ -171,6 +171,13 @@ class PlayBackPage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
+                          onPressed: () {
+                            if (model.bookmarks.contains(model.currentSong)) {
+                            } else {
+                              model.bookmarks.add(model.currentSong);
+                              debugPrint(model.bookmarks.toString());
+                            }
+                          },
                           icon: Icon(
                             LineIcons.bookmark,
                             color: Colors.grey,

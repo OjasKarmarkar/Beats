@@ -11,6 +11,7 @@ class SongsModel extends ChangeNotifier {
   var currentState;
   MusicFinder player;
   ProgressModel prog;
+  List bookmarks = <Song>[];
 
   SongsModel(prov){
     fetchSongs();
