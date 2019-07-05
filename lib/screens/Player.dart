@@ -11,6 +11,7 @@ import 'package:beats/models/ProgressModel.dart';
 
 class PlayBackPage extends StatelessWidget {
   SongsModel model;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,8 +99,14 @@ class PlayBackPage extends StatelessWidget {
                   return Slider(
                     max: a.duration.toDouble(),
                     onChanged: (double value) {
-                      a.setPosition(value);
-                      model.seek(value);
+                      if (value.toDouble() == a.duration.toDouble()) {
+                        model.player.stop();
+                        model.next();
+                        model.play();
+                      } else {
+                        a.setPosition(value);
+                        model.seek(value);
+                      }
                     },
                     value: a.position.toDouble(),
                   );
@@ -174,12 +181,11 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
                           onPressed: () {
-                            var bookmarks = FuturePreferencesRepository<Song>(new SongHelper());
-                            // TODO: complete this shit 
-                            if (bookmarks.findOne()) {
-                            } else {
-                              bookmarks.save(model.currentSong);
-                            }
+                            var bookmarks = FuturePreferencesRepository<Song>(
+                                new SongHelper());
+                            // TODO: complete this shit
+
+                            bookmarks.save(model.currentSong);
                           },
                           icon: Icon(
                             Icons.bookmark_border,
@@ -191,8 +197,15 @@ class PlayBackPage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
+                          onPressed: () {
+                           
+                             model.player.stop();
+                             model.current_Song();
+                             model.play();
+                              debugPrint(model.currentSong.duration.toDouble().toString());
+                          },
                           icon: Icon(
-                            Icons.bookmark_border,
+                            Icons.loop,
                             color: Colors.grey,
                             size: 35.0,
                           ),

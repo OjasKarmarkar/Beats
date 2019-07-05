@@ -11,6 +11,7 @@ class SongsModel extends ChangeNotifier {
   var currentState;
   MusicFinder player;
   ProgressModel prog;
+  var position;
 
   SongsModel(prov){
     fetchSongs();
@@ -21,6 +22,11 @@ class SongsModel extends ChangeNotifier {
     songs = await MusicFinder.allSongs();
     player = new MusicFinder();
     initValues();
+    player.setPositionHandler((p){
+      prog.setPosition(p.inSeconds);
+      position = p.toString();
+      debugPrint(position);
+    });
     songs.forEach((item) {
       duplicate.add(item);
     });
@@ -50,9 +56,7 @@ class SongsModel extends ChangeNotifier {
     player.setDurationHandler((d){
       prog.setDuration(d.inSeconds);
     });
-    player.setPositionHandler((p){
-      prog.setPosition(p.inSeconds);
-    });
+    
     player.setCompletionHandler((){
       next();
     });
@@ -92,4 +96,14 @@ class SongsModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+getPositon(){
+  return position;
+}
+
+current_Song(){
+  currentSong == songs[songs.indexOf(currentSong)];
+  notifyListeners();
+}
+
 }
