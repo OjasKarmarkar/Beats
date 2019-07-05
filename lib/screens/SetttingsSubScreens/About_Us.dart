@@ -1,7 +1,7 @@
 import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 
-import 'package:line_icons/line_icons.dart';
+import '../../custom_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutUs extends StatelessWidget {
@@ -23,7 +23,7 @@ class AboutUs extends StatelessWidget {
             child: IconButton(
               iconSize: 35.0,
               icon: Icon(
-                LineIcons.arrow_circle_o_left,
+                CustomIcons.arrow_circle_o_left,
                 color: Colors.grey,
               ),
               onPressed: () {
@@ -96,7 +96,7 @@ class AboutUs extends StatelessWidget {
                         onTap: _launchTg,
                         leading: CircleAvatar(
                             backgroundColor: Theme.of(context).backgroundColor,
-                            child: Icon(LineIcons.paper_plane)),
+                            child: Icon(CustomIcons.paper_plane)),
                         title: Text("Telegram",
                             style: Theme.of(context).textTheme.display1),
                       ),
@@ -108,7 +108,7 @@ class AboutUs extends StatelessWidget {
                         onTap: _launchInsta,
                         leading: CircleAvatar(
                             backgroundColor: Theme.of(context).backgroundColor,
-                            child: Icon(LineIcons.instagram)),
+                            child: Icon(CustomIcons.instagram)),
                         title: Text("InstaGram",
                             style: Theme.of(context).textTheme.display1),
                       ),
@@ -120,7 +120,7 @@ class AboutUs extends StatelessWidget {
                         onTap: _launchGmail,
                         leading: CircleAvatar(
                             backgroundColor: Theme.of(context).backgroundColor,
-                            child: Icon(LineIcons.google)),
+                            child: Icon(CustomIcons.google)),
                         title: Text("Gmail",
                             style: Theme.of(context).textTheme.display1),
                       ),

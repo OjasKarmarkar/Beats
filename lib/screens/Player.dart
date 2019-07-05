@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:beats/models/SongHelper.dart';
 import 'package:beats/models/SongsModel.dart';
+import 'package:pref_dessert/pref_dessert.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
+import '../custom_icons.dart';
 import 'package:provider/provider.dart';
 import 'HomeScreen.dart';
 import 'package:beats/models/ProgressModel.dart';
@@ -21,7 +23,7 @@ class PlayBackPage extends StatelessWidget {
               child: IconButton(
                 iconSize: 35.0,
                 icon: Icon(
-                  LineIcons.arrow_circle_o_left,
+                  CustomIcons.arrow_circle_o_left,
                   color: Colors.grey,
                 ),
                 onPressed: () {
@@ -116,7 +118,7 @@ class PlayBackPage extends StatelessWidget {
                             model.play();
                           },
                           icon: Icon(
-                            Icons.skip_previous,
+                            CustomIcons.step_backward,
                             color: Colors.black,
                             size: 40.0,
                           ),
@@ -139,10 +141,10 @@ class PlayBackPage extends StatelessWidget {
                                           PlayerState.PAUSED ||
                                       model.currentState == PlayerState.STOPPED)
                                   ? Icon(
-                                      LineIcons.play,
+                                      CustomIcons.play,
                                       size: 30.0,
                                     )
-                                  : Icon(LineIcons.pause),
+                                  : Icon(CustomIcons.pause),
                             )),
                       ),
                       Padding(
@@ -154,7 +156,7 @@ class PlayBackPage extends StatelessWidget {
                             model.play();
                           },
                           icon: Icon(
-                            Icons.skip_next,
+                            CustomIcons.step_forward,
                             color: Colors.black,
                             size: 40.0,
                           ),
@@ -172,14 +174,15 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
                           onPressed: () {
-                            if (model.bookmarks.contains(model.currentSong)) {
+                            var bookmarks = FuturePreferencesRepository<Song>(new SongHelper());
+                            // TODO: complete this shit 
+                            if (bookmarks.findOne()) {
                             } else {
-                              model.bookmarks.add(model.currentSong);
-                              debugPrint(model.bookmarks.toString());
+                              bookmarks.save(model.currentSong);
                             }
                           },
                           icon: Icon(
-                            LineIcons.bookmark,
+                            Icons.bookmark_border,
                             color: Colors.grey,
                             size: 35.0,
                           ),
@@ -189,7 +192,7 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
                           icon: Icon(
-                            LineIcons.scissors,
+                            Icons.bookmark_border,
                             color: Colors.grey,
                             size: 35.0,
                           ),
@@ -199,7 +202,7 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
                           icon: Icon(
-                            LineIcons.refresh,
+                            Icons.bookmark_border,
                             color: Colors.grey,
                             size: 35.0,
                           ),
@@ -209,7 +212,7 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.05),
                         child: IconButton(
                           icon: Icon(
-                            LineIcons.recycle,
+                            Icons.bookmark_border,
                             color: Colors.grey,
                             size: 35.0,
                           ),

@@ -1,6 +1,6 @@
 import '../../models/ThemeModel.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
+import '../../custom_icons.dart';
 import 'package:provider/provider.dart';
 import '../HomeScreen.dart';
 import 'package:beats/themes/Themes.dart';
@@ -23,7 +23,7 @@ class Themes extends StatelessWidget {
               child: IconButton(
                 iconSize: 35.0,
                 icon: Icon(
-                  LineIcons.arrow_circle_left,
+                  CustomIcons.arrow_circle_o_left,
                   color: Colors.grey,
                 ),
                 onPressed: () {
@@ -97,7 +97,7 @@ class Themes extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(18.0),
                               child: FloatingActionButton(
-                                child: Icon(LineIcons.leaf),
+                                child: Icon(CustomIcons.leaf),
                                 onPressed: () {
                                   Navigator.of(context, rootNavigator: true)
                                       .pop('dialog');

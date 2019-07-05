@@ -2,7 +2,7 @@ import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:beats/models/SongsModel.dart';
-import 'package:line_icons/line_icons.dart';
+import '../custom_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 
@@ -31,7 +31,7 @@ class Library extends StatelessWidget {
                     disabledBorder: InputBorder.none,
                     hintStyle: TextStyle(),
                     hintText: "Search",
-                    prefixIcon: Icon(LineIcons.search),
+                    prefixIcon: Icon(CustomIcons.search),
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey)))),
           ),

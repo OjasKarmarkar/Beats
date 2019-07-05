@@ -7,11 +7,10 @@ enum PlayerState { PLAYING, PAUSED, STOPPED }
 class SongsModel extends ChangeNotifier {
   var songs = <Song>[];
   var duplicate = <Song>[]; // Duplicate of songs variable for Search function
-  var currentSong;
+  Song currentSong;
   var currentState;
   MusicFinder player;
   ProgressModel prog;
-  List bookmarks = <Song>[];
 
   SongsModel(prov){
     fetchSongs();

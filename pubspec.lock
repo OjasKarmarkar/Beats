@@ -116,13 +116,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
-  line_icons:
-    dependency: "direct main"
+  json_annotation:
+    dependency: transitive
     description:
-      name: line_icons
+      name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "1.2.0"
   matcher:
     dependency: transitive
     description:
@@ -172,6 +172,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  pref_dessert:
+    dependency: "direct main"
+    description:
+      name: pref_dessert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.3"
   provider:
     dependency: "direct main"
     description:
@@ -187,12 +194,12 @@ packages:
     source: hosted
     version: "2.0.2"
   shared_preferences:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.3+1"
+    version: "0.4.3"
   sky_engine:
     dependency: transitive
     description: flutter
