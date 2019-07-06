@@ -15,5 +15,16 @@ darkTheme() {
             fontFamily: 'sans-serif',
             fontSize: 17,
             color: Colors.white,
-          )));
+          ),
+          subhead: TextStyle(
+              letterSpacing: 1.2,
+              fontFamily: 'sans-serif',
+              fontSize: 30,
+              color: Colors.white,
+              fontWeight: FontWeight.w500),
+          headline: TextStyle(
+              fontFamily: 'sans-serif',
+              color: Colors.white,
+              fontSize: 45,
+              fontWeight: FontWeight.bold)));
 }
