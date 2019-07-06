@@ -214,8 +214,13 @@ class PlayBackPage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
+                          onPressed: (){
+                            model.player.stop();
+                            model.random_Song();
+                            model.play();
+                          },
                           icon: Icon(
-                            Icons.bookmark_border,
+                            Icons.shuffle,
                             color: Colors.grey,
                             size: 35.0,
                           ),
@@ -225,7 +230,7 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.05),
                         child: IconButton(
                           icon: Icon(
-                            Icons.bookmark_border,
+                            Icons.playlist_add,
                             color: Colors.grey,
                             size: 35.0,
                           ),
