@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:beats/models/BookmarkModel.dart';
+
 import 'models/SongsModel.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,7 @@ void main(List<String> args) {
   var prov = ProgressModel();
   runApp(MultiProvider(
       providers: [
+        ChangeNotifierProvider<BookmarkModel>(builder: (context)=>BookmarkModel(),),
         ChangeNotifierProvider<ProgressModel>(builder: (context)=>prov,),
         ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(prov),),
         ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger(lightTheme()))

@@ -7,70 +7,56 @@ import 'package:beats/screens/Player.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
 
-class Bookmarks extends StatefulWidget {
-  @override
-  State<Bookmarks> createState() {
-    return _BookmarksState();
-  }
-}
-
-class _BookmarksState extends State<Bookmarks> {
-
+class Bookmarks extends StatelessWidget {
+  
   SongsModel model;
-  var bookmarkList;
-
-  @override
-  void initState() {
-    super.initState();
-    initRequirements();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: (bookmarkList == null && model == null)
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: bookmarkList.length,
-              itemBuilder: (context, pos) {
-                return ListTile(
-              onTap: () {
-                model.player.stop();
-                model.currentSong = model.songs[pos];
-                model.filterResults(""); //Reset the list. So we can change to next song.
-                model.play();
-
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PlayBackPage();
-                }));
-              },
-              leading: CircleAvatar(child: getImage(model, pos)),
-              title: Text(
-                model.songs[pos].title,
-                style: Theme.of(context).textTheme.display2,
-              ),
-            );
-              },
-            ),
+    model = Provider.of<SongsModel>(context);
+    return Consumer<BookmarkModel>(
+      builder: (context, bookmark, _) => Scaffold(
+            body: (bookmark.bookmarkList == null)
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : (bookmark.bookmarkList.length == 0)
+                    ? Center(child: Text("No Bookmarks"))
+                    : ListView.builder(
+                        itemCount: bookmark.bookmarkList.length,
+                        itemBuilder: (context, pos) {
+                          return ListTile(
+                            onTap: () {
+                              model.player.stop();
+                              model.currentSong = bookmark.bookmarkList[pos];
+                              model.filterResults(
+                                  ""); //Reset the list. So we can change to next song.
+                              model.play();
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return PlayBackPage();
+                              }));
+                            },
+                            leading: CircleAvatar(child: getImage(bookmark, pos)),
+                            title: Text(
+                              bookmark.bookmarkList[pos].title,
+                              style: Theme.of(context).textTheme.display2,
+                            ),
+                          );
+                        },
+                      ),
+          ),
     );
   }
 
-  getImage(model, pos) {
-    if (model.songs[pos].albumArt != null) {
+  getImage(bookmark, pos) {
+    if (bookmark.bookmarkList[pos].albumArt != null) {
       return ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child:
-              Image.file(File.fromUri(Uri.parse(model.songs[pos].albumArt))));
+              Image.file(File.fromUri(Uri.parse(bookmark.bookmarkList[pos].albumArt))));
     } else {
       return Icon(Icons.music_note);
     }
-  }
-
-  void initRequirements() {
-    bookmarkList = BookmarkModel().getAll();
-    model = Provider.of<SongsModel>(context);
-    setState(() {});
   }
 }
