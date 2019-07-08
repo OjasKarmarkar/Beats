@@ -77,7 +77,7 @@ class SongsModel extends ChangeNotifier {
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
-    if(lastPlayed.findOne(0) != null){
+    if(lastPlayed.findOne(0) == null){
       lastPlayed.save(currentSong);
     }
     else{

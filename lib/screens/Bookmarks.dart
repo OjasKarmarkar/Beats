@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:provider/provider.dart';
-
 import 'package:beats/screens/Player.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
