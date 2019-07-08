@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
+import 'dart:math';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
@@ -11,8 +12,10 @@ class SongsModel extends ChangeNotifier {
   var currentState;
   MusicFinder player;
   ProgressModel prog;
+  var position;
+  Random rnd = new Random();
 
-  SongsModel(prov){
+  SongsModel(prov) {
     fetchSongs();
     prog = prov;
   }
@@ -21,6 +24,11 @@ class SongsModel extends ChangeNotifier {
     songs = await MusicFinder.allSongs();
     player = new MusicFinder();
     initValues();
+    player.setPositionHandler((p) {
+      prog.setPosition(p.inSeconds);
+      position = p.toString();
+      debugPrint(position);
+    });
     songs.forEach((item) {
       duplicate.add(item);
     });
@@ -46,19 +54,17 @@ class SongsModel extends ChangeNotifier {
     }
   }
 
-  initValues(){
-    player.setDurationHandler((d){
+  initValues() {
+    player.setDurationHandler((d) {
       prog.setDuration(d.inSeconds);
     });
-    player.setPositionHandler((p){
-      prog.setPosition(p.inSeconds);
-    });
-    player.setCompletionHandler((){
+
+    player.setCompletionHandler(() {
       next();
     });
   }
 
-  seek(pos){
+  seek(pos) {
     player.seek(pos);
   }
 
@@ -76,7 +82,7 @@ class SongsModel extends ChangeNotifier {
   }
 
   next() {
-    if (currentSong == songs[songs.length-1]) {
+    if (currentSong == songs[songs.length - 1]) {
       currentSong == songs[0];
     } else {
       currentSong = songs[songs.indexOf(currentSong) + 1];
@@ -86,10 +92,26 @@ class SongsModel extends ChangeNotifier {
 
   previous() {
     if (currentSong == songs[0]) {
-      currentSong == songs[songs.length-1];
+      currentSong == songs[songs.length - 1];
     } else {
       currentSong = songs[songs.indexOf(currentSong) - 1];
     }
+    notifyListeners();
+  }
+
+  getPositon() {
+    return position;
+  }
+
+  current_Song() {
+    currentSong = songs[songs.indexOf(currentSong)];
+    notifyListeners();
+  }
+
+  random_Song() {
+    int max = songs.length;
+    print(rnd.nextInt(max));
+    currentSong = songs[rnd.nextInt(max)];
     notifyListeners();
   }
 }

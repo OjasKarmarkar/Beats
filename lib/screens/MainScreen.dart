@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
           body: screens[index],
           bottomNavigationBar: ExpandingBottomBar(
-            animationDuration: Duration(milliseconds: 700),
+            animationDuration: Duration(milliseconds: 500),
             backgroundColor: Theme.of(context).backgroundColor,
               navBarHeight: 75,
               items: [
