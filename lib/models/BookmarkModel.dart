@@ -6,7 +6,7 @@ import 'SongHelper.dart';
 class BookmarkModel extends ChangeNotifier{
 
   FuturePreferencesRepository<Song> repo;
-  var bookmarkList;
+  var   bookmarkList;
 
   BookmarkModel(){
     repo = FuturePreferencesRepository<Song>(SongHelper());
