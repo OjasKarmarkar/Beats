@@ -3,6 +3,10 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
 import 'dart:math';
 
+import 'package:pref_dessert/pref_dessert_internal.dart';
+
+import 'SongHelper.dart';
+
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
 class SongsModel extends ChangeNotifier {
@@ -14,6 +18,7 @@ class SongsModel extends ChangeNotifier {
   ProgressModel prog;
   var position;
   Random rnd = new Random();
+  var lastPlayed = FuturePreferencesRepository<Song>(new SongHelper());
 
   SongsModel(prov) {
     fetchSongs();
@@ -72,6 +77,7 @@ class SongsModel extends ChangeNotifier {
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
+    lastPlayed.update(0 , currentSong);
     notifyListeners();
   }
 

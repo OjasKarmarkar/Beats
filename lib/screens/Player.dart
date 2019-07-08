@@ -11,6 +11,7 @@ import 'package:beats/models/ProgressModel.dart';
 
 class PlayBackPage extends StatelessWidget {
   SongsModel model;
+   var lastPlayed = FuturePreferencesRepository<Song>(new SongHelper());
 
   @override
   Widget build(BuildContext context) {
