@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/SongHelper.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:pref_dessert/pref_dessert.dart';
@@ -51,7 +52,7 @@ class PlayBackPage extends StatelessWidget {
                               height: 300,
                               width: 300,
                               child: ClipOval(
-                                child: model.currentSong.albumArt != null
+                                child: (model.currentSong.albumArt != null)
                                     ? Image.file(
                                         File.fromUri(Uri.parse(
                                             model.currentSong.albumArt)),
@@ -180,20 +181,23 @@ class PlayBackPage extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(right: width * 0.13),
-                        child: IconButton(
-                          onPressed: () {
-                            var bookmarks = FuturePreferencesRepository<Song>(
-                                new SongHelper());
-                            // TODO: complete this shit
-
-                            bookmarks.save(model.currentSong);
-                          },
-                          icon: Icon(
-                            Icons.bookmark_border,
-                            color: Colors.grey,
-                            size: 35.0,
-                          ),
-                        ),
+                        child: Consumer<BookmarkModel>(
+                              builder: (context, bookmark, _) => IconButton(
+                                    onPressed: () {
+                                      if (!bookmark.contains(model.currentSong)) {
+                                        bookmark.add(model.currentSong);
+                                      }else{
+                                        bookmark.remove(model.currentSong);
+                                      }
+                                    },
+                                    icon: Icon(
+                                      bookmark.contains(model.currentSong) ? Icons.bookmark : Icons.bookmark_border,
+                                      color: bookmark.contains(model.currentSong) ? Colors.pink : Colors.grey,
+                                      size: 35.0,
+                                    ),
+                                  ),
+                            ),
+                      
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: width * 0.13),
@@ -202,9 +206,6 @@ class PlayBackPage extends StatelessWidget {
                             model.player.stop();
                             model.current_Song();
                             model.play();
-                            debugPrint(model.currentSong.duration
-                                .toDouble()
-                                .toString());
                           },
                           icon: Icon(
                             Icons.loop,

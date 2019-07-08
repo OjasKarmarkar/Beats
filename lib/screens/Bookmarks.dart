@@ -49,12 +49,13 @@ class Bookmarks extends StatelessWidget {
     );
   }
 
-  getImage(bookmark, pos) {
-    if (bookmark.bookmarkList[pos].albumArt != null) {
+  getImage(bm, pos) {
+    if (bm.bookmarkList[pos].albumArt!="") {
+      print(bm.bookmarkList[pos].albumArt);
       return ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child:
-              Image.file(File.fromUri(Uri.parse(bookmark.bookmarkList[pos].albumArt))));
+              Image.file(File.fromUri(Uri.parse(bm.bookmarkList[pos].albumArt))));
     } else {
       return Icon(Icons.music_note);
     }
