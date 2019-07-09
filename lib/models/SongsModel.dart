@@ -78,16 +78,14 @@ class SongsModel extends ChangeNotifier {
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
 
-    if(lastPlayed.findOne(0) == null){
+    if (lastPlayed.findOne(0) == null) {
+      //lastPlayed.update(0 , currentSong);
 
-    //lastPlayed.update(0 , currentSong);
-    if(lastPlayed.findOne(0) != null){
       lastPlayed.save(currentSong);
-    }
-    else{
+    } else {
       lastPlayed.update(1, currentSong);
     }
-    
+
     notifyListeners();
   }
 

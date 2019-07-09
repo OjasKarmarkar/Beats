@@ -49,7 +49,7 @@ class Bookmarks extends StatelessWidget {
   }
 
   getImage(bm, pos) {
-    if (bm.bookmarkList[pos].albumArt!="") {
+    if (bm.bookmarkList[pos].albumArt!=null) {
       print(bm.bookmarkList[pos].albumArt);
       return ClipRRect(
           borderRadius: BorderRadius.circular(20),
