@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:line_icons/line_icons.dart';
+import '../../custom_icons.dart';
 
 class Donate extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _DonateState extends State<Donate> {
             leading: IconButton(
               iconSize: 35.0,
               icon: Icon(
-                LineIcons.arrow_circle_o_left,
+                CustomIcons.arrow_circle_o_left,
                 color: Colors.white,
               ),
               onPressed: () {

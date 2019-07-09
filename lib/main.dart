@@ -1,8 +1,8 @@
 import 'dart:async';
-
+import 'package:beats/models/BookmarkModel.dart';
+import 'models/Recently_played.dart';
 import 'models/SongsModel.dart';
 import 'package:provider/provider.dart';
-
 import 'package:beats/screens/onboarding/Onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,10 +14,13 @@ import 'package:beats/models/ProgressModel.dart';
 
 void main(List<String> args) {
   var prov = ProgressModel();
+  var rec = Recents();
   runApp(MultiProvider(
       providers: [
+        ChangeNotifierProvider<BookmarkModel>(builder: (context)=>BookmarkModel(),),
+        ChangeNotifierProvider<Recents>(builder: (context)=>rec,),
         ChangeNotifierProvider<ProgressModel>(builder: (context)=>prov,),
-        ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(prov),),
+        ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(prov,rec),),
         ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger(lightTheme()))
       ],
       child: MyApp()));

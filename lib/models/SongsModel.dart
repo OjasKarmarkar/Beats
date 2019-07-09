@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
+import 'dart:math';
+
+import 'package:pref_dessert/pref_dessert_internal.dart';
+
+import 'Recently_played.dart';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
 class SongsModel extends ChangeNotifier {
   var songs = <Song>[];
   var duplicate = <Song>[]; // Duplicate of songs variable for Search function
-  var currentSong;
+  Song currentSong;
   var currentState;
   MusicFinder player;
   ProgressModel prog;
-  List bookmarks = <Song>[];
+  var position;
+  bool shuffle = false;
+  bool repeat = false;
+  Random rnd = new Random();
+  Recents recents;
 
-  SongsModel(prov){
+  SongsModel(prov, rec) {
     fetchSongs();
     prog = prov;
+    recents = rec;
   }
 
   fetchSongs() async {
     songs = await MusicFinder.allSongs();
     player = new MusicFinder();
     initValues();
+    player.setPositionHandler((p) {
+      prog.setPosition(p.inSeconds);
+      position = p.toString();
+      debugPrint(position);
+    });
     songs.forEach((item) {
       duplicate.add(item);
     });
@@ -47,19 +62,22 @@ class SongsModel extends ChangeNotifier {
     }
   }
 
-  initValues(){
-    player.setDurationHandler((d){
+  initValues() {
+    player.setDurationHandler((d) {
       prog.setDuration(d.inSeconds);
     });
-    player.setPositionHandler((p){
-      prog.setPosition(p.inSeconds);
-    });
-    player.setCompletionHandler((){
-      next();
+
+    player.setCompletionHandler(() {
+      if (repeat) {
+        random_Song();
+      } else if (shuffle) {
+        current_Song();
+      } else
+        next();
     });
   }
 
-  seek(pos){
+  seek(pos) {
     player.seek(pos);
   }
 
@@ -67,6 +85,7 @@ class SongsModel extends ChangeNotifier {
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
+    recents.add(song);
     notifyListeners();
   }
 
@@ -77,7 +96,7 @@ class SongsModel extends ChangeNotifier {
   }
 
   next() {
-    if (currentSong == songs[songs.length-1]) {
+    if (currentSong == songs[songs.length - 1]) {
       currentSong == songs[0];
     } else {
       currentSong = songs[songs.indexOf(currentSong) + 1];
@@ -87,10 +106,29 @@ class SongsModel extends ChangeNotifier {
 
   previous() {
     if (currentSong == songs[0]) {
-      currentSong == songs[songs.length-1];
+      currentSong == songs[songs.length - 1];
     } else {
       currentSong = songs[songs.indexOf(currentSong) - 1];
     }
+    notifyListeners();
+  }
+
+  getPositon() {
+    return position;
+  }
+
+  current_Song() {
+    player.stop();
+    currentSong = songs[songs.indexOf(currentSong)];
+    player.play(currentSong.uri);
+    notifyListeners();
+  }
+
+  random_Song() {
+    int max = songs.length;
+    player.stop();
+    currentSong = songs[rnd.nextInt(max)];
+    player.play(currentSong.uri);
     notifyListeners();
   }
 }

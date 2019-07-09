@@ -1,11 +1,12 @@
+import 'package:beats/models/BookmarkHelper.dart';
 import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:beats/models/SongsModel.dart';
-import 'package:line_icons/line_icons.dart';
+import 'package:pref_dessert/pref_dessert_internal.dart';
+import '../custom_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:flute_music_player/flute_music_player.dart';
-
 import 'Player.dart';
 
 class Library extends StatelessWidget {
@@ -31,7 +32,7 @@ class Library extends StatelessWidget {
                     disabledBorder: InputBorder.none,
                     hintStyle: TextStyle(),
                     hintText: "Search",
-                    prefixIcon: Icon(LineIcons.search),
+                    prefixIcon: Icon(CustomIcons.search),
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey)))),
           ),
@@ -58,6 +59,7 @@ class Library extends StatelessWidget {
                 model.currentSong = model.songs[pos];
                 model.filterResults(""); //Reset the list. So we can change to next song.
                 model.play();
+                
 
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return PlayBackPage();

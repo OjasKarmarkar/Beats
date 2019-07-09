@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
-import 'package:line_icons/line_icons.dart';
+import '../custom_icons.dart';
 import 'SetttingsSubScreens/Donate.dart';
 import 'SetttingsSubScreens/Theme.dart';
 import 'SetttingsSubScreens/PlayBack.dart';
@@ -28,10 +28,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       'Donate us a Coffee!'
     ];
     final icons = [
-      LineIcons.paint_brush,
-      LineIcons.music,
-      LineIcons.info_circle,
-      LineIcons.coffee
+      CustomIcons.paint_brush,
+      CustomIcons.music,
+      CustomIcons.info_circle,
+      CustomIcons.coffee
     ];
 
     return Scaffold(
@@ -44,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: IconButton(
                   iconSize: 35.0,
                   icon: Icon(
-                    LineIcons.share_alt,
+                    CustomIcons.share_alt,
                     color: Colors.grey,
                   ),
                   onPressed: () {},
@@ -57,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: IconButton(
                     iconSize: 35.0,
                     icon: Icon(
-                      LineIcons.user,
+                      CustomIcons.user,
                       color: Colors.grey,
                     ),
                     onPressed: () {},
