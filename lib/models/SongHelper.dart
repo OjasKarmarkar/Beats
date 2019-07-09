@@ -14,8 +14,9 @@ class SongHelper extends DesSer<Song>{
 
   @override
   String serialize(Song t) {
+    var art = t.albumArt ?? "";
     // All Songs are in two comma club
-    return "${t.id},,${t.artist},,${t.title},,${t.album},,${t.albumId},,${t.duration},,${t.uri},,${t.albumArt}";
+    return "${t.id},,${t.artist},,${t.title},,${t.album},,${t.albumId},,${t.duration},,${t.uri},,$art";
   }
 
 }
