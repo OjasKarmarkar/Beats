@@ -14,7 +14,7 @@ class Recents extends ChangeNotifier{
   }
 
   add(Song song){
-    if (recently.length > 0) last_played.remove(0);
+    if (recently.length >= 1) last_played.remove(1);
     last_played.save(song);
     fetch_Last();
   }
