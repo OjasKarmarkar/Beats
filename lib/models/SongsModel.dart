@@ -5,7 +5,7 @@ import 'dart:math';
 
 import 'package:pref_dessert/pref_dessert_internal.dart';
 
-import 'SongHelper.dart';
+import 'Recently_played.dart';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
@@ -17,12 +17,15 @@ class SongsModel extends ChangeNotifier {
   MusicFinder player;
   ProgressModel prog;
   var position;
+  bool shuffle = false;
+  bool repeat = false;
   Random rnd = new Random();
-  var lastPlayed = FuturePreferencesRepository<Song>(new SongHelper());
+  Recents recents;
 
-  SongsModel(prov) {
+  SongsModel(prov, rec) {
     fetchSongs();
     prog = prov;
+    recents = rec;
   }
 
   fetchSongs() async {
@@ -65,7 +68,12 @@ class SongsModel extends ChangeNotifier {
     });
 
     player.setCompletionHandler(() {
-      next();
+      if (repeat) {
+        random_Song();
+      } else if (shuffle) {
+        current_Song();
+      } else
+        next();
     });
   }
 
@@ -77,15 +85,7 @@ class SongsModel extends ChangeNotifier {
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
-
-    if (lastPlayed.findOne(0) == null) {
-      //lastPlayed.update(0 , currentSong);
-
-      lastPlayed.save(currentSong);
-    } else {
-      lastPlayed.update(1, currentSong);
-    }
-
+    recents.add(song);
     notifyListeners();
   }
 
@@ -118,14 +118,17 @@ class SongsModel extends ChangeNotifier {
   }
 
   current_Song() {
+    player.stop();
     currentSong = songs[songs.indexOf(currentSong)];
+    player.play(currentSong.uri);
     notifyListeners();
   }
 
   random_Song() {
     int max = songs.length;
-    print(rnd.nextInt(max));
+    player.stop();
     currentSong = songs[rnd.nextInt(max)];
+    player.play(currentSong.uri);
     notifyListeners();
   }
 }

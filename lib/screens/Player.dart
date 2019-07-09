@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:beats/models/BookmarkModel.dart';
-import 'package:beats/models/SongHelper.dart';
+import 'package:beats/models/BookmarkHelper.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:pref_dessert/pref_dessert.dart';
 import 'package:flute_music_player/flute_music_player.dart';
@@ -12,7 +12,7 @@ import 'package:beats/models/ProgressModel.dart';
 
 class PlayBackPage extends StatelessWidget {
   SongsModel model;
-   var lastPlayed = FuturePreferencesRepository<Song>(new SongHelper());
+   var lastPlayed = FuturePreferencesRepository<Song>(new BookmarkHelper());
 
   @override
   Widget build(BuildContext context) {
@@ -203,13 +203,11 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
                           onPressed: () {
-                            model.player.stop();
-                            model.current_Song();
-                            model.play();
+                            model.repeat ? model.repeat = false : model.repeat = true;
                           },
                           icon: Icon(
                             Icons.loop,
-                            color: Colors.grey,
+                            color: model.repeat ? Colors.pink : Colors.grey,
                             size: 35.0,
                           ),
                         ),
@@ -218,13 +216,11 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
                           onPressed: () {
-                            model.player.stop();
-                            model.random_Song();
-                            model.play();
+                            model.shuffle ? model.shuffle = false : model.shuffle = true;
                           },
                           icon: Icon(
                             Icons.shuffle,
-                            color: Colors.grey,
+                            color: model.shuffle ? Colors.pink : Colors.grey,
                             size: 35.0,
                           ),
                         ),

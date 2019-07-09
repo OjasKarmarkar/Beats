@@ -1,16 +1,16 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:pref_dessert/pref_dessert.dart';
-class SongHelper extends DesSer<Song>{
+class RecentsHelper extends DesSer<Song>{
   
   @override
   Song deserialize(String s) {
     // Its a simple spell( two commas ) but quite unbreakable
     var split = s.split(",,");
-    print(split);
-    return Song(int.parse(split[0]), split[1], split[2], split[3], int.parse(split[4]), int.parse(split[5]), split[6], split[7]);}
+    var art = split[7] == "" ? null : split[7];
+    return Song(int.parse(split[0]), split[1], split[2], split[3], int.parse(split[4]), int.parse(split[5]), split[6], art);}
 
   @override
-  String get key => "Song";
+  String get key => "recents";
 
   @override
   String serialize(Song t) {

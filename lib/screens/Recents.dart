@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:beats/Models/Recently_played.dart';
+import 'package:beats/models/Recently_played.dart';
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:provider/provider.dart';
@@ -15,43 +15,41 @@ class LastPlayed extends StatelessWidget {
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
     return Consumer<Recents>(
-      builder: (context, lastPlayed, _) =>
-      Padding(
-        padding: const EdgeInsets.all(28.0),
-        child: (lastPlayed.recently == null)
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : (lastPlayed.recently.length == 0)
-                      ? Center(child: Text("No Bookmarks"))
-                      :
-         Container(
-         child: ListView.builder(
-           itemCount:  lastPlayed.recently.length,
-           itemBuilder: (context, pos) {
-              return ListTile(
-                            onTap: () {
-                              model.player.stop();
-                              model.currentSong = lastPlayed.recently[pos];
-                              model.filterResults(
-                                  ""); //Reset the list. So we can change to next song.
-                              model.play();
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return PlayBackPage();
-                              }));
-                            },
-                            leading: CircleAvatar(child: getImage(lastPlayed, pos)),
-                            title: Text(
-                              lastPlayed.recently[pos].title,
-                              style: Theme.of(context).textTheme.display2,
-                            ),
-                          );
-           },
-
-         ),
-        ),
-      ),
+      builder: (context, lastPlayed, _) => Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: (lastPlayed.recently == null)
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : (lastPlayed.recently.length == 0)
+                    ? Center(child: Text("No Bookmarks"))
+                    : Container(
+                        child: ListView.builder(
+                          itemCount: lastPlayed.recently.length,
+                          itemBuilder: (context, pos) {
+                            return ListTile(
+                              onTap: () {
+                                model.player.stop();
+                                model.currentSong = lastPlayed.recently[pos];
+                                model.filterResults(
+                                    ""); //Reset the list. So we can change to next song.
+                                model.play();
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return PlayBackPage();
+                                }));
+                              },
+                              leading: CircleAvatar(
+                                  child: getImage(lastPlayed, pos)),
+                              title: Text(
+                                lastPlayed.recently[pos].title,
+                                style: Theme.of(context).textTheme.display2,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+          ),
     );
   }
 
