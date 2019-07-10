@@ -446,19 +446,34 @@ class PlayBackPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(right: width * 0.13),
-                          child: IconButton(
-                            onPressed: () {
-                              model.shuffle
-                                  ? model.shuffle = false
-                                  : model.shuffle = true;
-                            },
-                            icon: Icon(
-                              Icons.shuffle,
-                              color: model.shuffle ? Colors.pink : Colors.grey,
-                              size: 35.0,
-                            ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: width * 0.13),
+                        child: IconButton(
+                          onPressed: () {
+                            model.repeat
+                                ? model.setRepeat(false)
+                                : model.setRepeat(true);
+                          },
+                          icon: Icon(
+                            Icons.loop,
+                            color: model.repeat ? Colors.pink : Colors.grey,
+                            size: 35.0,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: width * 0.13),
+                        child: IconButton(
+                          onPressed: () {
+                            model.shuffle
+                                ? model.setShuffle(false)
+                                : model.setShuffle(true);
+                          },
+                          icon: Icon(
+                            Icons.shuffle,
+                            color: model.shuffle ? Colors.pink : Colors.grey,
+                            size: 35.0,
                           ),
                         ),
                         Padding(

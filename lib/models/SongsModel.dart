@@ -48,6 +48,7 @@ class SongsModel extends ChangeNotifier {
       List<Song> dummy = <Song>[];
       duplicate.forEach((item) {
         if (item.title.toLowerCase().startsWith(low)) {
+          // TODO: add regex to optimize search using letters in the middle
           dummy.add(item);
         }
       });
@@ -84,13 +85,7 @@ class SongsModel extends ChangeNotifier {
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
-    if(recents.recently.contains(song)){
-      recents.recently.remove(song);
-    }
-    else{
-      recents.add(song);
-    }
-    
+    recents.add(song);
     notifyListeners();
   }
 
@@ -118,7 +113,15 @@ class SongsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  
+  setRepeat(b){
+    repeat = b;
+    notifyListeners();
+  }
+
+  setShuffle(b){
+    shuffle = b;
+    notifyListeners();
+  }
 
   current_Song() {
     player.stop();

@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './screens/MainScreen.dart';
 import 'models/ThemeModel.dart';
-import 'package:beats/themes/Themes.dart';
 import 'package:beats/models/ProgressModel.dart';
 
 void main(List<String> args) {
@@ -22,8 +21,7 @@ void main(List<String> args) {
         ChangeNotifierProvider<Recents>(builder: (context)=>rec,),
         ChangeNotifierProvider<ProgressModel>(builder: (context)=>prov,),
         ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(prov,rec),),
-        ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger(lightTheme()),
-        ),
+        ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger()),
         ChangeNotifierProvider<Now_Playing>(builder: (context)=> Now_Playing(false))
       ],
       child: MyApp()));
