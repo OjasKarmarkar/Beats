@@ -12,7 +12,7 @@ import 'package:beats/models/ProgressModel.dart';
 
 class PlayBackPage extends StatelessWidget {
   SongsModel model;
-   var lastPlayed = FuturePreferencesRepository<Song>(new BookmarkHelper());
+  var lastPlayed = FuturePreferencesRepository<Song>(new BookmarkHelper());
 
   @override
   Widget build(BuildContext context) {
@@ -182,28 +182,33 @@ class PlayBackPage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: Consumer<BookmarkModel>(
-                              builder: (context, bookmark, _) => IconButton(
-                                    onPressed: () {
-                                      if (!bookmark.contains(model.currentSong)) {
-                                        bookmark.add(model.currentSong);
-                                      }else{
-                                        bookmark.remove(model.currentSong);
-                                      }
-                                    },
-                                    icon: Icon(
-                                      bookmark.contains(model.currentSong) ? Icons.bookmark : Icons.bookmark_border,
-                                      color: bookmark.contains(model.currentSong) ? Colors.pink : Colors.grey,
-                                      size: 35.0,
-                                    ),
-                                  ),
+                          builder: (context, bookmark, _) => IconButton(
+                            onPressed: () {
+                              if (!bookmark.contains(model.currentSong)) {
+                                bookmark.add(model.currentSong);
+                              } else {
+                                bookmark.remove(model.currentSong);
+                              }
+                            },
+                            icon: Icon(
+                              bookmark.contains(model.currentSong)
+                                  ? Icons.bookmark
+                                  : Icons.bookmark_border,
+                              color: bookmark.contains(model.currentSong)
+                                  ? Colors.pink
+                                  : Colors.grey,
+                              size: 35.0,
                             ),
-                      
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
                           onPressed: () {
-                            model.repeat ? model.repeat = false : model.repeat = true;
+                            model.repeat
+                                ? model.repeat = false
+                                : model.repeat = true;
                           },
                           icon: Icon(
                             Icons.loop,
@@ -216,7 +221,9 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
                           onPressed: () {
-                            model.shuffle ? model.shuffle = false : model.shuffle = true;
+                            model.shuffle
+                                ? model.shuffle = false
+                                : model.shuffle = true;
                           },
                           icon: Icon(
                             Icons.shuffle,

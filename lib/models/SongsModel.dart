@@ -34,8 +34,6 @@ class SongsModel extends ChangeNotifier {
     initValues();
     player.setPositionHandler((p) {
       prog.setPosition(p.inSeconds);
-      position = p.toString();
-      debugPrint(position);
     });
     songs.forEach((item) {
       duplicate.add(item);
@@ -85,7 +83,13 @@ class SongsModel extends ChangeNotifier {
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
-    recents.add(song);
+    if(recents.recently.contains(song)){
+      recents.recently.remove(song);
+    }
+    else{
+      recents.add(song);
+    }
+    
     notifyListeners();
   }
 
@@ -113,9 +117,7 @@ class SongsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  getPositon() {
-    return position;
-  }
+  
 
   current_Song() {
     player.stop();

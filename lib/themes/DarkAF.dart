@@ -16,7 +16,7 @@ darkAFTheme() {
               fontSize: 45,
               fontWeight: FontWeight.bold),
           subhead: TextStyle(
-              letterSpacing: 1.2,
+              letterSpacing: 1.1,
               fontFamily: 'sans-serif',
               fontSize: 30,
               color: Colors.white,
