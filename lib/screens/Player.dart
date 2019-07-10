@@ -207,8 +207,8 @@ class PlayBackPage extends StatelessWidget {
                         child: IconButton(
                           onPressed: () {
                             model.repeat
-                                ? model.repeat = false
-                                : model.repeat = true;
+                                ? model.setRepeat(false)
+                                : model.setRepeat(true);
                           },
                           icon: Icon(
                             Icons.loop,
@@ -222,8 +222,8 @@ class PlayBackPage extends StatelessWidget {
                         child: IconButton(
                           onPressed: () {
                             model.shuffle
-                                ? model.shuffle = false
-                                : model.shuffle = true;
+                                ? model.setShuffle(false)
+                                : model.setShuffle(true);
                           },
                           icon: Icon(
                             Icons.shuffle,

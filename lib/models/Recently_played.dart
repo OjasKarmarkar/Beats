@@ -14,9 +14,19 @@ class Recents extends ChangeNotifier{
   }
 
   add(Song song){
-    if (recently.length >= 1) last_played.remove(1);
-    last_played.save(song);
-    fetch_Last();
+    if (!alreadyExists(song)){
+      if (recently.length > 1) last_played.remove(0);
+      last_played.save(song);
+      fetch_Last();
+    }
+  }
+
+  alreadyExists(s){
+    var list = <Song>[];
+    list.forEach((item){
+      if (s.uri==item.uri) return true;
+    });
+    return false;
   }
 
   fetch_Last() async {
