@@ -22,19 +22,27 @@ class Library extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                left: width * 0.05, right: width * 0.05, top: height * 0.06),
-            child: TextField(
-                onChanged: (value) {
-                   model.filterResults(value);
-                },
-                controller: editingController,
-                decoration: InputDecoration(
-                    disabledBorder: InputBorder.none,
-                    hintStyle: TextStyle(),
-                    hintText: "Search",
-                    prefixIcon: Icon(CustomIcons.search),
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)))),
+                left: width * 0.04, right: width * 0.04, top: height * 0.03, bottom: height*0.04
+                ),
+            child: Container(
+              margin: const EdgeInsets.only(right: 20, left: 10),
+              child: TextField(
+                  onChanged: (value) {
+                     model.filterResults(value);
+                  },
+                  controller: editingController,
+                  decoration: InputDecoration(
+                     
+                      hintStyle: Theme.of(context).textTheme.display2,
+                      hintText: "Search",
+                      prefixIcon: Icon(
+                        CustomIcons.search,
+                        color: Colors.grey,
+                        ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40.0),
+                          borderSide: BorderSide(color: Colors.grey)))),
+            ),
           ),
           getLoading(model)
         ],
@@ -54,6 +62,10 @@ class Library extends StatelessWidget {
           itemCount: model.songs.length,
           itemBuilder: (context, pos) {
             return ListTile(
+              trailing: Icon(
+                Icons.menu,
+                color: Colors.grey,
+                ),
               onTap: () {
                 model.player.stop();
                 model.currentSong = model.songs[pos];
