@@ -68,7 +68,7 @@ class Themes extends StatelessWidget {
                   context: context,
                   builder: (_) => Padding(
                     padding: EdgeInsets.symmetric(
-                        vertical: height * 0.2, horizontal: width * 0.15),
+                        vertical: height * 0.14, horizontal: width * 0.15),
                     child: Container(
                       color: Theme.of(context).backgroundColor,
                       height: height * 0.2,

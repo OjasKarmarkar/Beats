@@ -1,3 +1,5 @@
+import 'package:beats/Animations/transitions.dart';
+import 'package:beats/screens/Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
@@ -91,20 +93,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onTap: () {
                             switch (index) {
                               case 0:
-                                Navigator.of(context).push(
-                                  new MaterialPageRoute(
-                                      builder: (context) => new Themes()),
+                                Navigator.push(
+                                 context, Scale(page: Themes())
                                 );
                                 break;
                               case 1:
-                                Navigator.of(context).push(
-                                    new MaterialPageRoute(
-                                        builder: (context) => new PlayBack()));
+                                 Navigator.push(
+                                 context, Scale(page: PlayBack())
+                                );
                                 break;
                               case 2:
-                                Navigator.of(context).push(
-                                    new MaterialPageRoute(
-                                        builder: (context) => new AboutUs()));
+                                Navigator.push(
+                                 context, Scale(page: AboutUs())
+                                );
                                 break;
 
                               case 3:

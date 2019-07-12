@@ -1,3 +1,4 @@
+import 'package:beats/Animations/transitions.dart';
 import 'package:beats/models/BookmarkHelper.dart';
 import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
@@ -22,25 +23,26 @@ class Library extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                left: width * 0.04, right: width * 0.04, top: height * 0.03, bottom: height*0.04
-                ),
+                left: width * 0.04,
+                right: width * 0.04,
+                top: height * 0.03,
+                bottom: height * 0.04),
             child: Container(
               margin: const EdgeInsets.only(right: 20, left: 10),
               child: TextField(
                   onChanged: (value) {
-                     model.filterResults(value);
+                    model.filterResults(value);
                   },
                   controller: editingController,
                   decoration: InputDecoration(
-                     
                       hintStyle: Theme.of(context).textTheme.display2,
                       hintText: "Search",
                       prefixIcon: Icon(
                         CustomIcons.search,
                         color: Colors.grey,
-                        ),
+                      ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40.0),
+                          borderRadius: BorderRadius.circular(40.0),
                           borderSide: BorderSide(color: Colors.grey)))),
             ),
           ),
@@ -63,19 +65,17 @@ class Library extends StatelessWidget {
           itemBuilder: (context, pos) {
             return ListTile(
               trailing: Icon(
-                Icons.menu,
+                Icons.view_column,
                 color: Colors.grey,
-                ),
+              ),
               onTap: () {
                 model.player.stop();
                 model.currentSong = model.songs[pos];
-                model.filterResults(""); //Reset the list. So we can change to next song.
+                model.filterResults(
+                    ""); //Reset the list. So we can change to next song.
                 model.play();
-                
 
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PlayBackPage();
-                }));
+                Navigator.push(context, Scale(page: PlayBackPage()));
               },
               leading: CircleAvatar(child: getImage(model, pos)),
               title: Text(

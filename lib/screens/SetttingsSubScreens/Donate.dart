@@ -11,6 +11,7 @@ class _DonateState extends State<Donate> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       color: Theme.of(context).backgroundColor,
       routes: {
         "/": (_) => new WebviewScaffold(
