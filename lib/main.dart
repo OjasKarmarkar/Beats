@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:beats/Models/PlaylistModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/screens/Now_Playing.dart';
 import 'models/Recently_played.dart';
@@ -18,6 +19,7 @@ void main(List<String> args) {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider<BookmarkModel>(builder: (context)=>BookmarkModel(),),
+        ChangeNotifierProvider<PlayList_Model>(builder: (context)=>PlayList_Model(),),
         ChangeNotifierProvider<Recents>(builder: (context)=>rec,),
         ChangeNotifierProvider<ProgressModel>(builder: (context)=>prov,),
         ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(prov,rec),),

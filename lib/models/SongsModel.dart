@@ -71,7 +71,7 @@ class SongsModel extends ChangeNotifier {
       if (repeat) {
         random_Song();
       } else if (shuffle) {
-        current_Song();
+        random_Song();
       } else
         next();
     });
