@@ -1,7 +1,7 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pref_dessert/pref_dessert.dart';
-import 'BookmarkHelper.dart';
+import 'RecentsHelper.dart';
 
 class Recents extends ChangeNotifier{
 
@@ -9,7 +9,7 @@ class Recents extends ChangeNotifier{
   var recently;
 
   Recents(){
-    last_played = FuturePreferencesRepository<Song>(BookmarkHelper());
+    last_played = FuturePreferencesRepository<Song>(RecentsHelper());
     fetch_Last();
   }
 

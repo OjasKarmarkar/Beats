@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:beats/models/BookmarkModel.dart';
+import 'package:beats/screens/Noti.dart';
 import 'models/Recently_played.dart';
 import 'models/SongsModel.dart';
 import 'package:provider/provider.dart';

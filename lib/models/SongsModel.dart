@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
 import 'dart:math';
+import 'package:media_notification/media_notification.dart';
 
 import 'package:pref_dessert/pref_dessert_internal.dart';
 
@@ -10,6 +11,7 @@ import 'Recently_played.dart';
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
 class SongsModel extends ChangeNotifier {
+  // Thousands of stuff packed into this ChangeNotifier
   var songs = <Song>[];
   var duplicate = <Song>[]; // Duplicate of songs variable for Search function
   Song currentSong;
@@ -38,6 +40,24 @@ class SongsModel extends ChangeNotifier {
     songs.forEach((item) {
       duplicate.add(item);
     });
+    MediaNotification.setListener('pause', (){pause();});
+    MediaNotification.setListener('play', (){play();});
+    MediaNotification.setListener('next', (){
+      player.stop();
+      next();
+      play();});
+    MediaNotification.setListener('prev', (){
+      player.stop();
+      previous();
+      play();});
+    notifyListeners();
+  }
+
+  updateUI(){
+    MediaNotification.show(title: currentSong?.title,
+                      author:currentSong?.artist,
+                      play:currentState==PlayerState.PLAYING,
+                      art: currentSong.albumArt ?? "");
     notifyListeners();
   }
 
@@ -81,17 +101,18 @@ class SongsModel extends ChangeNotifier {
   }
 
   play() {
+    print(currentSong.albumArt);
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
     recents.add(song);
-    notifyListeners();
+    updateUI();
   }
 
   pause() {
     player?.pause();
     currentState = PlayerState.PAUSED;
-    notifyListeners();
+    updateUI();
   }
 
   next() {
@@ -100,7 +121,7 @@ class SongsModel extends ChangeNotifier {
     } else {
       currentSong = songs[songs.indexOf(currentSong) + 1];
     }
-    notifyListeners();
+    updateUI();
   }
 
   previous() {
@@ -109,7 +130,7 @@ class SongsModel extends ChangeNotifier {
     } else {
       currentSong = songs[songs.indexOf(currentSong) - 1];
     }
-    notifyListeners();
+    updateUI();
   }
 
   setRepeat(b){
@@ -126,7 +147,7 @@ class SongsModel extends ChangeNotifier {
     player.stop();
     currentSong = songs[songs.indexOf(currentSong)];
     player.play(currentSong.uri);
-    notifyListeners();
+    updateUI();
   }
 
   random_Song() {
@@ -134,6 +155,6 @@ class SongsModel extends ChangeNotifier {
     player.stop();
     currentSong = songs[rnd.nextInt(max)];
     player.play(currentSong.uri);
-    notifyListeners();
+    updateUI();
   }
 }
