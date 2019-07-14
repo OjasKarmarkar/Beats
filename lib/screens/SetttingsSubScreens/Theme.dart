@@ -89,6 +89,7 @@ class Themes extends StatelessWidget {
                                 selectedColor: color,
                                 circleSize: 70,
                                 onMainColorChange: (ColorSwatch selectedColor) {
+                                  color = selectedColor;
                                   themeChanger.setAccent(selectedColor);
                                 },
                               ),
