@@ -24,6 +24,7 @@ class SongsModel extends ChangeNotifier {
   Random rnd = new Random();
   Recents recents;
 
+
   SongsModel(prov, rec) {
     fetchSongs();
     prog = prov;

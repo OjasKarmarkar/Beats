@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/screens/Noti.dart';
+import 'package:beats/screens/Now_Playing.dart';
 import 'models/Recently_played.dart';
 import 'models/SongsModel.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,8 @@ void main(List<String> args) {
         ChangeNotifierProvider<Recents>(builder: (context)=>rec,),
         ChangeNotifierProvider<ProgressModel>(builder: (context)=>prov,),
         ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(prov,rec),),
-        ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger())
+        ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger()),
+        ChangeNotifierProvider<Now_Playing>(builder: (context)=> Now_Playing(false))
       ],
       child: MyApp()));
 }
