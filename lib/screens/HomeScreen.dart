@@ -27,15 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding:
-                          EdgeInsets.only(top: height * 0.1, left: width * 0.1),
+                      padding: EdgeInsets.only(
+                          top: height * 0.08, left: width * 0.1),
                       child: Text(
                         "User,",
                         style: Theme.of(context).textTheme.headline,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0, left: width * 0.1),
+                      padding: EdgeInsets.only(
+                          top: height * 0.005, left: width * 0.1),
                       child: Text("Welcome",
                           style: Theme.of(context).textTheme.subhead),
                     ),
@@ -51,31 +52,32 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(left: width * 0.08, top: height * 0.04),
               child: SizedBox(
                   height: height * 0.31,
-                  child:  Consumer<PlayList_Model>(
+                  child: Consumer<PlayList_Model>(
                     builder: (context, playlist, _) => ListView.builder(
                       itemCount: playlist.lists.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
-                            elevation: 10,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(new MaterialPageRoute(
-                                    builder: (context) => new PLayListScreen()));
-                              },
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    width: width * 0.4,
-                                    color: Colors.blue,
-                                    child: Center(
-                                        child: Text(playlist.lists[index].toString(),
-                                            style:
-                                                TextStyle(color: Colors.white))),
-                                  )),
-                            ),
-                          );
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (context) => new PLayListScreen()));
+                            },
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: width * 0.4,
+                                  color: Colors.blue,
+                                  child: Center(
+                                      child: Text(
+                                          playlist.lists[index].toString(),
+                                          style:
+                                              TextStyle(color: Colors.white))),
+                                )),
+                          ),
+                        );
                       },
                       scrollDirection: Axis.horizontal,
                     ),
@@ -87,7 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
               style: Theme.of(context).textTheme.display1,
             ),
           ),
-          LastPlayed()
+         Expanded(
+           child: LastPlayed(),
+
+         )
         ],
       ),
     );
