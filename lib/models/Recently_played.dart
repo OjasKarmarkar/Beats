@@ -1,7 +1,8 @@
+import 'package:beats/Models/RecentsHelper.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pref_dessert/pref_dessert.dart';
-import 'RecentsHelper.dart';
+
 
 class Recents extends ChangeNotifier{
 

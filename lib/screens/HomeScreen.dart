@@ -1,7 +1,8 @@
+import 'package:beats/Models/PlaylistModel.dart';
 import 'package:beats/screens/Recents.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'PlayList.dart';
-
 
 double height, width;
 
@@ -26,13 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding:
-                          EdgeInsets.only(top: height * 0.1, left: width * 0.1),
-                      child: Text("User,",
-                          style: Theme.of(context).textTheme.headline,),
+                      padding: EdgeInsets.only(
+                          top: height * 0.08, left: width * 0.1),
+                      child: Text(
+                        "User,",
+                        style: Theme.of(context).textTheme.headline,
+                      ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10.0, left: width * 0.1),
+                      padding: EdgeInsets.only(
+                          top: height * 0.005, left: width * 0.1),
                       child: Text("Welcome",
                           style: Theme.of(context).textTheme.subhead),
                     ),
@@ -48,57 +52,35 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(left: width * 0.08, top: height * 0.04),
               child: SizedBox(
                   height: height * 0.31,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(new MaterialPageRoute(
-                                builder: (context) => new PLayListScreen()));
-                          },
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                width: width * 0.4,
-                                color: Colors.blue,
-                                child: Center(
-                                    child: Text("PlayList 1",
-                                        style: TextStyle(color: Colors.white))),
-                              )),
-                        ),
-                      ),
-                      Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              width: width * 0.4,
-                              color: Colors.pinkAccent,
-                              child: Center(
-                                  child: Text(
-                                "PlayList 2",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                            )),
-                      ),
-                      Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              width: width * 0.3,
-                              child: Center(child: Icon(Icons.add)),
-                            )),
-                      ),
-                    ],
+                  child: Consumer<PlayList_Model>(
+                    builder: (context, playlist, _) => ListView.builder(
+                      itemCount: playlist.lists.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (context) => new PLayListScreen()));
+                            },
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: width * 0.4,
+                                  color: Colors.blue,
+                                  child: Center(
+                                      child: Text(
+                                          playlist.lists[index].toString(),
+                                          style:
+                                              TextStyle(color: Colors.white))),
+                                )),
+                          ),
+                        );
+                      },
+                      scrollDirection: Axis.horizontal,
+                    ),
                   ))),
           Padding(
             padding: EdgeInsets.only(top: height * 0.03, left: 20.0),
@@ -107,7 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
               style: Theme.of(context).textTheme.display1,
             ),
           ),
-          LastPlayed()
+         Expanded(
+           child: LastPlayed(),
+
+         )
         ],
       ),
     );

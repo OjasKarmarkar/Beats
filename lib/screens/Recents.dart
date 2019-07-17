@@ -17,7 +17,7 @@ class LastPlayed extends StatelessWidget {
     model = Provider.of<SongsModel>(context);
     return Consumer<Recents>(
       builder: (context, lastPlayed, _) => Padding(
-            padding: const EdgeInsets.all(18.0),
+            padding: const EdgeInsets.all(2.0),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: (lastPlayed.recently == null)
@@ -27,7 +27,7 @@ class LastPlayed extends StatelessWidget {
                   : (lastPlayed.recently.length == 0)
                       ? Center(child: Text("Play Something!"))
                       : Container(
-                        height: height*0.15,
+                        height: height*0.16,
                         width:  width,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
