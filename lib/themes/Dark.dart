@@ -12,18 +12,18 @@ darkTheme() {
               color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold),
           display2: TextStyle(
             letterSpacing: 1.1,
-            fontFamily: 'sans-serif',
+            fontFamily: 'Sans',
             fontSize: 17,
             color: Colors.white,
           ),
           subhead: TextStyle(
               letterSpacing: 1.1,
-              fontFamily: 'sans-serif',
+              fontFamily: 'Sans',
               fontSize: 30,
               color: Colors.white,
               fontWeight: FontWeight.w500),
           headline: TextStyle(
-              fontFamily: 'sans-serif',
+              fontFamily: 'Sans',
               color: Colors.white,
               fontSize: 45,
               fontWeight: FontWeight.bold)));

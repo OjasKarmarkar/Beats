@@ -1,3 +1,5 @@
+import 'package:beats/Models/SongsModel.dart';
+
 import '../../models/ThemeModel.dart';
 import 'package:flutter/material.dart';
 import '../../custom_icons.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 
 class Themes extends StatelessWidget {
   ThemeChanger themeChanger;
+  SongsModel model;
   MaterialColor color = Colors.blue;
 
   @override
@@ -99,6 +102,7 @@ class Themes extends StatelessWidget {
                               child: FloatingActionButton(
                                 child: Icon(CustomIcons.leaf),
                                 onPressed: () {
+                                  
                                   Navigator.of(context, rootNavigator: true)
                                       .pop('dialog');
                                 },
