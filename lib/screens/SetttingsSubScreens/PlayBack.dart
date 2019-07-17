@@ -1,4 +1,4 @@
-import 'package:beats/Models/ThemeModel.dart';
+import 'package:beats/models/ThemeModel.dart';
 import 'package:beats/screens/Now_Playing.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

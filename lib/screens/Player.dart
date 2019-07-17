@@ -431,22 +431,8 @@ class PlayBackPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(right: width * 0.13),
-                          child: IconButton(
-                            onPressed: () {
-                              model.repeat
-                                  ? model.repeat = false
-                                  : model.repeat = true;
-                            },
-                            icon: Icon(
-                              Icons.loop,
-                              color: model.repeat ? Colors.pink : Colors.grey,
-                              size: 35.0,
-                            ),
-                          ),
-                        ),
-                      ),
+        
+        
                       Padding(
                         padding: EdgeInsets.only(right: width * 0.13),
                         child: IconButton(
@@ -475,7 +461,7 @@ class PlayBackPage extends StatelessWidget {
                             color: model.shuffle ? Colors.pink : Colors.grey,
                             size: 35.0,
                           ),
-                        ),
+                        ),),
                         Padding(
                           padding: EdgeInsets.only(right: width * 0.05),
                           child: IconButton(
