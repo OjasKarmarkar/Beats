@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:beats/Models/PlaylistModel.dart';
+import 'package:beats/models/PlaylistModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/screens/Noti.dart';
 import 'package:beats/screens/Now_Playing.dart';

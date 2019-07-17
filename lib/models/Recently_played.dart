@@ -1,4 +1,4 @@
-import 'package:beats/Models/RecentsHelper.dart';
+import 'package:beats/models/RecentsHelper.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pref_dessert/pref_dessert.dart';
@@ -6,32 +6,31 @@ import 'package:pref_dessert/pref_dessert.dart';
 
 class Recents extends ChangeNotifier{
 
-  FuturePreferencesRepository<Song> last_played;
-  var recently;
+  RecentsHelper db;
+  List<Song> recently = List<Song>();
 
   Recents(){
-    last_played = FuturePreferencesRepository<Song>(RecentsHelper());
-    fetch_Last();
+    db = RecentsHelper();
+    fetchRecents();
   }
 
-  add(Song song){
+  add(Song song)async {
     if (!alreadyExists(song)){
-      if (recently.length > 1) last_played.remove(0);
-      last_played.save(song);
-      fetch_Last();
+      if (recently.length > 1) await db.deleteLast();
+      await db.add(song);
+      fetchRecents();
     }
   }
 
   alreadyExists(s){
-    var list = <Song>[];
-    list.forEach((item){
-      if (s.uri==item.uri) return true;
+    recently.forEach((item){
+      if (s.id==item.id) return true;
     });
     return false;
   }
 
-  fetch_Last() async {
-    recently = await last_played.findAll();
+  fetchRecents() async {
+    recently = await db.getRecents();
     notifyListeners();
   }
 
