@@ -368,6 +368,113 @@ class PlayBackPage extends StatelessWidget {
                           model.player.stop();
                           model.next();
                           model.play();
+                        } else {
+                          a.setPosition(value);
+                          model.seek(value);
+                        }
+                      },
+                      value: a.position.toDouble(),
+                    );
+                  }),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: width * 0.24, top: height * 0.04),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(right: width * 0.1),
+                          child: IconButton(
+                            onPressed: () {
+                              model.player.stop();
+                              model.previous();
+                              model.play();
+                            },
+                            icon: Icon(
+                              CustomIcons.step_backward,
+                              color: Colors.grey,
+                              size: 40.0,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: width * 0.1, top: height * 0.01),
+                          child: InkWell(
+                              onTap: () {
+                                if (model.currentState == PlayerState.PAUSED ||
+                                    model.currentState == PlayerState.STOPPED) {
+                                  model.play();
+                                } else {
+                                  model.pause();
+                                }
+                              },
+                              child: FloatingActionButton(
+                                child:
+                                    (model.currentState == PlayerState.PAUSED ||
+                                            model.currentState ==
+                                                PlayerState.STOPPED)
+                                        ? Icon(
+                                            CustomIcons.play,
+                                            size: 30.0,
+                                          )
+                                        : Icon(CustomIcons.pause),
+                              )),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: width * 0.1),
+                          child: IconButton(
+                            onPressed: () {
+                              model.player.stop();
+                              model.next();
+                              model.play();
+                            },
+                            icon: Icon(
+                              CustomIcons.step_forward,
+                              color: Colors.grey,
+                              size: 40.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: width * 0.075, top: height * 0.06),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(right: width * 0.13),
+                          child: Consumer<BookmarkModel>(
+                            builder: (context, bookmark, _) => IconButton(
+                              onPressed: () {
+                                if (!bookmark.contains(model.currentSong)) {
+                                  bookmark.add(model.currentSong);
+                                } else {
+                                  bookmark.remove(model.currentSong);
+                                }
+                              },
+                              icon: Icon(
+                                bookmark.contains(model.currentSong)
+                                    ? Icons.bookmark
+                                    : Icons.bookmark_border,
+                                color: bookmark.contains(model.currentSong)
+                                    ? Colors.pink
+                                    : Colors.grey,
+                                size: 35.0,
+                              ),
+                            ),
+                          ),
+                        ),
+        
+        
+                      Padding(
+                        padding: EdgeInsets.only(right: width * 0.13),
+                        child: IconButton(
+                          onPressed: () {
+                              model.player.stop();
+                              model.next();
+                              model.play();
                         },
                         icon: Icon(
                           CustomIcons.step_forward,
@@ -407,6 +514,104 @@ class PlayBackPage extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.only(right: width * 0.13),
+                        child: IconButton(
+                          onPressed: () {
+                            model.shuffle
+                                ? model.setShuffle(false)
+                                : model.setShuffle(true);
+                          },
+                          icon: Icon(
+                            Icons.shuffle,
+                            color: model.shuffle ? Colors.pink : Colors.grey,
+                            size: 35.0,
+                          ),
+                        ),),
+                        Padding(
+                          padding: EdgeInsets.only(right: width * 0.05),
+                          child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: height * 0.16,
+                                          horizontal: width * 0.13),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        child: Container(
+                                            color: Theme.of(context)
+                                                .backgroundColor,
+                                            child: Column(
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: height * 0.05,
+                                                      horizontal: width * 0.13),
+                                                  child: Text("Add to Playlist",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .display1),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: height * 0.05,
+                                                      horizontal: width * 0.1),
+                                                  child: Container(
+                                                    height: height * 0.4,
+                                                    child: ListView(
+                                                      children: <Widget>[
+                                                        Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    vertical:
+                                                                        4.0),
+                                                            child: Material(
+                                                              child: ListTile(
+                                                                title: Text(
+                                                                    "Playlist 1",
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .display2),
+                                                              ),
+                                                            )),
+                                                        Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    vertical:
+                                                                        4.0),
+                                                            child: Material(
+                                                              child: ListTile(
+                                                                title: Text(
+                                                                    "Playlist 2",
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .display2),
+                                                              ),
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                    );
+                                  });
+                            },
+                            icon: Icon(
+                              Icons.playlist_add,
+                              color: Colors.grey,
+                              size: 35.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     IconButton(
                       onPressed: () {
