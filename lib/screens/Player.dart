@@ -1,9 +1,8 @@
 import 'dart:io';
+import 'package:beats/Models/RecentsHelper.dart';
 import 'package:beats/models/BookmarkModel.dart';
-import 'package:beats/models/BookmarkHelper.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/screens/Now_Playing.dart';
-import 'package:beats/screens/SetttingsSubScreens/Immersive.dart';
 import 'package:pref_dessert/pref_dessert.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,7 @@ import 'package:beats/models/ProgressModel.dart';
 class PlayBackPage extends StatelessWidget {
   SongsModel model;
   Now_Playing Play_Screen;
-  var lastPlayed = FuturePreferencesRepository<Song>(new BookmarkHelper());
-
+  var lastPlayed = FuturePreferencesRepository<Song>(new RecentsHelper());
   @override
   Widget build(BuildContext context) {
     Play_Screen = Provider.of<Now_Playing>(context);

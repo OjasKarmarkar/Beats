@@ -11,18 +11,18 @@ darkAFTheme() {
           display1: TextStyle(
               color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold),
           headline: TextStyle(
-              fontFamily: 'sans-serif',
+              fontFamily: 'Sans',
               color: Colors.white,
               fontSize: 45,
               fontWeight: FontWeight.bold),
           subhead: TextStyle(
               letterSpacing: 1.1,
-              fontFamily: 'sans-serif',
+              fontFamily: 'Sans',
               fontSize: 30,
               color: Colors.white,
               fontWeight: FontWeight.w500),
           display2: TextStyle(
-            fontFamily: 'sans-serif',
+            fontFamily: 'Sans',
             letterSpacing: 1.1,
             fontSize: 17,
             color: Colors.white,

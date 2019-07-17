@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 lightTheme() {
   return ThemeData(
+    
       cardTheme: CardTheme(color: Colors.white),
       textTheme: TextTheme(
           display3: TextStyle(
@@ -9,18 +10,18 @@ lightTheme() {
           display1: TextStyle(
               color: Colors.black, fontSize: 25.0, fontWeight: FontWeight.bold),
           headline: TextStyle(
-              fontFamily: 'sans-serif',
+              fontFamily: 'Sans',
               color: Colors.black,
               fontSize: 45,
               fontWeight: FontWeight.bold),
           subhead: TextStyle(
               letterSpacing: 1.1,
-              fontFamily: 'sans-serif',
+              fontFamily: 'Sans',
               fontSize: 30,
               color: Colors.black,
               fontWeight: FontWeight.w500),
           display2: TextStyle(
-            fontFamily: 'sans-serif',
+            fontFamily: 'Sans',
             letterSpacing: 1.1,
             fontSize: 17,
             color: Colors.black,
