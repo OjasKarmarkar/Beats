@@ -3,7 +3,10 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
 import 'dart:math';
 import 'package:media_notification/media_notification.dart';
-import 'Recently_played.dart';
+
+import 'package:pref_dessert/pref_dessert_internal.dart';
+
+import 'RecentsModel.dart';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 

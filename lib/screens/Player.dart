@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:beats/Models/BookmarkModel.dart';
+import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/screens/Now_Playing.dart';
 import 'package:flutter/material.dart';

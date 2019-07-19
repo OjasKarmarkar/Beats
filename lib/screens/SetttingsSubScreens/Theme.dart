@@ -1,4 +1,4 @@
-import 'package:beats/Models/SongsModel.dart';
+import 'package:beats/models/SongsModel.dart';
 
 import '../../models/ThemeModel.dart';
 import 'package:flutter/material.dart';
