@@ -6,7 +6,7 @@ import 'package:media_notification/media_notification.dart';
 
 import 'package:pref_dessert/pref_dessert_internal.dart';
 
-import 'Recently_played.dart';
+import 'RecentsModel.dart';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
