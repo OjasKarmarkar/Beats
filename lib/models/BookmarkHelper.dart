@@ -1,22 +1,68 @@
 import 'package:flute_music_player/flute_music_player.dart';
-import 'package:pref_dessert/pref_dessert.dart';
-class BookmarkHelper extends DesSer<Song>{
-  
-  @override
-  Song deserialize(String s) {
-    // Its a simple spell( two commas ) but quite unbreakable
-    var split = s.split(",,");
-    var art = split[7] == "" ? null : split[7];
-    return Song(int.parse(split[0]), split[1], split[2], split[3], int.parse(split[4]), int.parse(split[5]), split[6], art);}
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqlite_api.dart';
+class BookmarkHelper {
 
-  @override
-  String get key => "bookmarks";
+  static Database _database;
+  String table = "boomarks";
 
-  @override
-  String serialize(Song t) {
-    var art = t.albumArt ?? "";
-    // All Songs are in two comma club
-    return "${t.id},,${t.artist},,${t.title},,${t.album},,${t.albumId},,${t.duration},,${t.uri},,$art";
+  Future<Database> get database async {
+    if (_database != null)
+    return _database;
+
+    // if _database is null we instantiate it
+    _database = await initDB();
+    return _database;
   }
 
+  initDB() async {
+    var documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = documentsDirectory.path + "beats.db";
+    return await openDatabase(path, version: 1, onOpen: (db) {
+    }, onCreate: (Database db, int version) async {
+      await db.execute("CREATE TABLE $table ("
+          "id INTEGER,"
+          "artist TEXT,"
+          "title TEXT,"
+          "album TEXT,"
+          "albumId INTEGER,"
+          "duration INTEGER,"
+          "uri TEXT,"
+          "albumArt TEXT"
+          ")");
+    });
+  }
+
+  deleteLast() async {
+    final db = await database;
+    await db.rawDelete("delete from $table where rowid in (select rowid from $table limit 1)");
+    //await db.rawDelete("delete from $table where rowid = (select max(rowid) from $table)");
+  }
+  add(Song s) async {
+    final db = await database;
+    var res = await db.insert(table, toMap(s));
+    return res;
+  }
+  getBookmarks() async {
+    final db = await database;
+    var res = await db.query(table);
+    List<Song> list =
+        res.isNotEmpty ? res.map((c) => Song.fromMap(c)).toList() : [];
+    return list;
+  }
+  toMap(Song s){
+    return {
+      'id': s.id,
+      'artist': s.artist,
+      'title': s.title,
+      'album': s.album,
+      'albumId': s.albumId,
+      'duration': s.duration,
+      'uri': s.uri,
+      'albumArt': s.albumArt
+    };
+  }
+  
+  
 }

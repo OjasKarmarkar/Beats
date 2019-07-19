@@ -1,40 +1,36 @@
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pref_dessert/pref_dessert.dart';
 import 'BookmarkHelper.dart';
 
 class BookmarkModel extends ChangeNotifier{
 
-  FuturePreferencesRepository<Song> repo;
-  var bookmarkList;
+  BookmarkHelper db;
+   List<Song> bookmarks = List<Song>();
 
-  BookmarkModel(){
-    repo = FuturePreferencesRepository<Song>(BookmarkHelper());
+   BookmarkModel(){
+    db = BookmarkHelper();
     fetchBookmarks();
   }
 
-  add(Song song){
-    repo.save(song);
-    fetchBookmarks();
+   add(Song song)async {
+    if (!alreadyExists(song)){
+      if (bookmarks.length > 1) await db.deleteLast();
+      await db.add(song);
+      fetchBookmarks();
+    }
   }
 
-  remove(Song song){
-    repo.removeWhere((s)=>s.uri==song.uri);
-    fetchBookmarks();
+  alreadyExists(s){
+    bookmarks.forEach((item){
+      if (s.id==item.id) return true;
+    });
+    return false;
   }
 
   fetchBookmarks() async {
-    bookmarkList = await repo.findAll();
+    bookmarks = await db.getBookmarks();
     notifyListeners();
   }
 
-  contains(Song s){
-    for(Song song in bookmarkList){
-      if(song.uri == s.uri){
-        return true;
-      }
-    };
-    return false;
-  }
 
 }

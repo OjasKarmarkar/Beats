@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
           bottomNavigationBar: ExpandingBottomBar(
             animationDuration: Duration(milliseconds: 500),
             backgroundColor: Theme.of(context).backgroundColor,
-              navBarHeight: 75,
+              navBarHeight: 70,
               items: [
                 ExpandingBottomBarItem(
                     icon: Icons.home,

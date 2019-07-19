@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:beats/models/Recently_played.dart';
-import 'package:beats/screens/HomeScreen.dart' as prefix0;
 import 'package:flutter/material.dart';
-import 'package:flute_music_player/flute_music_player.dart';
 import 'package:provider/provider.dart';
 import 'package:beats/screens/Player.dart';
 import 'package:beats/models/SongsModel.dart';

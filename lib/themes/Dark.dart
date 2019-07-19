@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 darkTheme() {
   return ThemeData(
-      cardColor: Colors.black12,
+      cardColor: Colors.black54,
+      cardTheme: CardTheme(color: Colors.black54),
       iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: Colors.black87,
       textTheme: TextTheme(

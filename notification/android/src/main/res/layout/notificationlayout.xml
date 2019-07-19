@@ -2,11 +2,11 @@
     android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="120dp"
-    android:background="#0000"
+    android:background="#31363e"
     android:padding="10dp">
     <TextView
         android:textSize="15dp"
-        android:textColor="#838383"
+        android:textColor="#ffff"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/author"
         android:layout_toRightOf="@id/art"
-        android:padding="15dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="35dp"
         android:paddingRight="0dp"
         android:src="@drawable/baseline_skip_previous_black_36"
         />
@@ -51,7 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/prev"
         android:layout_below="@id/author"
-        android:padding="15dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="45dp"
+        android:paddingBottom = "10dp"
         android:paddingRight="0dp"
         />
     <ImageView
@@ -61,7 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/toggle"
         android:layout_below="@id/author"
-        android:padding="15dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="45dp"
         android:src="@drawable/baseline_skip_next_black_36"
         />
     <ImageView

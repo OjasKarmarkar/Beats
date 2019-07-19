@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 lightTheme() {
   return ThemeData(
     
-      cardTheme: CardTheme(color: Colors.white),
+      cardColor: Colors.white,
+      cardTheme: CardTheme(color: Colors.white.withOpacity(0.9)),
       textTheme: TextTheme(
           display3: TextStyle(
               color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w600),

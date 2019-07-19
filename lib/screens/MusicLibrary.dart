@@ -10,6 +10,7 @@ import 'Player.dart';
 class Library extends StatelessWidget {
   TextEditingController editingController;
   SongsModel model;
+  bool isTapped = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,14 @@ class Library extends StatelessWidget {
                         },
                         controller: editingController,
                         decoration: InputDecoration(
+                            disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide:
+                                    BorderSide(color: Colors.greenAccent)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                                borderSide:
+                                    BorderSide(color: Colors.greenAccent)),
                             hintStyle: Theme.of(context).textTheme.display2,
                             hintText: "Search",
                             prefixIcon: Icon(
@@ -41,19 +50,18 @@ class Library extends StatelessWidget {
                               color: Colors.grey,
                             ),
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(40.0),
-                                borderSide: BorderSide(color: Colors.grey)))),
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide:
+                                    BorderSide(color: Colors.greenAccent)))),
                   ),
                 ),
                 getLoading(model),
               ],
             ),
-            
-               Align(
+            Align(
               alignment: Alignment.bottomLeft,
-          child: showStatus(model),
+              child: showStatus(model),
             )
-           
           ],
         ));
   }
@@ -80,8 +88,7 @@ class Library extends StatelessWidget {
                 model.filterResults(
                     ""); //Reset the list. So we can change to next song.
                 model.play();
-                
-                
+                isTapped = model.t;
               },
               leading: CircleAvatar(child: getImage(model, pos)),
               title: Text(
@@ -105,103 +112,103 @@ class Library extends StatelessWidget {
       return Icon(Icons.music_note);
     }
   }
-  
+
+  push(context) {
+    Navigator.push(context, Scale(page: PlayBackPage()));
+  }
 
   showStatus(model) {
-    
-    return Container(
-      height: 40,
-      width: width,
-      child: 
-      ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 1,
-        itemBuilder: (context, pos) {
-          return Container(
-            color: Theme.of(context).backgroundColor,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: width*0.6,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          Text(
-                            model.currentSong.title,
-                            style: Theme.of(context).textTheme.display2,
+    if (isTapped == true) {
+      return Container(
+        height: 45,
+        width: width,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 1,
+          itemBuilder: (context, pos) {
+            return GestureDetector(
+              onPanUpdate: (details) {
+                if (details.delta.dy < 0) {
+                  push(context);
+                  
+                }
+              },
+              child: Container(
+                color: Theme.of(context).cardTheme.color,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: width * 0.69,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: <Widget>[
+                              Text(
+                                model.currentSong.title,
+                                style: Theme.of(context).textTheme.display2,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      model.player.stop();
-                      model.previous();
-                      model.play();
-                    },
-                    icon: Icon(
-                      CustomIcons.step_backward,
-                      color: Colors.grey,
-                      size: 25.0,
-                    ),
-                  ),
-                  InkWell(
-                      onTap: () {
-                        if (model.currentState == PlayerState.PAUSED ||
-                            model.currentState == PlayerState.STOPPED) {
-                          model.play();
-                        } else {
-                          model.pause();
-                        }
-                      },
-                      child: Container(
-                        height: 25,
-                        width: 25,
-                        child: FloatingActionButton(
-                          child: (model.currentState == PlayerState.PAUSED ||
-                                  model.currentState == PlayerState.STOPPED)
-                              ? Icon(
-                                  CustomIcons.play,
-                                  size: 20.0,
-                                )
-                              : Icon(
-                                CustomIcons.pause,
-                                size: 20.0,
-                                ),
                         ),
-                      )),
-                  IconButton(
-                    onPressed: () {
-                      model.player.stop();
-                      model.next();
-                      model.play();
-                    },
-                    icon: Icon(
-                      CustomIcons.step_forward,
-                      color: Colors.grey,
-                      size: 25.0,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(context, Scale(page: PlayBackPage()));
-                    },
-                    icon: Icon(
-                      Icons.arrow_upward,
-                      color: Colors.grey,
-                      size: 25.0,
-                    ),
-                  ),
-                ]),
-          );
-        },
-      ),
-    );
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          model.player.stop();
+                          model.previous();
+                          model.play();
+                        },
+                        icon: Icon(
+                          CustomIcons.step_backward,
+                          color: Colors.grey,
+                          size: 25.0,
+                        ),
+                      ),
+                      InkWell(
+                          onTap: () {
+                            if (model.currentState == PlayerState.PAUSED ||
+                                model.currentState == PlayerState.STOPPED) {
+                              model.play();
+                            } else {
+                              model.pause();
+                            }
+                          },
+                          child: Container(
+                            height: 25,
+                            width: 25,
+                            child: FloatingActionButton(
+                              child: (model.currentState ==
+                                          PlayerState.PAUSED ||
+                                      model.currentState == PlayerState.STOPPED)
+                                  ? Icon(
+                                      CustomIcons.play,
+                                      size: 20.0,
+                                    )
+                                  : Icon(
+                                      CustomIcons.pause,
+                                      size: 20.0,
+                                    ),
+                            ),
+                          )),
+                      IconButton(
+                        onPressed: () {
+                          model.player.stop();
+                          model.next();
+                          model.play();
+                        },
+                        icon: Icon(
+                          CustomIcons.step_forward,
+                          color: Colors.grey,
+                          size: 25.0,
+                        ),
+                      ),
+                    ]),
+              ),
+            );
+          },
+        ),
+      );
+    } else {}
   }
-  }
-
-
+}

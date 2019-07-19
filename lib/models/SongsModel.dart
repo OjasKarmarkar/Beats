@@ -3,9 +3,6 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
 import 'dart:math';
 import 'package:media_notification/media_notification.dart';
-
-import 'package:pref_dessert/pref_dessert_internal.dart';
-
 import 'Recently_played.dart';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
@@ -23,6 +20,7 @@ class SongsModel extends ChangeNotifier {
   bool repeat = false;
   Random rnd = new Random();
   Recents recents;
+  bool t;
 
 
   SongsModel(prov, rec) {
@@ -102,6 +100,7 @@ class SongsModel extends ChangeNotifier {
   }
 
   play() {
+    t = true;
     print(currentSong.albumArt);
     var song = currentSong;
     player.play(song.uri, isLocal: true);

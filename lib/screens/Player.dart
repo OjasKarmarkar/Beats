@@ -1,10 +1,7 @@
 import 'dart:io';
-import 'package:beats/Models/RecentsHelper.dart';
-import 'package:beats/models/BookmarkModel.dart';
+import 'package:beats/Models/BookmarkModel.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/screens/Now_Playing.dart';
-import 'package:pref_dessert/pref_dessert.dart';
-import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import '../custom_icons.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +11,6 @@ import 'package:beats/models/ProgressModel.dart';
 class PlayBackPage extends StatelessWidget {
   SongsModel model;
   Now_Playing Play_Screen;
-  var lastPlayed = FuturePreferencesRepository<Song>(new RecentsHelper());
   @override
   Widget build(BuildContext context) {
     Play_Screen = Provider.of<Now_Playing>(context);
@@ -184,29 +180,7 @@ class PlayBackPage extends StatelessWidget {
                                 },
                               ),
                             ),
-                            Consumer<BookmarkModel>(
-                              builder: (context, bookmark, _) => Padding(
-                                padding: EdgeInsets.only(left: width * 0.45),
-                                child: IconButton(
-                                  onPressed: () {
-                                    if (!bookmark.contains(model.currentSong)) {
-                                      bookmark.add(model.currentSong);
-                                    } else {
-                                      bookmark.remove(model.currentSong);
-                                    }
-                                  },
-                                  icon: Icon(
-                                    bookmark.contains(model.currentSong)
-                                        ? Icons.bookmark
-                                        : Icons.bookmark_border,
-                                    color: bookmark.contains(model.currentSong)
-                                        ? Colors.pink
-                                        : Colors.grey,
-                                    size: 35.0,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            Icon(Icons.book),
                             IconButton(
                               icon: Icon(
                                 Icons.playlist_add,
@@ -227,6 +201,7 @@ class PlayBackPage extends StatelessWidget {
     // DFW FWFWFWFWFWFFWFWFWFWFWFWFWFFFFFFFFFFFFFFFFFFFFFFFFFFFWWFWFWFWFWFWFWFWFWFWFWFWFW
 
     else {
+      
       return Scaffold(
           body: Stack(children: <Widget>[
         AppBar(
@@ -386,28 +361,27 @@ class PlayBackPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 2.0),
-                      child: Consumer<BookmarkModel>(
+                        padding: EdgeInsets.only(left: 2.0),
+                        child: Consumer<BookmarkModel>(
                         builder: (context, bookmark, _) => IconButton(
                           onPressed: () {
-                            if (!bookmark.contains(model.currentSong)) {
+                            if (!bookmark.alreadyExists(model.currentSong)) {
                               bookmark.add(model.currentSong);
                             } else {
-                              bookmark.remove(model.currentSong);
+                              
                             }
                           },
                           icon: Icon(
-                            bookmark.contains(model.currentSong)
+                            bookmark.alreadyExists(model.currentSong)
                                 ? Icons.bookmark
                                 : Icons.bookmark_border,
-                            color: bookmark.contains(model.currentSong)
+                            color: bookmark.alreadyExists(model.currentSong)
                                 ? Colors.pink
                                 : Colors.grey,
                             size: 35.0,
                           ),
                         ),
-                      ),
-                    ),
+                      ),),
                     IconButton(
                       onPressed: () {
                         model.repeat

@@ -1,5 +1,4 @@
 import 'package:beats/Animations/transitions.dart';
-import 'package:beats/screens/Player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
