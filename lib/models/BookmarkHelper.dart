@@ -2,14 +2,13 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
-class BookmarkHelper {
 
+class BookmarkHelper {
   static Database _database;
-  String table = "boomarks";
+  String table = "bookmarks";
 
   Future<Database> get database async {
-    if (_database != null)
-    return _database;
+    if (_database != null) return _database;
 
     // if _database is null we instantiate it
     _database = await initDB();
@@ -18,9 +17,9 @@ class BookmarkHelper {
 
   initDB() async {
     var documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = documentsDirectory.path + "beats.db";
-    return await openDatabase(path, version: 1, onOpen: (db) {
-    }, onCreate: (Database db, int version) async {
+    String path = documentsDirectory.path + "bookmarks.db";
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE $table ("
           "id INTEGER,"
           "artist TEXT,"
@@ -34,16 +33,18 @@ class BookmarkHelper {
     });
   }
 
-  deleteLast() async {
+  remove(Song s) async {
     final db = await database;
-    await db.rawDelete("delete from $table where rowid in (select rowid from $table limit 1)");
+    await db.rawDelete("delete from $table where uri = ${s.uri}");
     //await db.rawDelete("delete from $table where rowid = (select max(rowid) from $table)");
   }
+
   add(Song s) async {
     final db = await database;
     var res = await db.insert(table, toMap(s));
     return res;
   }
+
   getBookmarks() async {
     final db = await database;
     var res = await db.query(table);
@@ -51,7 +52,8 @@ class BookmarkHelper {
         res.isNotEmpty ? res.map((c) => Song.fromMap(c)).toList() : [];
     return list;
   }
-  toMap(Song s){
+
+  toMap(Song s) {
     return {
       'id': s.id,
       'artist': s.artist,
@@ -63,6 +65,4 @@ class BookmarkHelper {
       'albumArt': s.albumArt
     };
   }
-  
-  
 }

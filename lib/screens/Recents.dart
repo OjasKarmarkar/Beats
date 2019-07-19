@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:beats/models/Recently_played.dart';
+import 'package:beats/models/RecentsModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beats/screens/Player.dart';
