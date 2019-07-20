@@ -14,7 +14,7 @@ class Recents extends ChangeNotifier{
   }
 
   add(Song song)async {
-    if (alreadyExists(song)){
+    if (!alreadyExists(song)){
       if (recently.length > 1) await db.deleteLast();
       await db.add(song);
       fetchRecents();
@@ -23,9 +23,9 @@ class Recents extends ChangeNotifier{
 
   alreadyExists(s){
     for(Song item in recently){
-      if (s.uri==item.uri) return false;
+      if (s.uri==item.uri) return true;
     }
-    return true;
+    return false;
   }
 
   fetchRecents() async {

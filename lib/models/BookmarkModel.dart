@@ -24,9 +24,9 @@ class BookmarkModel extends ChangeNotifier {
   }
 
   alreadyExists(s) {
-    bookmarks.forEach((item) {
-      if (s.id == item.id) return true;
-    });
+    for(Song item in bookmarks){
+      if (s.uri==item.uri) return true;
+    }
     return false;
   }
 
@@ -35,5 +35,4 @@ class BookmarkModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  
 }

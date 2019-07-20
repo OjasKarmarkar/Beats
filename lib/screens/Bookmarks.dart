@@ -17,47 +17,48 @@ class Bookmarks extends StatelessWidget {
     model = Provider.of<SongsModel>(context);
     return Consumer<BookmarkModel>(
       builder: (context, bm, _) => Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: Stack(
-          children: <Widget>[
-            (bm.bookmarks == null)
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : (bm.bookmarks.length == 0)
+            backgroundColor: Theme.of(context).backgroundColor,
+            body: Stack(
+              children: <Widget>[
+                (bm.bookmarks == null)
                     ? Center(
-                        child: Text(
-                        "No Bookmarks",
-                        style: Theme.of(context).textTheme.display1,
-                      ))
-                    : ListView.builder(
-                        itemCount: bm.bookmarks.length,
-                        itemBuilder: (context, pos) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.only(top: 20.0, left: 20.0),
-                            child: ListTile(
-                              onTap: () {
-                                model.player.stop();
-                                model.currentSong = bm.bookmarks[pos];
-                                model.filterResults(
-                                    ""); //Reset the list. So we can change to next song.
-                                model.play();
-                                isPressed = true;
-                              },
-                              leading: CircleAvatar(child: getImage(bm, pos)),
-                              title: Text(
-                                bm.bookmarks[pos].title,
-                                style: Theme.of(context).textTheme.display2,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-            showStatus(model)
-          ],
-        ),
-      ),
+                        child: CircularProgressIndicator(),
+                      )
+                    : (bm.bookmarks.length == 0)
+                        ? Center(
+                            child: Text(
+                            "No Bookmarks",
+                            style: Theme.of(context).textTheme.display1,
+                          ))
+                        : ListView.builder(
+                            itemCount: bm.bookmarks.length,
+                            itemBuilder: (context, pos) {
+                              return Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20.0, left: 20.0),
+                                child: ListTile(
+                                  onTap: () {
+                                    model.player.stop();
+                                    model.currentSong = bm.bookmarks[pos];
+                                    model.filterResults(
+                                        ""); //Reset the list. So we can change to next song.
+                                    model.play();
+                                    isPressed = true;
+                                  },
+                                  leading:
+                                      CircleAvatar(child: getImage(bm, pos)),
+                                  title: Text(
+                                    bm.bookmarks[pos].title,
+                                    style: Theme.of(context).textTheme.display2,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                if(isPressed) showStatus(model)
+              ],
+            ),
+          ),
     );
   }
 
@@ -74,7 +75,6 @@ class Bookmarks extends StatelessWidget {
   }
 
   showStatus(model) {
-    if (isPressed = true) {
       return Align(
           alignment: Alignment.bottomRight,
           child: ClipRRect(
@@ -88,9 +88,9 @@ class Bookmarks extends StatelessWidget {
                 child: ListTile(
                   leading: CircleAvatar(
                       child: ClipRect(
-                                              child: Image.file(
-                            File.fromUri(Uri.parse(model.currentSong.albumArt))),
-                      )),
+                    child: Image.file(
+                        File.fromUri(Uri.parse(model.currentSong.albumArt))),
+                  )),
                   title: Text(
                     model.currentSong.title,
                     style: TextStyle(),
@@ -137,6 +137,6 @@ class Bookmarks extends StatelessWidget {
               width: width * 0.59,
             ),
           ));
-    } else {}
+    
   }
 }

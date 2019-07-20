@@ -35,7 +35,7 @@ class BookmarkHelper {
 
   remove(Song s) async {
     final db = await database;
-    await db.rawDelete("delete from $table where uri = ${s.uri}");
+    await db.rawDelete("delete from $table where id = ${s.id}");
     //await db.rawDelete("delete from $table where rowid = (select max(rowid) from $table)");
   }
 
