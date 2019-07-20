@@ -180,7 +180,28 @@ class PlayBackPage extends StatelessWidget {
                                 },
                               ),
                             ),
-                            Icon(Icons.book),
+                            Padding(
+                        padding: EdgeInsets.only(left: 2.0),
+                        child: Consumer<BookmarkModel>(
+                        builder: (context, bookmark, _) => IconButton(
+                            onPressed: () {
+                              if (bookmark.alreadyExists(model.currentSong)) {
+                                bookmark.add(model.currentSong);
+                              } else {
+                                bookmark.remove(model.currentSong);
+                              }
+                            },
+                            icon: Icon(
+                              bookmark.alreadyExists(model.currentSong)
+                                  ? Icons.bookmark
+                                  : Icons.bookmark_border,
+                              color: bookmark.alreadyExists(model.currentSong)
+                                  ? Colors.pink
+                                  : Colors.grey,
+                              size: 35.0,
+                            ),
+                          ),
+                      ),),
                             IconButton(
                               icon: Icon(
                                 Icons.playlist_add,
@@ -364,23 +385,25 @@ class PlayBackPage extends StatelessWidget {
                         padding: EdgeInsets.only(left: 2.0),
                         child: Consumer<BookmarkModel>(
                         builder: (context, bookmark, _) => IconButton(
-                          onPressed: () {
-                            if (!bookmark.alreadyExists(model.currentSong)) {
-                              bookmark.add(model.currentSong);
-                            } else {
-                              
-                            }
-                          },
-                          icon: Icon(
-                            bookmark.alreadyExists(model.currentSong)
-                                ? Icons.bookmark
-                                : Icons.bookmark_border,
-                            color: bookmark.alreadyExists(model.currentSong)
-                                ? Colors.pink
-                                : Colors.grey,
-                            size: 35.0,
+                            onPressed: () {
+                              if (!bookmark.alreadyExists(model.currentSong)) {
+                                bookmark.add(model.currentSong);
+                                print("added");
+                              } else {
+                                bookmark.remove(model.currentSong);
+                                print("removed");
+                              }
+                            },
+                            icon: Icon(
+                              bookmark.alreadyExists(model.currentSong)
+                                  ? Icons.bookmark
+                                  : Icons.bookmark_border,
+                              color: bookmark.alreadyExists(model.currentSong)
+                                  ? Colors.pink
+                                  : Colors.grey,
+                              size: 35.0,
+                            ),
                           ),
-                        ),
                       ),),
                     IconButton(
                       onPressed: () {

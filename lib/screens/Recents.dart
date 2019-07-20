@@ -1,10 +1,9 @@
 import 'dart:io';
-import 'package:beats/models/RecentsModel.dart';
+import 'package:beats/Models/RecentsModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beats/screens/Player.dart';
 import 'package:beats/models/SongsModel.dart';
-
 import 'HomeScreen.dart';
 
 class LastPlayed extends StatelessWidget {

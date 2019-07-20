@@ -23,8 +23,7 @@ class SongsModel extends ChangeNotifier {
   bool repeat = false;
   Random rnd = new Random();
   Recents recents;
-  bool t;
-
+  static bool isTapped = false;
 
   SongsModel(prov, rec) {
     fetchSongs();
@@ -42,24 +41,31 @@ class SongsModel extends ChangeNotifier {
     songs.forEach((item) {
       duplicate.add(item);
     });
-    MediaNotification.setListener('pause', (){pause();});
-    MediaNotification.setListener('play', (){play();});
-    MediaNotification.setListener('next', (){
+    MediaNotification.setListener('pause', () {
+      pause();
+    });
+    MediaNotification.setListener('play', () {
+      play();
+    });
+    MediaNotification.setListener('next', () {
       player.stop();
       next();
-      play();});
-    MediaNotification.setListener('prev', (){
+      play();
+    });
+    MediaNotification.setListener('prev', () {
       player.stop();
       previous();
-      play();});
+      play();
+    });
     notifyListeners();
   }
 
-  updateUI(){
-    MediaNotification.show(title: currentSong?.title,
-                      author:currentSong?.artist,
-                      play:currentState==PlayerState.PLAYING,
-                      art: currentSong.albumArt ?? "");
+  updateUI() {
+    MediaNotification.show(
+        title: currentSong?.title,
+        author: currentSong?.artist,
+        play: currentState == PlayerState.PLAYING,
+        art: currentSong.albumArt ?? "");
     notifyListeners();
   }
 
@@ -103,7 +109,7 @@ class SongsModel extends ChangeNotifier {
   }
 
   play() {
-    t = true;
+    isTapped = true;
     print(currentSong.albumArt);
     var song = currentSong;
     player.play(song.uri, isLocal: true);
@@ -136,12 +142,12 @@ class SongsModel extends ChangeNotifier {
     updateUI();
   }
 
-  setRepeat(b){
+  setRepeat(b) {
     repeat = b;
     notifyListeners();
   }
 
-  setShuffle(b){
+  setShuffle(b) {
     shuffle = b;
     notifyListeners();
   }
@@ -159,5 +165,9 @@ class SongsModel extends ChangeNotifier {
     currentSong = songs[rnd.nextInt(max)];
     player.play(currentSong.uri);
     updateUI();
+  }
+
+  bool tapped() {
+    return isTapped;
   }
 }

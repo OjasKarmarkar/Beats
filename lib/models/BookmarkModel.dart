@@ -18,6 +18,11 @@ class BookmarkModel extends ChangeNotifier {
     }
   }
 
+  remove(Song song) async{
+    await db.remove(song);
+    fetchBookmarks();
+  }
+
   alreadyExists(s) {
     bookmarks.forEach((item) {
       if (s.id == item.id) return true;
@@ -29,4 +34,6 @@ class BookmarkModel extends ChangeNotifier {
     bookmarks = await db.getBookmarks();
     notifyListeners();
   }
+
+  
 }

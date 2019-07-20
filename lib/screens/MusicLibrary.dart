@@ -10,7 +10,6 @@ import 'Player.dart';
 class Library extends StatelessWidget {
   TextEditingController editingController;
   SongsModel model;
-  bool isTapped = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class Library extends StatelessWidget {
                       left: width * 0.04,
                       right: width * 0.04,
                       top: height * 0.03,
-                      bottom: height * 0.04),
+                      bottom: height * 0.01),
                   child: Container(
                     margin: const EdgeInsets.only(right: 20, left: 10),
                     child: TextField(
@@ -88,7 +87,7 @@ class Library extends StatelessWidget {
                 model.filterResults(
                     ""); //Reset the list. So we can change to next song.
                 model.play();
-                isTapped = model.t;
+                
               },
               leading: CircleAvatar(child: getImage(model, pos)),
               title: Text(
@@ -118,7 +117,7 @@ class Library extends StatelessWidget {
   }
 
   showStatus(model) {
-    if (isTapped == true) {
+    if (model.tapped()) {
       return Container(
         height: 45,
         width: width,
