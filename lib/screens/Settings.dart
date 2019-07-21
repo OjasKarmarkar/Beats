@@ -76,11 +76,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             padding: EdgeInsets.only(top: 100.0),
             child: Container(
               child: ListView.builder(
+                
                 itemCount: titles.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Card(
+                      
                       color: Theme.of(context).cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),

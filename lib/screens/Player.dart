@@ -181,27 +181,31 @@ class PlayBackPage extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                        padding: EdgeInsets.only(left: 2.0),
-                        child: Consumer<BookmarkModel>(
-                        builder: (context, bookmark, _) => IconButton(
-                            onPressed: () {
-                              if (bookmark.alreadyExists(model.currentSong)) {
-                                bookmark.add(model.currentSong);
-                              } else {
-                                bookmark.remove(model.currentSong);
-                              }
-                            },
-                            icon: Icon(
-                              bookmark.alreadyExists(model.currentSong)
-                                  ? Icons.bookmark
-                                  : Icons.bookmark_border,
-                              color: bookmark.alreadyExists(model.currentSong)
-                                  ? Colors.pink
-                                  : Colors.grey,
-                              size: 35.0,
+                              padding: EdgeInsets.only(left: 2.0),
+                              child: Consumer<BookmarkModel>(
+                                builder: (context, bookmark, _) => IconButton(
+                                  onPressed: () {
+                                    if (bookmark
+                                        .alreadyExists(model.currentSong)) {
+                                      bookmark.add(model.currentSong);
+                                      
+                                    } else {
+                                      bookmark.remove(model.currentSong);
+                                    }
+                                  },
+                                  icon: Icon(
+                                    bookmark.alreadyExists(model.currentSong)
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: bookmark
+                                            .alreadyExists(model.currentSong)
+                                        ? Colors.pink
+                                        : Colors.grey,
+                                    size: 35.0,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                      ),),
                             IconButton(
                               icon: Icon(
                                 Icons.playlist_add,
@@ -222,7 +226,6 @@ class PlayBackPage extends StatelessWidget {
     // DFW FWFWFWFWFWFFWFWFWFWFWFWFWFFFFFFFFFFFFFFFFFFFFFFFFFFFWWFWFWFWFWFWFWFWFWFWFWFWFW
 
     else {
-      
       return Scaffold(
           body: Stack(children: <Widget>[
         AppBar(
@@ -382,29 +385,28 @@ class PlayBackPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Padding(
-                        padding: EdgeInsets.only(left: 2.0),
-                        child: Consumer<BookmarkModel>(
+                      padding: EdgeInsets.only(left: 2.0),
+                      child: Consumer<BookmarkModel>(
                         builder: (context, bookmark, _) => IconButton(
-                            onPressed: () {
-                              if (!bookmark.alreadyExists(model.currentSong)) {
-                                bookmark.add(model.currentSong);
-                                print("added");
-                              } else {
-                                bookmark.remove(model.currentSong);
-                                print("removed");
-                              }
-                            },
-                            icon: Icon(
-                              bookmark.alreadyExists(model.currentSong)
-                                  ? Icons.bookmark
-                                  : Icons.bookmark_border,
-                              color: bookmark.alreadyExists(model.currentSong)
-                                  ? Colors.pink
-                                  : Colors.grey,
-                              size: 35.0,
-                            ),
+                          onPressed: () {
+                            if (!bookmark.alreadyExists(model.currentSong)) {
+                              bookmark.add(model.currentSong);
+                            } else {
+                              bookmark.remove(model.currentSong);
+                            }
+                          },
+                          icon: Icon(
+                            bookmark.alreadyExists(model.currentSong)
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: bookmark.alreadyExists(model.currentSong)
+                                ? Colors.pink
+                                : Colors.grey,
+                            size: 35.0,
                           ),
-                      ),),
+                        ),
+                      ),
+                    ),
                     IconButton(
                       onPressed: () {
                         model.repeat
@@ -439,7 +441,7 @@ class PlayBackPage extends StatelessWidget {
                                     vertical: height * 0.16,
                                     horizontal: width * 0.13),
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(30.0),
+                                  borderRadius: BorderRadius.circular(24.0),
                                   child: Container(
                                       color: Theme.of(context).backgroundColor,
                                       child: Column(
@@ -466,6 +468,8 @@ class PlayBackPage extends StatelessWidget {
                                                           EdgeInsets.symmetric(
                                                               vertical: 4.0),
                                                       child: Material(
+                                                        color: Theme.of(context)
+                                                            .backgroundColor,
                                                         child: ListTile(
                                                           title: Text(
                                                               "Playlist 1",
@@ -480,6 +484,8 @@ class PlayBackPage extends StatelessWidget {
                                                           EdgeInsets.symmetric(
                                                               vertical: 4.0),
                                                       child: Material(
+                                                        color: Theme.of(context)
+                                                            .backgroundColor,
                                                         child: ListTile(
                                                           title: Text(
                                                               "Playlist 2",

@@ -33,11 +33,11 @@ class _MainScreenState extends State<MainScreen> {
                 ExpandingBottomBarItem(
                     icon: Icons.music_note,
                     text: "Library",
-                    selectedColor: Colors.red),
-                    ExpandingBottomBarItem(
-                    icon: Icons.bookmark_border,
-                    text: "Bookmarks",
                     selectedColor: Colors.deepPurpleAccent),
+                    ExpandingBottomBarItem(
+                    icon: Icons.favorite_border,
+                    text: "Bookmarks",
+                    selectedColor: Colors.red),
                 ExpandingBottomBarItem(
                     icon: Icons.settings,
                     text: "Settings",

@@ -45,6 +45,7 @@ class Splash extends StatefulWidget {
 }
 
 class SplashState extends State<Splash> {
+  SongsModel model;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -74,5 +75,12 @@ class SplashState extends State<Splash> {
   void initState() {
     super.initState();
     checkFirstSeen();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    model.dispose();
+    
   }
 }

@@ -39,7 +39,7 @@ class Library extends StatelessWidget {
                                 borderSide:
                                     BorderSide(color: Colors.greenAccent)),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(20.0),
                                 borderSide:
                                     BorderSide(color: Colors.greenAccent)),
                             hintStyle: Theme.of(context).textTheme.display2,
@@ -77,9 +77,12 @@ class Library extends StatelessWidget {
           itemCount: model.songs.length,
           itemBuilder: (context, pos) {
             return ListTile(
-              trailing: Icon(
-                Icons.view_column,
-                color: Colors.grey,
+              trailing: PopupMenuButton(
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Colors.grey,
+                ),
+                itemBuilder: (BuildContext context) {},
               ),
               onTap: () {
                 model.player.stop();
@@ -87,7 +90,6 @@ class Library extends StatelessWidget {
                 model.filterResults(
                     ""); //Reset the list. So we can change to next song.
                 model.play();
-                
               },
               leading: CircleAvatar(child: getImage(model, pos)),
               title: Text(
@@ -129,11 +131,12 @@ class Library extends StatelessWidget {
               onPanUpdate: (details) {
                 if (details.delta.dy < 0) {
                   push(context);
-                  
                 }
               },
               child: Container(
-                color: Theme.of(context).cardTheme.color,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).cardTheme.color,
+                    border: Border(top: BorderSide(color: Colors.greenAccent))),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[

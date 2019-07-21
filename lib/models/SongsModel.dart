@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
+import 'package:flutter/services.dart';
 import 'dart:math';
 import 'package:media_notification/media_notification.dart';
-
-import 'package:pref_dessert/pref_dessert_internal.dart';
-
 import 'RecentsModel.dart';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
 class SongsModel extends ChangeNotifier {
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    MediaNotification.hide();
+    notifyListeners();
+    super.dispose();
+  }
+
   // Thousands of stuff packed into this ChangeNotifier
   var songs = <Song>[];
   var duplicate = <Song>[]; // Duplicate of songs variable for Search function
@@ -95,6 +102,7 @@ class SongsModel extends ChangeNotifier {
     });
 
     player.setCompletionHandler(() {
+      
       if (repeat) {
         random_Song();
       } else if (shuffle) {
@@ -110,7 +118,6 @@ class SongsModel extends ChangeNotifier {
 
   play() {
     isTapped = true;
-    print(currentSong.albumArt);
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
