@@ -2,9 +2,6 @@ import 'package:beats/screens/Bookmarks.dart';
 import 'package:flute_music_player/flute_music_player.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:expanding_bottom_bar/expanding_bottom_bar.dart';
-import 'package:provider/provider.dart';
-
-import '../models/SongsModel.dart';
 import 'HomeScreen.dart';
 import 'Settings.dart';
 import 'MusicLibrary.dart';
@@ -17,13 +14,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver{
   var index = 0;
   var screens = [HomeScreen(), Library(), Bookmarks(), SettingsScreen()];
-  ThemeData _themeData;
-  SongsModel model;
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    model = Provider.of<SongsModel>(context);
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

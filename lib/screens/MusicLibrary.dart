@@ -190,7 +190,7 @@ class Library extends StatelessWidget {
                                   : Icon(
                                       CustomIcons.pause,
                                       size: 20.0,
-                                    ),
+                                    ), onPressed: () {},
                             ),
                           )),
                       IconButton(

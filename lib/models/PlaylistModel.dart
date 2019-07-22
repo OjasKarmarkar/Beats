@@ -1,7 +1,4 @@
-import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'BookmarkHelper.dart';
 import 'PlayListHelper.dart';
 
 class PlayList_Model extends ChangeNotifier{

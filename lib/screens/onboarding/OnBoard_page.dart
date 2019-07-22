@@ -35,7 +35,7 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
                   fontSize: 45.0,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'sans-serif'),
+                  fontFamily: 'Sans'),
             ),
           ),
           Padding(
@@ -47,7 +47,7 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
                   fontSize: 17.0,
                   wordSpacing: 1.5,
                   color: Colors.black,
-                  fontFamily: 'sans-serif'),
+                  fontFamily: 'Sans'),
             ),
           ),
           Padding(
@@ -56,7 +56,7 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
             child: Text(
               widget.pageModel.desc,
               style: TextStyle(
-                  fontFamily: 'sans-serif',
+                  fontFamily: 'Sans',
                   fontStyle: FontStyle.normal,
                   fontWeight: FontWeight.bold,
                   fontSize: 17.0),

@@ -76,59 +76,59 @@ class _SettingsScreenState extends State<SettingsScreen> {
             padding: EdgeInsets.only(top: 100.0),
             child: Container(
               child: ListView.builder(
-                
                 itemCount: titles.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Card(
-                      
-                      color: Theme.of(context).cardColor,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(20)),
+                          side: BorderSide(
+                            width: 0.45, color: Colors.greenAccent
+                            )),
+                      color: Theme.of(context).cardColor,
                       elevation: 5.0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ListTile(
-                          onTap: () {
-                            switch (index) {
-                              case 0:
-                                Navigator.push(
-                                 context, Scale(page: Themes())
-                                );
-                                break;
-                              case 1:
-                                 Navigator.push(
-                                 context, Scale(page: PlayBack())
-                                );
-                                break;
-                              case 2:
-                                Navigator.push(
-                                 context, Scale(page: AboutUs())
-                                );
-                                break;
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: ListTile(
+                            onTap: () {
+                              switch (index) {
+                                case 0:
+                                  Navigator.push(
+                                      context, Scale(page: Themes()));
+                                  break;
+                                case 1:
+                                  Navigator.push(
+                                      context, Scale(page: PlayBack()));
+                                  break;
+                                case 2:
+                                  Navigator.push(
+                                      context, Scale(page: AboutUs()));
+                                  break;
 
-                              case 3:
-                                Navigator.of(context).push(
-                                    new MaterialPageRoute(
-                                        builder: (context) =>  Donate()));
-                                break;
-                            }
-                          },
-                          leading: Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Icon(icons[index], color: Colors.grey),
-                          ),
-                          title: Text(
-                            titles[index],
-                            style: Theme.of(context).textTheme.display3,
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 16.0),
-                            child: Text(
-                              subtitles[index],
-                              style: Theme.of(context).textTheme.display2,
+                                case 3:
+                                  Navigator.of(context).push(
+                                      new MaterialPageRoute(
+                                          builder: (context) => Donate()));
+                                  break;
+                              }
+                            },
+                            leading: Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Icon(icons[index], color: Colors.grey),
+                            ),
+                            title: Text(
+                              titles[index],
+                              style: Theme.of(context).textTheme.display3,
+                            ),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: Text(
+                                subtitles[index],
+                                style: Theme.of(context).textTheme.display2,
+                              ),
                             ),
                           ),
                         ),

@@ -105,11 +105,39 @@ class Bookmarks extends StatelessWidget {
                   style: Theme.of(context).textTheme.display3,
                 ),
                 subtitle: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left: 0, top: 10.0 , bottom: 10.0),
                   child: Text(
                     bm.bookmarks[pos].artist,
                     style: Theme.of(context).textTheme.display2,
                   ),
+                ),
+                trailing: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                      onTap: () {
+                        if (model.currentState == PlayerState.PAUSED ||
+                            model.currentState == PlayerState.STOPPED) {
+                          model.play();
+                        } else {
+                          model.pause();
+                        }
+                      },
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        child: FloatingActionButton(
+                          child: (model.currentState == PlayerState.PAUSED ||
+                                  model.currentState == PlayerState.STOPPED)
+                              ? Icon(
+                                  CustomIcons.play,
+                                  size: 20.0,
+                                )
+                              : Icon(
+                                  CustomIcons.pause,
+                                  size: 20.0,
+                                ), onPressed: () {},
+                        ),
+                      )),
                 ),
               ),
             );
@@ -181,6 +209,7 @@ class Bookmarks extends StatelessWidget {
                     ),
                   )),
             ),
+        
           ),
         ),
         height: height * 0.09,
