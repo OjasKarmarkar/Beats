@@ -1,5 +1,4 @@
 import 'package:beats/models/SongsModel.dart';
-
 import '../../models/ThemeModel.dart';
 import 'package:flutter/material.dart';
 import '../../custom_icons.dart';

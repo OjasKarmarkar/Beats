@@ -78,7 +78,7 @@ class SplashState extends State<Splash> {
   }
   @override
   void dispose() {
-    // TODO: implement dispose
+    
     super.dispose();
     model.dispose();
     

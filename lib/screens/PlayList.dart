@@ -1,8 +1,6 @@
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:beats/widgets/SongClipper.dart';
-
 import '../custom_icons.dart';
 
 class PLayListScreen extends StatefulWidget {

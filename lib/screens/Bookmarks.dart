@@ -146,7 +146,7 @@ class Bookmarks extends StatelessWidget {
                   ),
                 ),
                 subtitle: Padding(
-                  padding: const EdgeInsets.only(left: 0, top: 10.0),
+                  padding: const EdgeInsets.only(left: 0, top: 10.0 , bottom: 10.0),
                   child: Text(
                     model.currentSong.artist,
                     style: TextStyle(
@@ -179,14 +179,14 @@ class Bookmarks extends StatelessWidget {
                               : Icon(
                                   CustomIcons.pause,
                                   size: 20.0,
-                                ),
+                                ), onPressed: () {},
                         ),
                       )),
                 ),
               ),
             ),
             
-            height: height * 0.09,
+            height: height * 0.1,
             width: width * 0.65,
           ),
         );

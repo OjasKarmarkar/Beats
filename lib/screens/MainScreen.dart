@@ -1,9 +1,6 @@
 import 'package:beats/screens/Bookmarks.dart';
 import 'package:flutter/material.dart';
 import 'package:expanding_bottom_bar/expanding_bottom_bar.dart';
-import 'package:provider/provider.dart';
-
-import '../models/SongsModel.dart';
 import 'HomeScreen.dart';
 import 'Settings.dart';
 import 'MusicLibrary.dart';
@@ -16,7 +13,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   var index = 0;
   var screens = [HomeScreen(), Library(), Bookmarks(), SettingsScreen()];
-  ThemeData _themeData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
