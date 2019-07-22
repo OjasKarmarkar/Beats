@@ -10,12 +10,11 @@ enum PlayerState { PLAYING, PAUSED, STOPPED }
 
 class SongsModel extends ChangeNotifier {
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    MediaNotification.hide();
+
+  void dispose() async{
+    print("koti"+"calling");
+    await MediaNotification.hide();
     notifyListeners();
-    super.dispose();
   }
 
   // Thousands of stuff packed into this ChangeNotifier
@@ -30,7 +29,6 @@ class SongsModel extends ChangeNotifier {
   bool repeat = false;
   Random rnd = new Random();
   Recents recents;
-  static bool isTapped = false;
 
   SongsModel(prov, rec) {
     fetchSongs();
@@ -117,7 +115,6 @@ class SongsModel extends ChangeNotifier {
   }
 
   play() {
-    isTapped = true;
     var song = currentSong;
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
@@ -174,7 +171,5 @@ class SongsModel extends ChangeNotifier {
     updateUI();
   }
 
-  bool tapped() {
-    return isTapped;
-  }
+
 }

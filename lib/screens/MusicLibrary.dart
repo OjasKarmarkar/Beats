@@ -119,7 +119,7 @@ class Library extends StatelessWidget {
   }
 
   showStatus(model) {
-    if (model.tapped()) {
+    if (model.currentSong != null) {
       return Container(
         height: 45,
         width: width,

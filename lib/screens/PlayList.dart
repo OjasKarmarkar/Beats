@@ -102,7 +102,6 @@ class _PLayListScreenState extends State<PLayListScreen> {
           },
           body: Scaffold(
              backgroundColor: Theme.of(context).backgroundColor,
-             
           )),
     );
   }

@@ -49,7 +49,7 @@ class BookmarkHelper {
     final db = await database;
     var res = await db.query(table);
     List<Song> list =
-        res.isNotEmpty ? res.map((c) => Song.fromMap(c)).toList() : [];
+        res.isNotEmpty ? res.map((c) => Song.fromMap(c)).toList() : List<Song>();
     return list;
   }
 
