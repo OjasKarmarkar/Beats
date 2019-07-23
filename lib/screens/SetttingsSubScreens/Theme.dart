@@ -138,7 +138,9 @@ class Themes extends StatelessWidget {
                       'White',
                       style: Theme.of(context).textTheme.display2,
                     ),
-                    onTap: () => {themeChanger.setTheme(lightTheme())}),
+                    onTap: () => {themeChanger.setTheme(lightTheme()),
+                    Navigator.pop(context)
+                    }),
                 new ListTile(
                   leading: new Icon(
                     Icons.brush,
@@ -148,7 +150,9 @@ class Themes extends StatelessWidget {
                     'Dark',
                     style: Theme.of(context).textTheme.display2,
                   ),
-                  onTap: () => {themeChanger.setTheme(darkTheme())},
+                  onTap: () => {themeChanger.setTheme(darkTheme()),
+                  Navigator.pop(context)
+                  },
                 ),
                 new ListTile(
                   leading: new Icon(
@@ -156,10 +160,13 @@ class Themes extends StatelessWidget {
                     color: Colors.grey,
                   ),
                   title: new Text(
-                    'Dark AF',
+                    'Amoled Black',
                     style: Theme.of(context).textTheme.display2,
                   ),
-                  onTap: () => {themeChanger.setTheme(darkAFTheme())},
+                  onTap: () => {
+                    themeChanger.setTheme(darkAFTheme()),
+                    Navigator.pop(context)
+                    },
                 ),
               ],
             ),

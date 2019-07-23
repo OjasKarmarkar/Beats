@@ -82,7 +82,9 @@ class Library extends StatelessWidget {
                   Icons.more_vert,
                   color: Colors.grey,
                 ),
-                itemBuilder: (BuildContext context) {},
+                itemBuilder: (context){
+
+                },
               ),
               onTap: () {
                 model.player.stop();
@@ -143,7 +145,7 @@ class Library extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          width: width * 0.69,
+                          width: width * 0.65,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: <Widget>[
@@ -190,7 +192,7 @@ class Library extends StatelessWidget {
                                   : Icon(
                                       CustomIcons.pause,
                                       size: 20.0,
-                                    ), onPressed: () {},
+                                    ),
                             ),
                           )),
                       IconButton(

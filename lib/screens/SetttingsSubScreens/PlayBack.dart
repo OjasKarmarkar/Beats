@@ -50,6 +50,7 @@ Now_Playing Play_Screen;
                   style: Theme.of(context).textTheme.display2),
               onTap: () {
                 _settingModalBottomSheet(context);
+                
               },
             ),
           ),
@@ -74,7 +75,8 @@ Now_Playing Play_Screen;
                     ),
                     onTap: () => {
                   Play_Screen.set_Screen(true),
-                    Play_Screen.get_Screen()
+                    Play_Screen.get_Screen(),
+                    Navigator.pop(context)
                     }),
                 new ListTile(
                   leading: new Icon(
@@ -87,7 +89,8 @@ Now_Playing Play_Screen;
                   ),
                   onTap: () => {
                     Play_Screen.set_Screen(false),
-                    Play_Screen.get_Screen()
+                    Play_Screen.get_Screen(),
+                    Navigator.pop(context)
                   },
                 ),
                

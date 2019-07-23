@@ -19,18 +19,18 @@ class AboutUs extends StatelessWidget {
           ),
           backgroundColor: Theme.of(context).backgroundColor,
           leading: Padding(
-            padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
-            child: IconButton(
-              iconSize: 35.0,
-              icon: Icon(
-                CustomIcons.arrow_circle_o_left,
-                color: Colors.grey,
+              padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
+              child: IconButton(
+                iconSize: 35.0,
+                icon: Icon(
+                  CustomIcons.arrow_circle_o_left,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
             ),
-          ),
         ),
         ListView(
           children: <Widget>[
@@ -53,8 +53,10 @@ class AboutUs extends StatelessWidget {
                       padding: EdgeInsets.only(
                           left: width * 0.02, top: height * 0.03),
                       child: ListTile(
-                        leading: CircleAvatar(
-                            backgroundImage: AssetImage("assets/selva.jpg")),
+                        leading: Icon(
+                          Icons.person_outline,
+                          color: Colors.blueAccent,
+                        ),
                         title: Text("Selva",
                             style: Theme.of(context).textTheme.display1),
                         subtitle: Text(
@@ -67,8 +69,9 @@ class AboutUs extends StatelessWidget {
                       padding: EdgeInsets.only(
                           left: width * 0.02, top: height * 0.005),
                       child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: AssetImage("assets/Ojas.jpg"),
+                        leading: Icon(
+                          Icons.person_outline,
+                          color: Colors.blueAccent,
                         ),
                         title: Text("OjasK",
                             style: Theme.of(context).textTheme.display1),
@@ -109,7 +112,7 @@ class AboutUs extends StatelessWidget {
                         leading: CircleAvatar(
                             backgroundColor: Theme.of(context).backgroundColor,
                             child: Icon(CustomIcons.instagram)),
-                        title: Text("InstaGram",
+                        title: Text("Instagram",
                             style: Theme.of(context).textTheme.display1),
                       ),
                     ),

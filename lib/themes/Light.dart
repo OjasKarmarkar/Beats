@@ -9,7 +9,7 @@ lightTheme() {
           display3: TextStyle(
               color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w600),
           display1: TextStyle(
-              color: Colors.black, fontSize: 25.0, fontWeight: FontWeight.bold),
+              color: Colors.black, fontSize: 22.0, fontWeight: FontWeight.w500),
           headline: TextStyle(
               fontFamily: 'Sans',
               color: Colors.black,
