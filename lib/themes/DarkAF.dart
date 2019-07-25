@@ -10,7 +10,7 @@ darkAFTheme() {
           display3: TextStyle(
               color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w600),
           display1: TextStyle(
-              color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 22.0, fontWeight: FontWeight.w500),
           headline: TextStyle(
               fontFamily: 'Sans',
               color: Colors.white,

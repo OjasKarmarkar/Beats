@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:beats/Models/playlist_repo.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/screens/Now_Playing.dart';
@@ -11,9 +12,11 @@ import 'package:beats/models/ProgressModel.dart';
 class PlayBackPage extends StatelessWidget {
   SongsModel model;
   Now_Playing Play_Screen;
+  PlaylistRepo repo;
   @override
   Widget build(BuildContext context) {
     Play_Screen = Provider.of<Now_Playing>(context);
+    repo = Provider.of<PlaylistRepo>(context);
     if (Play_Screen.get_Screen() == true) {
       return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -188,7 +191,6 @@ class PlayBackPage extends StatelessWidget {
                                     if (bookmark
                                         .alreadyExists(model.currentSong)) {
                                       bookmark.add(model.currentSong);
-                                      
                                     } else {
                                       bookmark.remove(model.currentSong);
                                     }
@@ -431,85 +433,36 @@ class PlayBackPage extends StatelessWidget {
                         size: 35.0,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: height * 0.16,
-                                    horizontal: width * 0.13),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  child: Container(
-                                      color: Theme.of(context).backgroundColor,
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: height * 0.05,
-                                                horizontal: width * 0.13),
-                                            child: Text("Add to Playlist",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .display1),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: height * 0.05,
-                                                horizontal: width * 0.1),
-                                            child: Container(
-                                              height: height * 0.4,
-                                              child: ListView(
-                                                children: <Widget>[
-                                                  Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 4.0),
-                                                      child: Material(
-                                                        color: Theme.of(context)
-                                                            .backgroundColor,
-                                                        child: ListTile(
-                                                          title: Text(
-                                                              "Playlist 1",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .display3),
-                                                        ),
-                                                      )),
-                                                  Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 4.0),
-                                                      child: Material(
-                                                        color: Theme.of(context)
-                                                            .backgroundColor,
-                                                        child: ListTile(
-                                                          title: Text(
-                                                              "Playlist 2",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .display3),
-                                                        ),
-                                                      )),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                              );
-                            });
-                      },
-                      icon: Icon(
-                        Icons.playlist_add,
-                        color: Colors.grey,
-                        size: 35.0,
-                      ),
+                    Consumer<PlaylistRepo>(
+                      builder: (context, repo, _) {
+
+                      return  IconButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: height * 0.16,
+                                      horizontal: width * 0.13),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    child: Container(
+                                        color:
+                                            Theme.of(context).backgroundColor,
+                                        child: ListView(
+                                          children: <Widget>[],
+                                        )),
+                                  ),
+                                );
+                              });
+                        },
+                        icon: Icon(
+                          Icons.playlist_add,
+                          color: Colors.grey,
+                          size: 35.0,
+                        ),
+                      );},
                     ),
                   ],
                 ),
