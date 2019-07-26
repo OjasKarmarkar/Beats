@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeChanger with ChangeNotifier{
   ThemeData _themeData;
-  SharedPreferences prefs;
+  SharedPreferences prefs , pref1;
   var accentColor = Colors.blue;
 
   ThemeChanger(){
@@ -13,6 +13,7 @@ class ThemeChanger with ChangeNotifier{
   }
 
   init() async{
+    pref1 = await SharedPreferences.getInstance();
     prefs = await SharedPreferences.getInstance();
     String theme = prefs.getString("theme") ?? "light";
     if(theme=="light"){
