@@ -8,19 +8,19 @@ class PlayList_Model extends ChangeNotifier{
   var lists;
 
   PlayList_Model(){
-    fetch_Last();
+    fetchLast();
   }
 
   add(List list){
     //playlists_repo.save(list);
-      fetch_Last();
+      fetchLast();
   }
 
   remove(List list){
     
   }
 
-  fetch_Last() async {
+  fetchLast() async {
     //lists = await playlists_repo.findAll();
     notifyListeners();
   }

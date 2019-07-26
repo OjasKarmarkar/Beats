@@ -71,7 +71,7 @@ class SongsModel extends ChangeNotifier {
         title: currentSong?.title,
         author: currentSong?.artist,
         play: currentState == PlayerState.PLAYING,
-        art: currentSong.albumArt ?? "");
+        art: currentSong.albumArt ?? "@drawable/headphone.png");
     notifyListeners();
   }
 

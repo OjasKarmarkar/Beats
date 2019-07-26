@@ -9,14 +9,27 @@ import 'package:provider/provider.dart';
 import 'HomeScreen.dart';
 import 'package:beats/models/ProgressModel.dart';
 
-class PlayBackPage extends StatelessWidget {
+class PlayBackPage extends StatefulWidget {
+  @override
+  _PlayBackPageState createState() => _PlayBackPageState();
+}
+
+class _PlayBackPageState extends State<PlayBackPage> {
   SongsModel model;
-  Now_Playing Play_Screen;
   PlaylistRepo repo;
+
+  Now_Playing Play_Screen;
+
+  TextEditingController txt = TextEditingController();
+
+  bool error = false;
+  List<String> playlist = new List();
+
   @override
   Widget build(BuildContext context) {
     Play_Screen = Provider.of<Now_Playing>(context);
     repo = Provider.of<PlaylistRepo>(context);
+
     if (Play_Screen.get_Screen() == true) {
       return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -91,8 +104,8 @@ class PlayBackPage extends StatelessWidget {
                             IconButton(
                               onPressed: () {
                                 model.repeat
-                                    ? model.repeat = false
-                                    : model.repeat = true;
+                                    ? model.setRepeat(false)
+                                    : model.setRepeat(true);
                               },
                               icon: Icon(
                                 Icons.loop,
@@ -149,18 +162,18 @@ class PlayBackPage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: width * 0.01),
                               child: IconButton(
-                                onPressed: () {
-                                  model.shuffle
-                                      ? model.shuffle = false
-                                      : model.shuffle = true;
-                                },
-                                icon: Icon(
-                                  Icons.shuffle,
-                                  color:
-                                      model.shuffle ? Colors.pink : Colors.grey,
-                                  size: 35.0,
-                                ),
-                              ),
+                                  onPressed: () {
+                                    model.shuffle
+                                        ? model.setShuffle(false)
+                                        : model.setShuffle(true);
+                                  },
+                                  icon: Icon(
+                                    Icons.shuffle,
+                                    color: model.shuffle
+                                        ? Colors.pink
+                                        : Colors.grey,
+                                    size: 35.0,
+                                  )),
                             ),
                           ],
                         ),
@@ -188,7 +201,7 @@ class PlayBackPage extends StatelessWidget {
                               child: Consumer<BookmarkModel>(
                                 builder: (context, bookmark, _) => IconButton(
                                   onPressed: () {
-                                    if (bookmark
+                                    if (!bookmark
                                         .alreadyExists(model.currentSong)) {
                                       bookmark.add(model.currentSong);
                                     } else {
@@ -208,14 +221,88 @@ class PlayBackPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.playlist_add,
-                                color: Colors.grey,
-                                size: 35.0,
-                              ),
-                              onPressed: () {},
-                            ),
+                            Consumer<PlaylistRepo>(builder: (context, repo, _) {
+                              return IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: height * 0.16,
+                                              horizontal: width * 0.13),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                            child: Container(
+                                                color: Theme.of(context)
+                                                    .backgroundColor,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(20.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          children: <Widget>[
+                                                            Text(
+                                                              "Add to Playlist",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .display1,
+                                                            ),
+                                                            Container(
+                                                              height: 25,
+                                                              width: 25,
+                                                              child:
+                                                                  FloatingActionButton(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                onPressed: () {
+                                                                  _displayDialog(
+                                                                      context);
+                                                                },
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .add_circle_outline,
+                                                                  color: Colors
+                                                                      .greenAccent,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      //ListView.builder(
+                                                      // itemCount: repo.getList().length == null? 0 : repo.getList().length,
+                                                      // itemBuilder: (context, index) {
+                                                      //return FlatButton(
+                                                      //child: Text(repo.getList()[index]), onPressed: () {},
+                                                      //);
+                                                      // },
+                                                      //)
+                                                    ],
+                                                  ),
+                                                )),
+                                          ),
+                                        );
+                                      });
+                                },
+                                icon: Icon(
+                                  Icons.playlist_add,
+                                  color: Colors.grey,
+                                  size: 35.0,
+                                ),
+                              );
+                            }),
                           ],
                         ),
                       )
@@ -433,10 +520,8 @@ class PlayBackPage extends StatelessWidget {
                         size: 35.0,
                       ),
                     ),
-                    Consumer<PlaylistRepo>(
-                      builder: (context, repo, _) {
-
-                      return  IconButton(
+                    Consumer<PlaylistRepo>(builder: (context, repo, _) {
+                      return IconButton(
                         onPressed: () {
                           showDialog(
                               context: context,
@@ -450,8 +535,56 @@ class PlayBackPage extends StatelessWidget {
                                     child: Container(
                                         color:
                                             Theme.of(context).backgroundColor,
-                                        child: ListView(
-                                          children: <Widget>[],
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(20.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: <Widget>[
+                                                    Text(
+                                                      "Add to Playlist",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .display1,
+                                                    ),
+                                                    Container(
+                                                      height: 25,
+                                                      width: 25,
+                                                      child:
+                                                          FloatingActionButton(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        onPressed: () {
+                                                          _displayDialog(
+                                                              context);
+                                                        },
+                                                        child: Icon(
+                                                          Icons
+                                                              .add_circle_outline,
+                                                          color: Colors
+                                                              .greenAccent,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              //ListView.builder(
+                                              // itemCount: repo.getList().length == null? 0 : repo.getList().length,
+                                              // itemBuilder: (context, index) {
+                                              //return FlatButton(
+                                              //child: Text(repo.getList()[index]), onPressed: () {},
+                                              //);
+                                              // },
+                                              //)
+                                            ],
+                                          ),
                                         )),
                                   ),
                                 );
@@ -462,8 +595,8 @@ class PlayBackPage extends StatelessWidget {
                           color: Colors.grey,
                           size: 35.0,
                         ),
-                      );},
-                    ),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -472,5 +605,53 @@ class PlayBackPage extends StatelessWidget {
         )
       ]));
     }
+  }
+
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AlertDialog(
+              shape: Border.all(color: Colors.greenAccent),
+              backgroundColor: Theme.of(context).backgroundColor,
+              title: Text(
+                'Add',
+                style: Theme.of(context).textTheme.display2,
+              ),
+              content: TextFormField(
+                controller: txt,
+                decoration: InputDecoration(
+                    errorText: error ? "Name cant be null" : null,
+                    errorStyle: Theme.of(context).textTheme.display2,
+                    labelText: "Enter Name",
+                    labelStyle: Theme.of(context).textTheme.display2,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4))),
+              ),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text(
+                    'Create',
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                  onPressed: () {
+                    validate(context);
+                  },
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  void validate(context) {
+    setState(() {
+      txt.text.isEmpty ? error = true : error = false;
+    });
+    if (txt.text.isNotEmpty) {
+      Navigator.of(context).pop();
+    } else {}
   }
 }

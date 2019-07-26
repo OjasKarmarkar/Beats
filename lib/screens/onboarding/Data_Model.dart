@@ -3,7 +3,7 @@ import 'Model.dart';
 
 List<OnBoardPageModel> onboardData = [
   OnBoardPageModel(
-      "assets/img1.gif",
+      "assets/img1.jpg",
       "Voila!",
       1,
       "Want to relax? Or just wanna take a break from your hectic routine?",
@@ -11,7 +11,7 @@ List<OnBoardPageModel> onboardData = [
       
       ),
   OnBoardPageModel(
-      "assets/img2.gif",
+      "assets/img2.jpg",
       "Hang on!",
       2,
       "Before you plug in your earphones.. We need permission to access your music files! Click on the button below to get started!",
