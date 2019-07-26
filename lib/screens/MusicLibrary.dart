@@ -16,7 +16,7 @@ class Library extends StatelessWidget {
     model = Provider.of<SongsModel>(context);
     return Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Stack(
+        body: (model.songs == null) ? Center(child: Text("No Songs", style: Theme.of(context).textTheme.display1,),) : Stack(
           children: <Widget>[
             Column(
               children: <Widget>[

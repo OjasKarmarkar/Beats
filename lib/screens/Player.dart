@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:beats/Models/playlist_repo.dart';
 import 'package:beats/models/BookmarkModel.dart';
+import 'package:beats/models/PlayListHelper.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/screens/Now_Playing.dart';
 import 'package:flutter/material.dart';
@@ -223,11 +224,7 @@ class PlayBackPage extends StatelessWidget {
           ],
         ),
       );
-    }
-
-    // DFW FWFWFWFWFWFFWFWFWFWFWFWFWFFFFFFFFFFFFFFFFFFFFFFFFFFFWWFWFWFWFWFWFWFWFWFWFWFWFW
-
-    else {
+    } else {
       return Scaffold(
           body: Stack(children: <Widget>[
         AppBar(
@@ -435,34 +432,45 @@ class PlayBackPage extends StatelessWidget {
                     ),
                     Consumer<PlaylistRepo>(
                       builder: (context, repo, _) {
-
-                      return  IconButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: height * 0.16,
-                                      horizontal: width * 0.13),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(24.0),
-                                    child: Container(
-                                        color:
-                                            Theme.of(context).backgroundColor,
-                                        child: ListView(
-                                          children: <Widget>[],
-                                        )),
-                                  ),
-                                );
-                              });
-                        },
-                        icon: Icon(
-                          Icons.playlist_add,
-                          color: Colors.grey,
-                          size: 35.0,
-                        ),
-                      );},
+                        return IconButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: height * 0.16,
+                                        horizontal: width * 0.13),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      child: Container(
+                                          color:
+                                              Theme.of(context).backgroundColor,
+                                          child: (repo.playlist.length == 0)
+                                              ? Center(
+                                                  child: Text("No Playlist"))
+                                              : ListView.builder(
+                                                  itemCount: repo.playlist.length,
+                                                  itemBuilder: (context,pos){
+                                                    return ListTile(
+                                                      onTap: (){
+                                                        PlaylistHelper(repo.playlist[pos]).add(model.currentSong);
+                                                      },
+                                                      title: Text(repo.playlist[pos]),
+                                                    );
+                                                  },
+                                                )),
+                                    ),
+                                  );
+                                });
+                          },
+                          icon: Icon(
+                            Icons.playlist_add,
+                            color: Colors.grey,
+                            size: 35.0,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

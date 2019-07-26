@@ -22,7 +22,7 @@ class LastPlayed extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     )
                   : (lastPlayed.recently.length == 0)
-                      ? Center(child: Text("Play Something!"))
+                      ? Center(child: Text("Play Something!",style: Theme.of(context).textTheme.display3,))
                       : Container(
                         height: height*0.16,
                         width:  width,

@@ -37,12 +37,13 @@ class SongsModel extends ChangeNotifier {
 
   fetchSongs() async {
     songs = await MusicFinder.allSongs();
+    if(songs.length == 0) songs = null;
     player = new MusicFinder();
     initValues();
     player.setPositionHandler((p) {
       prog.setPosition(p.inSeconds);
     });
-    songs.forEach((item) {
+    songs?.forEach((item) {
       duplicate.add(item);
     });
     MediaNotification.setListener('pause', () {
@@ -99,14 +100,17 @@ class SongsModel extends ChangeNotifier {
     });
 
     player.setCompletionHandler(() {
-      
+      player.stop();
       if (repeat) {
         random_Song();
       } else if (shuffle) {
         random_Song();
-      } else
+      } else{
         next();
-    });
+      }
+        play();
+      }
+    );
   }
 
   seek(pos) {
