@@ -13,6 +13,7 @@ Now_Playing Play_Screen;
   @override
   Widget build(BuildContext context) {
     Play_Screen = Provider.of<Now_Playing>(context);
+    themeChanger  = Provider.of<ThemeChanger>(context);
     return Scaffold(
        body: Stack(
         children: <Widget>[
@@ -67,7 +68,7 @@ Now_Playing Play_Screen;
                 new ListTile(
                     leading: new Icon(
                       Icons.details,
-                      color: Colors.grey,
+                      color: themeChanger.getAccent(),
                     ),
                     title: new Text(
                       'Immersive',
@@ -81,7 +82,7 @@ Now_Playing Play_Screen;
                 new ListTile(
                   leading: new Icon(
                     Icons.details,
-                    color: Colors.grey,
+                    color: themeChanger.getAccent(),
                   ),
                   title: new Text(
                     'Basic',
