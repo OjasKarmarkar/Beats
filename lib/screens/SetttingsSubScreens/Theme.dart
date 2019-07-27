@@ -10,11 +10,12 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 class Themes extends StatelessWidget {
   ThemeChanger themeChanger;
   SongsModel model;
-  MaterialColor color = Colors.blue;
+
 
   @override
   Widget build(BuildContext context) {
     themeChanger = Provider.of<ThemeChanger>(context);
+    
 
     return Scaffold(
       body: Stack(
@@ -62,10 +63,11 @@ class Themes extends StatelessWidget {
               title: Text("Accent Color",
                   style: Theme.of(context).textTheme.display2),
               trailing: CircleColor(
-                color: color,
+                color: themeChanger.getAccent(),
                 circleSize: 25.0,
               ),
               onTap: () {
+                
                 showDialog(
                   context: context,
                   builder: (_) => Padding(
@@ -87,12 +89,19 @@ class Themes extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: MaterialColorPicker(
+                                colors: [
+                                  Colors.blue,
+                                  Colors.red,
+                                  Colors.deepPurpleAccent,
+                                  Colors.green,
+                                  Colors.greenAccent
+                                ],
                                 allowShades: false,
-                                selectedColor: color,
+                                selectedColor: themeChanger.getAccent(),
                                 circleSize: 70,
                                 onMainColorChange: (ColorSwatch selectedColor) {
-                                  color = selectedColor;
                                   themeChanger.setAccent(selectedColor);
+                               
                                 },
                               ),
                             ),
@@ -101,7 +110,6 @@ class Themes extends StatelessWidget {
                               child: FloatingActionButton(
                                 child: Icon(CustomIcons.leaf),
                                 onPressed: () {
-                                  
                                   Navigator.of(context, rootNavigator: true)
                                       .pop('dialog');
                                 },
@@ -138,9 +146,10 @@ class Themes extends StatelessWidget {
                       'White',
                       style: Theme.of(context).textTheme.display2,
                     ),
-                    onTap: () => {themeChanger.setTheme(lightTheme()),
-                    Navigator.pop(context)
-                    }),
+                    onTap: () => {
+                          themeChanger.setTheme(lightTheme()),
+                          Navigator.pop(context)
+                        }),
                 new ListTile(
                   leading: new Icon(
                     Icons.brush,
@@ -150,8 +159,9 @@ class Themes extends StatelessWidget {
                     'Dark',
                     style: Theme.of(context).textTheme.display2,
                   ),
-                  onTap: () => {themeChanger.setTheme(darkTheme()),
-                  Navigator.pop(context)
+                  onTap: () => {
+                    themeChanger.setTheme(darkTheme()),
+                    Navigator.pop(context)
                   },
                 ),
                 new ListTile(
@@ -166,7 +176,7 @@ class Themes extends StatelessWidget {
                   onTap: () => {
                     themeChanger.setTheme(darkAFTheme()),
                     Navigator.pop(context)
-                    },
+                  },
                 ),
               ],
             ),
