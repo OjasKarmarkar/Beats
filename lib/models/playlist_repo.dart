@@ -11,7 +11,7 @@ class PlaylistRepo extends ChangeNotifier {
 
   init() async {
     prefList = await SharedPreferences.getInstance();
-    List<String> list = prefList.getStringList("Playlist");
+    List<String> list = prefList.getStringList("playlist");
     updatePlayList(list);
   }
 
@@ -26,7 +26,7 @@ class PlaylistRepo extends ChangeNotifier {
 
   add(String name) async {
     playlist.add(name);
-    await prefList.setStringList("PlayList", playlist);
+    await prefList.setStringList("playlist", playlist);
     notifyListeners();
   }
 }

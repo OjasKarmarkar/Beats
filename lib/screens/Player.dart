@@ -3,6 +3,7 @@ import 'package:beats/Models/playlist_repo.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/PlayListHelper.dart';
 import 'package:beats/models/SongsModel.dart';
+import 'package:beats/models/playlist_repo.dart' as prefix0;
 import 'package:beats/screens/Now_Playing.dart';
 import 'package:flutter/material.dart';
 import '../custom_icons.dart';
@@ -269,7 +270,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                                         .white,
                                                                 onPressed: () {
                                                                   _displayDialog(
-                                                                      context);
+                                                                      context,repo);
                                                                 },
                                                                 child: Icon(
                                                                   Icons
@@ -533,20 +534,57 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                       child: Container(
                                           color:
                                               Theme.of(context).backgroundColor,
-                                          child: (repo.playlist.length == 0)
-                                              ? Center(
-                                                  child: Text("No Playlist"))
-                                              : ListView.builder(
-                                                  itemCount: repo.playlist.length,
-                                                  itemBuilder: (context,pos){
-                                                    return ListTile(
-                                                      onTap: (){
-                                                        PlaylistHelper(repo.playlist[pos]).add(model.currentSong);
-                                                      },
-                                                      title: Text(repo.playlist[pos]),
-                                                    );
-                                                  },
-                                                )),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      20.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        "Add to Playlist",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .display1,
+                                                      ),
+                                                      Container(
+                                                        height: 25,
+                                                        width: 25,
+                                                        child:
+                                                            FloatingActionButton(
+                                                          backgroundColor:
+                                                              Colors.white,
+                                                          onPressed: () {
+                                                            _displayDialog(
+                                                                context,repo);
+                                                          },
+                                                          child: Icon(
+                                                            Icons
+                                                                .add_circle_outline,
+                                                            color: Colors
+                                                                .greenAccent,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                (repo.playlist != null) ? ListView.builder(
+                                                 itemCount: repo.playlist.length,
+                                                 itemBuilder: (context, index) {
+                                                return FlatButton(
+                                                child: Text(repo.playlist[index]), onPressed: () {},
+                                                );
+                                                 },
+                                                ) : Center(child: Text("No Playlist"),)
+                                              ],
+                                            ),
+                                          )),
                                     ),
                                   );
                                 });
@@ -569,7 +607,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
     }
   }
 
-  _displayDialog(BuildContext context) async {
+  _displayDialog(BuildContext context,repo) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -599,7 +637,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                     style: Theme.of(context).textTheme.display2,
                   ),
                   onPressed: () {
-                    validate(context);
+                    validate(context,repo);
                   },
                 )
               ],
@@ -608,11 +646,12 @@ class _PlayBackPageState extends State<PlayBackPage> {
         });
   }
 
-  void validate(context) {
+  void validate(context,repo) {
     setState(() {
       txt.text.isEmpty ? error = true : error = false;
     });
     if (txt.text.isNotEmpty) {
+      repo.add(txt.text);
       Navigator.of(context).pop();
     } else {}
   }
