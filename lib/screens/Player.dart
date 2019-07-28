@@ -1,11 +1,10 @@
 import 'dart:io';
-import 'package:beats/Models/ThemeModel.dart';
+import 'package:beats/models/ThemeModel.dart';
 import 'package:beats/Models/playlist_repo.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/PlayListHelper.dart';
 import 'package:beats/models/SongsModel.dart';
-import 'package:beats/models/playlist_repo.dart' as prefix0;
-import 'package:beats/screens/Now_Playing.dart';
+import 'package:beats/models/Now_Playing.dart';
 import 'package:flutter/material.dart';
 import '../custom_icons.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +19,7 @@ class PlayBackPage extends StatefulWidget {
 class _PlayBackPageState extends State<PlayBackPage> {
   SongsModel model;
   PlaylistRepo repo;
+  ThemeChanger tc;
 
   Now_Playing Play_Screen;
 
@@ -32,6 +32,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
   Widget build(BuildContext context) {
     Play_Screen = Provider.of<Now_Playing>(context);
     repo = Provider.of<PlaylistRepo>(context);
+    tc = Provider.of<ThemeChanger>(context);
 
     if (Play_Screen.get_Screen() == true) {
       return Scaffold(
@@ -141,6 +142,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                   }
                                 },
                                 child: FloatingActionButton(
+                                  backgroundColor: tc.accentColor,
                                   child: (model.currentState ==
                                               PlayerState.PAUSED ||
                                           model.currentState ==
@@ -426,6 +428,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 }
                               },
                               child: FloatingActionButton(
+                                backgroundColor: tc.accentColor,
                                 child:
                                     (model.currentState == PlayerState.PAUSED ||
                                             model.currentState ==

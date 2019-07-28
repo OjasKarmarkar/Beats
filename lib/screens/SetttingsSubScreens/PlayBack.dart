@@ -1,5 +1,5 @@
 import 'package:beats/models/ThemeModel.dart';
-import 'package:beats/screens/Now_Playing.dart';
+import 'package:beats/models/Now_Playing.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../custom_icons.dart';
@@ -47,7 +47,7 @@ Now_Playing Play_Screen;
                 size: 27.0,
                 color: Colors.grey,
               ),
-              title: Text("Change Look of Now PLaying",
+              title: Text("Change Look of Now Playing",
                   style: Theme.of(context).textTheme.display2),
               onTap: () {
                 _settingModalBottomSheet(context);

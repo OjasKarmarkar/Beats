@@ -11,8 +11,6 @@ class Themes extends StatelessWidget {
   ThemeChanger themeChanger;
   SongsModel model;
   
-
-
   @override
   Widget build(BuildContext context) {
     themeChanger = Provider.of<ThemeChanger>(context);

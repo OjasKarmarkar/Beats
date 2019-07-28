@@ -1,5 +1,6 @@
 import 'package:beats/Animations/transitions.dart';
 import 'package:beats/Models/Username.dart';
+import 'package:beats/models/ThemeModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +19,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   Username username;
-  TextEditingController text = new TextEditingController();
-  bool err = false;
-  @override
-  Widget build(BuildContext context) {
-    username = Provider.of<Username>(context);
-    final subtitles = [
+      final subtitles = [
       'Customize The Look and Accent Of The App',
       "Change The Controls Of The Playing Screen",
       "Know More About Us",
@@ -41,7 +37,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       CustomIcons.info_circle,
       CustomIcons.coffee
     ];
-
+  ThemeChanger themeChanger;
+  TextEditingController text = new TextEditingController();
+  bool err = false;
+  @override
+  Widget build(BuildContext context) {
+    username = Provider.of<Username>(context);
+    themeChanger  = Provider.of<ThemeChanger>(context);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -53,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   iconSize: 35.0,
                   icon: Icon(
                     CustomIcons.share_alt,
-                    color: Colors.grey,
+                    color: themeChanger.accentColor,
                   ),
                   onPressed: () {
                     Share.share('Download this beautiful music player right now!');

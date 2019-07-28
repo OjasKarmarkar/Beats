@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:beats/Models/Username.dart';
 import 'package:beats/Models/playlist_repo.dart';
 import 'package:beats/models/BookmarkModel.dart';
-import 'package:beats/screens/Now_Playing.dart';
+import 'package:beats/models/Now_Playing.dart';
 import 'models/RecentsModel.dart';
 import 'models/SongsModel.dart';
 import 'package:provider/provider.dart';
