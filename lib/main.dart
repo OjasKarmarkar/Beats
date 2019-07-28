@@ -81,5 +81,4 @@ class SplashState extends State<Splash> {
     super.initState();
     checkFirstSeen();
   }
- 
 }

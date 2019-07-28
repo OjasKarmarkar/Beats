@@ -14,6 +14,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver{
   var index = 0;
   var screens = [HomeScreen(), Library(), Bookmarks(), SettingsScreen()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

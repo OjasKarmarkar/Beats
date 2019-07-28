@@ -35,6 +35,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
 
     if (Play_Screen.get_Screen() == true) {
       return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).backgroundColor,
         body: Stack(
           children: <Widget>[
@@ -228,76 +229,59 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               return IconButton(
                                 onPressed: () {
                                   showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: height * 0.16,
-                                              horizontal: width * 0.13),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(24.0),
-                                            child: Container(
-                                                color: Theme.of(context)
-                                                    .backgroundColor,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(20.0),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
-                                                          children: <Widget>[
-                                                            Text(
-                                                              "Add to Playlist",
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .display1,
-                                                            ),
-                                                            Container(
-                                                              height: 25,
-                                                              width: 25,
-                                                              child:
-                                                                  FloatingActionButton(
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .white,
-                                                                onPressed: () {
-                                                                  _displayDialog(
-                                                                      context,repo);
-                                                                },
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .add_circle_outline,
-                                                                  color: Colors
-                                                                      .greenAccent,
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      //ListView.builder(
-                                                      // itemCount: repo.getList().length == null? 0 : repo.getList().length,
-                                                      // itemBuilder: (context, index) {
-                                                      //return FlatButton(
-                                                      //child: Text(repo.getList()[index]), onPressed: () {},
-                                                      //);
-                                                      // },
-                                                      //)
-                                                    ],
+                                    context: context,
+                                    builder: (context) {
+                                      return SimpleDialog(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text(
+                                                "Add to Playlist",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .display1,
+                                              ),
+                                              Container(
+                                                height: 25,
+                                                width: 25,
+                                                child: FloatingActionButton(
+                                                  backgroundColor: Colors.white,
+                                                  onPressed: () {
+                                                    _displayDialog(
+                                                        context, repo);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.add_circle_outline,
+                                                    color: Colors.greenAccent,
                                                   ),
-                                                )),
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                        );
-                                      });
+                                          Container(
+                                            width: double.maxFinite,
+                                            child: (repo.playlist.length != 0)
+                                                ? ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount:
+                                                        repo.playlist.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return ListTile(
+                                                            title: Text(
+                                                            repo.playlist[index]),
+                                                      );
+                                                    },
+                                                  )
+                                                : Center(
+                                                    child: Text("No Playlist"),
+                                                  ),
+                                          )
+                                        ],
+                                      );
+                                    });
                                 },
                                 icon: Icon(
                                   Icons.playlist_add,
@@ -315,309 +299,294 @@ class _PlayBackPageState extends State<PlayBackPage> {
       );
     } else {
       return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Stack(children: <Widget>[
-        AppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
-          leading: Padding(
-            padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
-            child: IconButton(
-              iconSize: 35.0,
-              icon: Icon(
-                CustomIcons.arrow_circle_o_left,
-                color: Colors.grey,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ),
-        Consumer<SongsModel>(
-          builder: (context, model, _) => Column(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(top: height * 0.04),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(200)),
-                        elevation: 10,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
-                          child: SizedBox(
-                            height: 290,
-                            width: 290,
-                            child: ClipOval(
-                              child: (model.currentSong.albumArt != null)
-                                  ? Image.file(
-                                      File.fromUri(Uri.parse(
-                                          model.currentSong.albumArt)),
-                                      width: 100,
-                                      height: 100,
-                                    )
-                                  : Image.asset("assets/headphone.png"),
-                            ),
-                          ),
-                        )),
-                    //)
-                  ) //;},
-                  //),
+            AppBar(
+              backgroundColor: Theme.of(context).backgroundColor,
+              leading: Padding(
+                padding:
+                    EdgeInsets.only(top: height * 0.012, left: width * 0.03),
+                child: IconButton(
+                  iconSize: 35.0,
+                  icon: Icon(
+                    CustomIcons.arrow_circle_o_left,
+                    color: Colors.grey,
                   ),
-              Container(
-                height: height * 0.09,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 12),
-                  child: Center(
-                    child: Text(
-                      model.currentSong.title,
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                height: height * 0.04,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 1.0),
-                  child: Center(
-                    child: Text(
-                      model.currentSong.artist.toString(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Consumer<ProgressModel>(builder: (context, a, _) {
-                return Slider(
-                  max: a.duration.toDouble(),
-                  onChanged: (double value) {
-                    if (value.toDouble() == a.duration.toDouble()) {
-                      model.player.stop();
-                      model.next();
-                      model.play();
-                    } else {
-                      a.setPosition(value);
-                      model.seek(value);
-                    }
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
-                  value: a.position.toDouble(),
-                );
-              }),
-              Padding(
-                padding: EdgeInsets.only(left: width * 0.1, top: height * 0.02),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: () {
-                        model.player.stop();
-                        model.previous();
-                        model.play();
-                      },
-                      icon: Icon(
-                        CustomIcons.step_backward,
-                        color: Colors.grey,
-                        size: 40.0,
+                ),
+              ),
+            ),
+            Consumer<SongsModel>(
+              builder: (context, model, _) => Column(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(top: height * 0.04),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(200)),
+                            elevation: 10,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(40),
+                              child: SizedBox(
+                                height: 290,
+                                width: 290,
+                                child: ClipOval(
+                                  child: (model.currentSong.albumArt != null)
+                                      ? Image.file(
+                                          File.fromUri(Uri.parse(
+                                              model.currentSong.albumArt)),
+                                          width: 100,
+                                          height: 100,
+                                        )
+                                      : Image.asset("assets/headphone.png"),
+                                ),
+                              ),
+                            )),
+                        //)
+                      ) //;},
+                      //),
+                      ),
+                  Container(
+                    height: height * 0.09,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 12),
+                      child: Center(
+                        child: Text(
+                          model.currentSong.title,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: height * 0.01),
-                      child: InkWell(
-                          onTap: () {
-                            if (model.currentState == PlayerState.PAUSED ||
-                                model.currentState == PlayerState.STOPPED) {
-                              model.play();
-                            } else {
-                              model.pause();
-                            }
-                          },
-                          child: FloatingActionButton(
-                            child: (model.currentState == PlayerState.PAUSED ||
-                                    model.currentState == PlayerState.STOPPED)
-                                ? Icon(
-                                    CustomIcons.play,
-                                    size: 30.0,
-                                  )
-                                : Icon(CustomIcons.pause),
-                          )),
+                  ),
+                  Container(
+                    height: height * 0.04,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 1.0),
+                      child: Center(
+                        child: Text(
+                          model.currentSong.artist.toString(),
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: width * 0.1),
-                      child: IconButton(
-                        onPressed: () {
+                  ),
+                  Consumer<ProgressModel>(builder: (context, a, _) {
+                    return Slider(
+                      max: a.duration.toDouble(),
+                      onChanged: (double value) {
+                        if (value.toDouble() == a.duration.toDouble()) {
                           model.player.stop();
                           model.next();
                           model.play();
-                        },
-                        icon: Icon(
-                          CustomIcons.step_forward,
-                          color: Colors.grey,
-                          size: 40.0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding:
-                    EdgeInsets.only(left: width * 0.001, top: height * 0.06),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 2.0),
-                      child: Consumer<BookmarkModel>(
-                        builder: (context, bookmark, _) => IconButton(
+                        } else {
+                          a.setPosition(value);
+                          model.seek(value);
+                        }
+                      },
+                      value: a.position.toDouble(),
+                    );
+                  }),
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: width * 0.1, top: height * 0.02),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        IconButton(
                           onPressed: () {
-                            if (!bookmark.alreadyExists(model.currentSong)) {
-                              bookmark.add(model.currentSong);
-                            } else {
-                              bookmark.remove(model.currentSong);
-                            }
+                            model.player.stop();
+                            model.previous();
+                            model.play();
                           },
                           icon: Icon(
-                            bookmark.alreadyExists(model.currentSong)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: bookmark.alreadyExists(model.currentSong)
-                                ? Colors.pink
-                                : Colors.grey,
+                            CustomIcons.step_backward,
+                            color: Colors.grey,
+                            size: 40.0,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: height * 0.01),
+                          child: InkWell(
+                              onTap: () {
+                                if (model.currentState == PlayerState.PAUSED ||
+                                    model.currentState == PlayerState.STOPPED) {
+                                  model.play();
+                                } else {
+                                  model.pause();
+                                }
+                              },
+                              child: FloatingActionButton(
+                                child:
+                                    (model.currentState == PlayerState.PAUSED ||
+                                            model.currentState ==
+                                                PlayerState.STOPPED)
+                                        ? Icon(
+                                            CustomIcons.play,
+                                            size: 30.0,
+                                          )
+                                        : Icon(CustomIcons.pause),
+                              )),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: width * 0.1),
+                          child: IconButton(
+                            onPressed: () {
+                              model.player.stop();
+                              model.next();
+                              model.play();
+                            },
+                            icon: Icon(
+                              CustomIcons.step_forward,
+                              color: Colors.grey,
+                              size: 40.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: width * 0.001, top: height * 0.06),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(left: 2.0),
+                          child: Consumer<BookmarkModel>(
+                            builder: (context, bookmark, _) => IconButton(
+                              onPressed: () {
+                                if (!bookmark
+                                    .alreadyExists(model.currentSong)) {
+                                  bookmark.add(model.currentSong);
+                                } else {
+                                  bookmark.remove(model.currentSong);
+                                }
+                              },
+                              icon: Icon(
+                                bookmark.alreadyExists(model.currentSong)
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: bookmark.alreadyExists(model.currentSong)
+                                    ? Colors.pink
+                                    : Colors.grey,
+                                size: 35.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            model.repeat
+                                ? model.setRepeat(false)
+                                : model.setRepeat(true);
+                          },
+                          icon: Icon(
+                            Icons.loop,
+                            color: model.repeat ? Colors.pink : Colors.grey,
                             size: 35.0,
                           ),
                         ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        model.repeat
-                            ? model.setRepeat(false)
-                            : model.setRepeat(true);
-                      },
-                      icon: Icon(
-                        Icons.loop,
-                        color: model.repeat ? Colors.pink : Colors.grey,
-                        size: 35.0,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        model.shuffle
-                            ? model.setShuffle(false)
-                            : model.setShuffle(true);
-                      },
-                      icon: Icon(
-                        Icons.shuffle,
-                        color: model.shuffle ? Colors.pink : Colors.grey,
-                        size: 35.0,
-                      ),
-                    ),
-                    Consumer<PlaylistRepo>(
-                      builder: (context, repo, _) {
-                        return IconButton(
+                        IconButton(
                           onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: height * 0.16,
-                                        horizontal: width * 0.13),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(24.0),
-                                      child: Container(
-                                          color:
-                                              Theme.of(context).backgroundColor,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      20.0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: <Widget>[
-                                                      Text(
-                                                        "Add to Playlist",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .display1,
-                                                      ),
-                                                      Container(
-                                                        height: 25,
-                                                        width: 25,
-                                                        child:
-                                                            FloatingActionButton(
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          onPressed: () {
-                                                            _displayDialog(
-                                                                context,repo);
-                                                          },
-                                                          child: Icon(
-                                                            Icons
-                                                                .add_circle_outline,
-                                                            color: Colors
-                                                                .greenAccent,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
+                            model.shuffle
+                                ? model.setShuffle(false)
+                                : model.setShuffle(true);
+                          },
+                          icon: Icon(
+                            Icons.shuffle,
+                            color: model.shuffle ? Colors.pink : Colors.grey,
+                            size: 35.0,
+                          ),
+                        ),
+                        Consumer<PlaylistRepo>(
+                          builder: (context, repo, _) {
+                            return IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return SimpleDialog(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text(
+                                                "Add to Playlist",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .display1,
+                                              ),
+                                              Container(
+                                                height: 25,
+                                                width: 25,
+                                                child: FloatingActionButton(
+                                                  backgroundColor: Colors.white,
+                                                  onPressed: () {
+                                                    _displayDialog(
+                                                        context, repo);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.add_circle_outline,
+                                                    color: Colors.greenAccent,
                                                   ),
                                                 ),
-                                                Container(
-                                                  color: Theme.of(context).backgroundColor,
-                                                  height: height*0.3,
-                                                  child: ListView(children: <Widget>[
-                                                    Material(child: ListTile(title: Text("lapre" ,
-                                                    style: Theme.of(context).textTheme.display2,),))
-                                                  ],),
-                                                )
-                                                /*(repo.playlist.length != 0) ? 
-                                                ListView.builder(
-                                                 itemCount: repo.playlist.length,
-                                                 itemBuilder: (context, index) {
-                                                return ListTile(
-                                                title: Text(repo.playlist[index]),
-                                                );
-                                                 },
-                                                ) : Center(child: Text("No Playlist"),)*/
-                                              ],
-                                            ),
-                                          )),
-                                    ),
-                                  );
-                                });
+                                              )
+                                            ],
+                                          ),
+                                          Container(
+                                            width: double.maxFinite,
+                                            child: (repo.playlist.length != 0)
+                                                ? ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount:
+                                                        repo.playlist.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return ListTile(
+                                                            title: Text(
+                                                            repo.playlist[index]),
+                                                      );
+                                                    },
+                                                  )
+                                                : Center(
+                                                    child: Text("No Playlist"),
+                                                  ),
+                                          )
+                                        ],
+                                      );
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.playlist_add,
+                                color: Colors.grey,
+                                size: 35.0,
+                              ),
+                            );
                           },
-                          icon: Icon(
-                            Icons.playlist_add,
-                            color: Colors.grey,
-                            size: 35.0,
-                          ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        )
-      ]));
+            )
+          ]));
     }
   }
 
-  _displayDialog(BuildContext context,repo) async {
+  _displayDialog(BuildContext context, repo) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -647,7 +616,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                     style: Theme.of(context).textTheme.display2,
                   ),
                   onPressed: () {
-                    validate(context,repo);
+                    validate(context, repo);
                   },
                 )
               ],
@@ -656,12 +625,13 @@ class _PlayBackPageState extends State<PlayBackPage> {
         });
   }
 
-  void validate(context,repo) {
+  void validate(context, repo) {
     setState(() {
       txt.text.isEmpty ? error = true : error = false;
     });
     if (txt.text.isNotEmpty) {
       repo.add(txt.text);
+      txt.clear();
       Navigator.of(context).pop();
     } else {}
   }
