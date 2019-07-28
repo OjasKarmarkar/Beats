@@ -1,5 +1,6 @@
 import 'package:beats/Models/Username.dart';
 import 'package:beats/screens/Recents.dart';
+import 'package:beats/Models/playlist_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'PlayList.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Username username;
-  
+
   @override
   Widget build(BuildContext context) {
     username = Provider.of<Username>(context);
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.only(
                           top: height * 0.08, left: width * 0.1),
                       child: Text(
-                        username.getName() +",",
+                        username.getName() + ",",
                         style: Theme.of(context).textTheme.headline,
                       ),
                     ),
@@ -52,33 +53,38 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(left: width * 0.08, top: height * 0.04),
+              padding: EdgeInsets.only(top: height * 0.04),
               child: SizedBox(
                 height: height * 0.31,
-                child: ListView(
-                  children: <Widget>[
-                    Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(new MaterialPageRoute(
-                              builder: (context) => new PLayListScreen()));
-                        },
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              width: width * 0.4,
-                              color: Colors.blue,
-                              child: Center(
-                                  child: Text("Hello",
-                                      style: TextStyle(color: Colors.white))),
-                            )),
-                      ),
-                    ),
-                  ],
-                  scrollDirection: Axis.horizontal,
+                child: Consumer<PlaylistRepo>(
+                  builder: (context, playlistRepo, _) => ListView.builder(
+                    itemCount: playlistRepo.playlist.length,
+                    itemBuilder: (context, pos) {
+                      var padd = (pos == 0) ? width * 0.08 : 5.0;
+                      return Card(
+                        margin: EdgeInsets.only(left: padd, right:5.0),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(new MaterialPageRoute(
+                                builder: (context) => new PLayListScreen()));
+                          },
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                width: width * 0.4,
+                                color: Colors.blue,
+                                child: Center(
+                                    child: Text(playlistRepo.playlist[pos],
+                                        style: TextStyle(color: Colors.white))),
+                              )),
+                        ),
+                      );
+                    },
+                    scrollDirection: Axis.horizontal,
+                  ),
                 ),
               )),
           Padding(
@@ -95,5 +101,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-   
 }
