@@ -15,8 +15,6 @@ class Themes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     themeChanger = Provider.of<ThemeChanger>(context);
-    
-
     return Scaffold(
       body: Stack(
         children: <Widget>[

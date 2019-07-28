@@ -78,11 +78,5 @@ class SplashState extends State<Splash> {
     super.initState();
     checkFirstSeen();
   }
-  @override
-  void dispose() {
-    
-    super.dispose();
-    model.dispose();
-    
-  }
+
 }
