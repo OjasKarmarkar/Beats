@@ -574,14 +574,18 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                     ],
                                                   ),
                                                 ),
-                                                (repo.playlist != null) ? ListView.builder(
+                                                ListView(children: <Widget>[
+                                                  ListTile(title: Text("lapre"),)
+                                                ],)
+                                                /*(repo.playlist.length != 0) ? 
+                                                ListView.builder(
                                                  itemCount: repo.playlist.length,
                                                  itemBuilder: (context, index) {
-                                                return FlatButton(
-                                                child: Text(repo.playlist[index]), onPressed: () {},
+                                                return ListTile(
+                                                title: Text(repo.playlist[index]),
                                                 );
                                                  },
-                                                ) : Center(child: Text("No Playlist"),)
+                                                ) : Center(child: Text("No Playlist"),)*/
                                               ],
                                             ),
                                           )),

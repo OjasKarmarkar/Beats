@@ -10,12 +10,6 @@ enum PlayerState { PLAYING, PAUSED, STOPPED }
 class SongsModel extends ChangeNotifier {
 
 
-  void dispose() async{
-    print("koti"+"calling");
-    await MediaNotification.hide();
-    notifyListeners();
-  }
-
   // Thousands of stuff packed into this ChangeNotifier
   var songs = <Song>[];
   var duplicate = <Song>[]; // Duplicate of songs variable for Search function

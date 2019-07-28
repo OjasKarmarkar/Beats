@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaylistRepo extends ChangeNotifier {
-  List<String> playlist;
+  List<String> playlist = [];
   SharedPreferences prefList;
 
   PlaylistRepo() {
@@ -20,7 +20,9 @@ class PlaylistRepo extends ChangeNotifier {
   }
 
   updatePlayList(List<String> list) {
-    playlist = list;
+    if (list != null) {
+      playlist.addAll(list);
+    }
     notifyListeners();
   }
 
