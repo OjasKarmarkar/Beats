@@ -18,7 +18,6 @@ class PlayBackPage extends StatefulWidget {
 
 class _PlayBackPageState extends State<PlayBackPage> {
   SongsModel model;
-  PlaylistRepo repo;
   ThemeChanger tc;
 
   Now_Playing Play_Screen;
@@ -31,7 +30,6 @@ class _PlayBackPageState extends State<PlayBackPage> {
   @override
   Widget build(BuildContext context) {
     Play_Screen = Provider.of<Now_Playing>(context);
-    repo = Provider.of<PlaylistRepo>(context);
     tc = Provider.of<ThemeChanger>(context);
 
     if (Play_Screen.get_Screen() == true) {
