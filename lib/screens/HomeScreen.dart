@@ -1,5 +1,7 @@
+import 'package:beats/Models/Username.dart';
 import 'package:beats/screens/Recents.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'PlayList.dart';
 
 double height, width;
@@ -10,8 +12,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Username username;
+  
   @override
   Widget build(BuildContext context) {
+    username = Provider.of<Username>(context);
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -28,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: EdgeInsets.only(
                           top: height * 0.08, left: width * 0.1),
                       child: Text(
-                        "User,",
+                        username.getName() +",",
                         style: Theme.of(context).textTheme.headline,
                       ),
                     ),
@@ -90,4 +95,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+   
 }

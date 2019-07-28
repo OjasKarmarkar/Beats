@@ -1,6 +1,8 @@
 import 'package:beats/Animations/transitions.dart';
+import 'package:beats/Models/Username.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'HomeScreen.dart';
 import '../custom_icons.dart';
 import 'SetttingsSubScreens/Donate.dart';
@@ -15,8 +17,12 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  Username username;
+  TextEditingController text = new TextEditingController();
+  bool err = false;
   @override
   Widget build(BuildContext context) {
+    username = Provider.of<Username>(context);
     final subtitles = [
       'Customize The Look and Accent Of The App',
       "Change The Controls Of The Playing Screen",
@@ -64,7 +70,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       CustomIcons.user,
                       color: Colors.grey,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                     _displayDialog(context);
+                    },
                   ),
                 )
               ],
@@ -145,5 +153,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
     );
+  }
+
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AlertDialog(
+              shape: Border.all(color: Colors.greenAccent),
+              backgroundColor: Theme.of(context).backgroundColor,
+              title: Text(
+                'Enter your name!',
+                style: Theme.of(context).textTheme.display2,
+              ),
+              content: TextFormField(
+                controller: text,
+                decoration: InputDecoration(
+                    errorText: err ? "Whats in a name?" : null,
+                    errorStyle: Theme.of(context).textTheme.display2,
+                    labelText: "Enter Name",
+                    labelStyle: Theme.of(context).textTheme.display2,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4))),
+              ),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text(
+                    'Set',
+                    style: Theme.of(context).textTheme.display2,
+                  ),
+                  onPressed: () {
+                    validate(context);
+                  },
+                )
+              ],
+            ),
+          );
+        });
+  }
+  void validate(context) {
+    setState(() {
+      text.text.isEmpty ? err = true : err = false;
+    });
+    if (text.text.isNotEmpty) {
+      username.setName(text.text.toString());
+      text.clear();
+      Navigator.of(context).pop();
+    } else {}
   }
 }
