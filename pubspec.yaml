@@ -35,8 +35,8 @@ dependencies:
   url_launcher: ^5.0.3
   flutter_webview_plugin: ^0.3.5
   sqflite:
-  media_notification:
-    path: ./notification
+  share: ^0.6.2+1
+ 
 
 flutter_icons:
   android: "launcher_icon"

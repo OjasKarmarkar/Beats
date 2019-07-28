@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:beats/Models/ThemeModel.dart';
 import 'package:beats/Models/playlist_repo.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/PlayListHelper.dart';
@@ -574,9 +575,14 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                     ],
                                                   ),
                                                 ),
-                                                ListView(children: <Widget>[
-                                                  ListTile(title: Text("lapre"),)
-                                                ],)
+                                                Container(
+                                                  color: Theme.of(context).backgroundColor,
+                                                  height: height*0.3,
+                                                  child: ListView(children: <Widget>[
+                                                    Material(child: ListTile(title: Text("lapre" ,
+                                                    style: Theme.of(context).textTheme.display2,),))
+                                                  ],),
+                                                )
                                                 /*(repo.playlist.length != 0) ? 
                                                 ListView.builder(
                                                  itemCount: repo.playlist.length,

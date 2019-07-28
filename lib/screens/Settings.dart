@@ -7,6 +7,7 @@ import 'SetttingsSubScreens/Donate.dart';
 import 'SetttingsSubScreens/Theme.dart';
 import 'SetttingsSubScreens/PlayBack.dart';
 import 'SetttingsSubScreens/About_Us.dart';
+import 'package:share/share.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -48,7 +49,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     CustomIcons.share_alt,
                     color: Colors.grey,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Share.share('Download this beautiful music player right now!');
+                  },
                 ),
               ),
               actions: <Widget>[

@@ -47,7 +47,6 @@ class Splash extends StatefulWidget {
 }
 
 class SplashState extends State<Splash> {
-  SongsModel model;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -75,14 +74,12 @@ class SplashState extends State<Splash> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
     super.initState();
     checkFirstSeen();
   }
-  @override
-  void dispose() {
-    
-    super.dispose();
-    model.dispose();
-    
-  }
+ 
 }

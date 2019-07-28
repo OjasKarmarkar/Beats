@@ -130,13 +130,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.5"
-  media_notification:
-    dependency: "direct main"
-    description:
-      path: notification
-      relative: true
-    source: path
-    version: "0.0.5"
   meta:
     dependency: transitive
     description:
@@ -207,6 +200,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+  share:
+    dependency: "direct main"
+    description:
+      name: share
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.2+1"
   shared_preferences:
     dependency: transitive
     description:
@@ -312,4 +312,4 @@ packages:
     version: "2.1.15"
 sdks:
   dart: ">=2.2.2 <3.0.0"
-  flutter: ">=1.5.0 <2.0.0"
+  flutter: ">=1.6.0 <2.0.0"
