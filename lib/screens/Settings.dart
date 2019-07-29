@@ -55,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   iconSize: 35.0,
                   icon: Icon(
                     CustomIcons.share_alt,
-                    color: themeChanger.accentColor,
+                    color: Colors.grey,
                   ),
                   onPressed: () {
                     Share.share('Download this beautiful music player right now!');
@@ -98,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           borderRadius: BorderRadius.all(
                               Radius.circular(20)),
                           side: BorderSide(
-                            width: 0.45, color: Colors.greenAccent
+                            width: 0.45, color: themeChanger.accentColor
                             )),
                       color: Theme.of(context).cardColor,
                       elevation: 5.0,
