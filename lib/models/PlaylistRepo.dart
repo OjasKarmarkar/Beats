@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PlaylistRepo extends ChangeNotifier {
+
   List<String> playlist = [];
   SharedPreferences prefList;
+  int selected;
 
   PlaylistRepo() {
     init();

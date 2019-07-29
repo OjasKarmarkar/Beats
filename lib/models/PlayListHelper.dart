@@ -8,6 +8,7 @@ class PlaylistHelper {
 
   PlaylistHelper(String playlist){
     tableName = playlist;
+    database;
   }
 
   Future<Database> get database async {

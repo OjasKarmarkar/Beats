@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:beats/models/ThemeModel.dart';
-import 'package:beats/Models/playlist_repo.dart';
+import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/PlayListHelper.dart';
 import 'package:beats/models/SongsModel.dart';
@@ -229,59 +229,61 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               return IconButton(
                                 onPressed: () {
                                   showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return SimpleDialog(
-                                        children: <Widget>[
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: <Widget>[
-                                              Text(
-                                                "Add to Playlist",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .display1,
-                                              ),
-                                              Container(
-                                                height: 25,
-                                                width: 25,
-                                                child: FloatingActionButton(
-                                                  backgroundColor: Colors.white,
-                                                  onPressed: () {
-                                                    _displayDialog(
-                                                        context, repo);
-                                                  },
-                                                  child: Icon(
-                                                    Icons.add_circle_outline,
-                                                    color: Colors.greenAccent,
-                                                  ),
+                                      context: context,
+                                      builder: (context) {
+                                        return SimpleDialog(
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Text(
+                                                  "Add to Playlist",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .display1,
                                                 ),
-                                              )
-                                            ],
-                                          ),
-                                          Container(
-                                            width: double.maxFinite,
-                                            child: (repo.playlist.length != 0)
-                                                ? ListView.builder(
-                                                    shrinkWrap: true,
-                                                    itemCount:
-                                                        repo.playlist.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return ListTile(
-                                                            title: Text(
-                                                            repo.playlist[index]),
-                                                      );
+                                                Container(
+                                                  height: 25,
+                                                  width: 25,
+                                                  child: FloatingActionButton(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    onPressed: () {
+                                                      _displayDialog(
+                                                          context, repo);
                                                     },
-                                                  )
-                                                : Center(
-                                                    child: Text("No Playlist"),
+                                                    child: Icon(
+                                                      Icons.add_circle_outline,
+                                                      color: Colors.greenAccent,
+                                                    ),
                                                   ),
-                                          )
-                                        ],
-                                      );
-                                    });
+                                                )
+                                              ],
+                                            ),
+                                            Container(
+                                              width: double.maxFinite,
+                                              child: (repo.playlist.length != 0)
+                                                  ? ListView.builder(
+                                                      shrinkWrap: true,
+                                                      itemCount:
+                                                          repo.playlist.length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return ListTile(
+                                                          title: Text(repo
+                                                              .playlist[index]),
+                                                        );
+                                                      },
+                                                    )
+                                                  : Center(
+                                                      child:
+                                                          Text("No Playlist"),
+                                                    ),
+                                            )
+                                          ],
+                                        );
+                                      });
                                 },
                                 icon: Icon(
                                   Icons.playlist_add,
@@ -556,8 +558,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                     itemBuilder:
                                                         (context, index) {
                                                       return ListTile(
-                                                            title: Text(
-                                                            repo.playlist[index]),
+                                                        onTap: () {
+                                                          PlaylistHelper(
+                                                            repo.playlist[index]).add(model.currentSong);
+                                                        },
+                                                        title: Text(repo.playlist[index]),
                                                       );
                                                     },
                                                   )

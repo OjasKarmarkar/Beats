@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/SongsModel.dart';
+import 'package:beats/models/PlayListHelper.dart';
 import 'package:beats/screens/HomeScreen.dart';
+import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../custom_icons.dart';
 
 class PLayListScreen extends StatefulWidget {
@@ -9,8 +15,21 @@ class PLayListScreen extends StatefulWidget {
 }
 
 class _PLayListScreenState extends State<PLayListScreen> {
+  PlaylistRepo playlistRepo;
   SongsModel model;
+  String name;
   TextEditingController editingController;
+  List<Song> songs;
+
+  @override
+  void didChangeDependencies() {
+    playlistRepo = Provider.of<PlaylistRepo>(context);
+    name = playlistRepo.playlist[playlistRepo.selected];
+    initData();
+    model = Provider.of<SongsModel>(context);
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,12 +102,13 @@ class _PLayListScreenState extends State<PLayListScreen> {
                             child: Padding(
                               padding: EdgeInsets.only(top: height * 0.18),
                               child: Text(
-                                "Playlist 1",
+                                name,
                                 style: TextStyle(
                                     fontSize: 40.0, color: Colors.white),
                               ),
                             ),
                           ),
+                          showStatus()
                         ],
                       )
                     ],
@@ -98,9 +118,136 @@ class _PLayListScreenState extends State<PLayListScreen> {
               ),
             ];
           },
-          body: Scaffold(
-             backgroundColor: Theme.of(context).backgroundColor,
-          )),
+          body: (songs != null)
+              ? (songs.length != 0)
+                  ? ListView.builder(
+                      itemCount: songs.length,
+                      itemBuilder: (context, pos) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 20.0, left: 10.0),
+                          child: ListTile(
+                            onTap: () {
+                              //isPlayed = true;
+                              model.player.stop();
+                              model.currentSong = songs[pos];
+                              model.filterResults(
+                                  ""); //Reset the list. So we can change to next song.
+                              model.play();
+                            },
+                            leading: CircleAvatar(child: getImage(pos)),
+                            title: Text(
+                              songs[pos].title,
+                              style: Theme.of(context).textTheme.display3,
+                            ),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                songs[pos].artist,
+                                style: Theme.of(context).textTheme.display2,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text("No Songs"),
+                    )
+              : Center(
+                  child: Text("Loading..."),
+                )),
+                
     );
   }
+
+  void initData() async {
+    var helper = PlaylistHelper(name);
+    songs = await helper.getSongs();
+    setState(() {});
+  }
+
+  getImage(pos) {
+    if (songs[pos].albumArt != null) {
+      return ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.file(File.fromUri(Uri.parse(songs[pos].albumArt))));
+    } else {
+      return Icon(Icons.music_note);
+    }
+  }
+  showStatus() {
+    if (model.currentSong != null) {
+      return Align(
+        alignment: Alignment.bottomRight,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.black,
+            border: Border.all(color: Colors.greenAccent),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40.0),
+                topRight: Radius.circular(10.0),
+                bottomRight: Radius.elliptical(10, 4)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ListTile(
+              leading: CircleAvatar(
+                  child: ClipRRect(
+                borderRadius: BorderRadius.circular(40.0),
+                child: (model.currentSong.albumArt != null)
+                    ? Image.file(
+                        File.fromUri(Uri.parse(model.currentSong.albumArt)),
+                        width: 100,
+                        height: 100,
+                      )
+                    : Image.asset("assets/headphone.png"),
+              )),
+              title: Text(
+                model.currentSong.title,
+                maxLines: 1,
+                style: TextStyle(color: Colors.white, fontSize: 11.0),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(left: 0, top: 5.0, bottom: 10.0),
+                child: Text(
+                  model.currentSong.artist,
+                  style: TextStyle(
+                      fontFamily: 'Sans', color: Colors.white, fontSize: 11.0),
+                ),
+              ),
+              trailing: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                    onTap: () {
+                      if (model.currentState == PlayerState.PAUSED ||
+                          model.currentState == PlayerState.STOPPED) {
+                        model.play();
+                      } else {
+                        model.pause();
+                      }
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      child: FloatingActionButton(
+                        child: (model.currentState == PlayerState.PAUSED ||
+                                model.currentState == PlayerState.STOPPED)
+                            ? Icon(
+                                CustomIcons.play,
+                                size: 20.0,
+                              )
+                            : Icon(
+                                CustomIcons.pause,
+                                size: 20.0,
+                              ),
+                      ),
+                    )),
+              ),
+            ),
+          ),
+          height: height * 0.1,
+          width: width * 0.62,
+        ),
+      );}else{}
+}
 }

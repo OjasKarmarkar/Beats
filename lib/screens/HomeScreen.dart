@@ -1,6 +1,7 @@
 import 'package:beats/Models/Username.dart';
 import 'package:beats/screens/Recents.dart';
-import 'package:beats/Models/playlist_repo.dart';
+import 'package:beats/models/PlaylistRepo.dart';
+//import 'package:beats/Models/playlist_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'PlayList.dart';
@@ -58,30 +59,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: height * 0.31,
                 child: Consumer<PlaylistRepo>(
                   builder: (context, playlistRepo, _) => ListView.builder(
-                    itemCount: playlistRepo.playlist.length,
+                    itemCount: playlistRepo.playlist.length + 1,
                     itemBuilder: (context, pos) {
                       var padd = (pos == 0) ? width * 0.08 : 5.0;
-                      return Card(
-                        margin: EdgeInsets.only(left: padd, right:5.0),
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(new MaterialPageRoute(
-                                builder: (context) => new PLayListScreen()));
-                          },
+                      if (pos == (playlistRepo.playlist.length)) {
+                        return Card(
+                          margin: EdgeInsets.only(left: padd, right: 5.0),
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Container(
                                 width: width * 0.4,
-                                color: Colors.blue,
-                                child: Center(
-                                    child: Text(playlistRepo.playlist[pos],
-                                        style: TextStyle(color: Colors.white))),
+                                child: Center(child: Icon(Icons.add)),
                               )),
-                        ),
-                      );
+                        );
+                      } else {
+                        return Card(
+                          margin: EdgeInsets.only(left: padd, right: 5.0),
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: GestureDetector(
+                            onTap: () {
+                              playlistRepo.selected = pos;
+                              Navigator.of(context).push(new MaterialPageRoute(
+                                  builder: (context) => new PLayListScreen()));
+                            },
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  width: width * 0.4,
+                                  color: Colors.blue,
+                                  child: Center(
+                                      child: Text(playlistRepo.playlist[pos],
+                                          style:
+                                              TextStyle(color: Colors.white))),
+                                )),
+                          ),
+                        );
+                      }
                     },
                     scrollDirection: Axis.horizontal,
                   ),
