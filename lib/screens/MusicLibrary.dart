@@ -1,4 +1,7 @@
 import 'package:beats/Animations/transitions.dart';
+import 'package:beats/models/ThemeModel.dart';
+import 'package:beats/models/BookmarkModel.dart';
+import 'package:beats/Models/const.dart';
 import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -10,59 +13,75 @@ import 'Player.dart';
 class Library extends StatelessWidget {
   TextEditingController editingController;
   SongsModel model;
+  BookmarkModel b;
+  ThemeChanger themeChanger;
+  TextEditingController txt = TextEditingController();
+
+  bool error = false;
 
   @override
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
+    b = Provider.of<BookmarkModel>(context);
+    themeChanger = Provider.of<ThemeChanger>(context);
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).backgroundColor,
-        body: (model.songs == null) ? Center(child: Text("No Songs", style: Theme.of(context).textTheme.display1,),) : Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: width * 0.04,
-                      right: width * 0.04,
-                      top: height * 0.03,
-                      bottom: height * 0.01),
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 20, left: 10),
-                    child: TextField(
-                        onChanged: (value) {
-                          model.filterResults(value);
-                        },
-                        controller: editingController,
-                        decoration: InputDecoration(
-                            disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide:
-                                    BorderSide(color: Colors.greenAccent)),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide:
-                                    BorderSide(color: Colors.greenAccent)),
-                            hintStyle: Theme.of(context).textTheme.display2,
-                            hintText: "Search",
-                            prefixIcon: Icon(
-                              CustomIcons.search,
-                              color: Colors.grey,
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                borderSide:
-                                    BorderSide(color: Colors.greenAccent)))),
-                  ),
+        body: (model.songs == null)
+            ? Center(
+                child: Text(
+                  "No Songs",
+                  style: Theme.of(context).textTheme.display1,
                 ),
-                getLoading(model),
-              ],
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: showStatus(model),
-            )
-          ],
-        ));
+              )
+            : Stack(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: width * 0.04,
+                            right: width * 0.04,
+                            top: height * 0.03,
+                            bottom: height * 0.01),
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 20, left: 10),
+                          child: TextField(
+                              onChanged: (value) {
+                                model.filterResults(value);
+                              },
+                              controller: editingController,
+                              decoration: InputDecoration(
+                                  disabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide: BorderSide(
+                                          color: Colors.greenAccent)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide: BorderSide(
+                                          color: Colors.greenAccent)),
+                                  hintStyle:
+                                      Theme.of(context).textTheme.display2,
+                                  hintText: "Search",
+                                  prefixIcon: Icon(
+                                    CustomIcons.search,
+                                    color: Colors.grey,
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      borderSide: BorderSide(
+                                          color: Colors.greenAccent)))),
+                        ),
+                      ),
+                      getLoading(model),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: showStatus(model),
+                  )
+                ],
+              ));
   }
 
   getLoading(model) {
@@ -77,13 +96,25 @@ class Library extends StatelessWidget {
           itemCount: model.songs.length,
           itemBuilder: (context, pos) {
             return ListTile(
-              trailing: PopupMenuButton(
+              trailing: PopupMenuButton<String>(
                 icon: Icon(
                   Icons.more_vert,
                   color: Colors.grey,
                 ),
-                itemBuilder: (context){
-
+                onSelected: choiceAction(Constants.choices.toString(), context),
+                itemBuilder: (BuildContext context) {
+                  return Constants.choices.map((String choice) {
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          choice,
+                          style: Theme.of(context).textTheme.display2,
+                        ),
+                      ),
+                    );
+                  }).toList();
                 },
               ),
               onTap: () {
@@ -182,6 +213,7 @@ class Library extends StatelessWidget {
                             height: 25,
                             width: 25,
                             child: FloatingActionButton(
+                              backgroundColor: themeChanger.accentColor,
                               child: (model.currentState ==
                                           PlayerState.PAUSED ||
                                       model.currentState == PlayerState.STOPPED)
@@ -214,5 +246,50 @@ class Library extends StatelessWidget {
         ),
       );
     } else {}
+  }
+
+  choiceAction(String choice, BuildContext context) {
+    if (choice == Constants.pl) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AlertDialog(
+                shape: Border.all(color: Colors.greenAccent),
+                backgroundColor: Theme.of(context).backgroundColor,
+                title: Text(
+                  'Add',
+                  style: Theme.of(context).textTheme.display2,
+                ),
+                content: TextFormField(
+                  controller: txt,
+                  decoration: InputDecoration(
+                      errorText: error ? "Name cant be null" : null,
+                      errorStyle: Theme.of(context).textTheme.display2,
+                      labelText: "Enter Name",
+                      labelStyle: Theme.of(context).textTheme.display2,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4))),
+                ),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text(
+                      'Create',
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                    onPressed: () {},
+                  )
+                ],
+              ),
+            );
+          });
+    } else if (choice == Constants.bm) {
+      if (!b.alreadyExists(model.currentSong)) {
+        b.add(model.currentSong);
+      } else {
+        b.remove(model.currentSong);
+      }
+    }
   }
 }

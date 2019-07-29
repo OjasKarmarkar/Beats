@@ -18,7 +18,7 @@ class PlayBackPage extends StatefulWidget {
 
 class _PlayBackPageState extends State<PlayBackPage> {
   SongsModel model;
-  ThemeChanger tc;
+  ThemeChanger themeChanger;
 
   Now_Playing Play_Screen;
 
@@ -30,7 +30,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
   @override
   Widget build(BuildContext context) {
     Play_Screen = Provider.of<Now_Playing>(context);
-    tc = Provider.of<ThemeChanger>(context);
+    themeChanger = Provider.of<ThemeChanger>(context);
 
     if (Play_Screen.get_Screen() == true) {
       return Scaffold(
@@ -51,10 +51,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 width: width,
                                 height: height * 0.63,
                               )
-                            : Image.asset("assets/headphone.png"),
+                            : Image.asset("assets/headphone.png" , alignment: Alignment.center,),
                       ),
                       Consumer<ProgressModel>(builder: (context, a, _) {
                         return Slider(
+                          activeColor: themeChanger.accentColor,
                           max: a.duration.toDouble(),
                           onChanged: (double value) {
                             if (value.toDouble() == a.duration.toDouble()) {
@@ -140,7 +141,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                   }
                                 },
                                 child: FloatingActionButton(
-                                  backgroundColor: tc.accentColor,
+                                  backgroundColor: themeChanger.accentColor,
                                   child: (model.currentState ==
                                               PlayerState.PAUSED ||
                                           model.currentState ==
@@ -344,7 +345,9 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                           width: 100,
                                           height: 100,
                                         )
-                                      : Image.asset("assets/headphone.png"),
+                                      : Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 10.0 , vertical: 30.0),
+                                        child:Image.asset("assets/headphone.png")),
                                 ),
                               ),
                             )),
@@ -384,6 +387,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                   ),
                   Consumer<ProgressModel>(builder: (context, a, _) {
                     return Slider(
+                      activeColor: themeChanger.accentColor,
                       max: a.duration.toDouble(),
                       onChanged: (double value) {
                         if (value.toDouble() == a.duration.toDouble()) {
@@ -428,7 +432,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 }
                               },
                               child: FloatingActionButton(
-                                backgroundColor: tc.accentColor,
+                                backgroundColor: themeChanger.accentColor,
                                 child:
                                     (model.currentState == PlayerState.PAUSED ||
                                             model.currentState ==
