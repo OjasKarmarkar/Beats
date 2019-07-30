@@ -33,130 +33,95 @@ class _PLayListScreenState extends State<PLayListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                automaticallyImplyLeading: false,
-                backgroundColor: Theme.of(context).backgroundColor,
-                expandedHeight: height * 0.4,
-                floating: true,
-                pinned: false,
-                snap: false,
-                flexibleSpace: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Stack(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: height * 0.04, left: width * 0.034),
-                            child: SizedBox(
-                              width: 42.0,
-                              height: 42.0,
-                              child: IconButton(
-                                iconSize: 35.0,
-                                icon: Icon(
-                                  CustomIcons.arrow_circle_o_left,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
+                  automaticallyImplyLeading: false,
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  expandedHeight: height * 0.25,
+                  floating: true,
+                  pinned: false,
+                  snap: false,
+                  flexibleSpace: Container(
+                    height: 200,
+                    color: Colors.blue,
+                    child: Stack(children: <Widget>[
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: height * 0.01, left: width * 0.034),
+                          child: SizedBox(
+                            width: 42.0,
+                            height: 42.0,
+                            child: IconButton(
+                              iconSize: 35.0,
+                              icon: Icon(
+                                CustomIcons.arrow_circle_o_left,
+                                color: Colors.white,
                               ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                             ),
+                          )),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: height * 0.02),
+                          child: Text(
+                            name,
+                            style:
+                                TextStyle(fontSize: 40.0, color: Colors.white),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: width * 0.21,
-                                top: height * 0.032,
-                                right: width * 0.05),
-                            child: TextField(
-                                cursorColor: Colors.black,
-                                onChanged: (value) {
-                                  model.filterResults(value);
-                                },
-                                controller: editingController,
-                                decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        borderSide:
-                                            BorderSide(color: Colors.black)),
-                                    contentPadding: EdgeInsets.all(13.0),
-                                    hintStyle:
-                                        Theme.of(context).textTheme.display2,
-                                    hintText: "Search",
-                                    prefixIcon: Icon(
-                                      CustomIcons.search,
-                                      color: Colors.white,
-                                    ),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        borderSide:
-                                            BorderSide(color: Colors.white)))),
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: height * 0.18),
-                              child: Text(
-                                name,
-                                style: TextStyle(
-                                    fontSize: 40.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          showStatus()
-                        ],
-                      )
-                    ],
-                  ),
-                  color: Colors.blueAccent,
-                ),
-              ),
+                        ),
+                      ),
+                    ]),
+                  )),
             ];
           },
           body: (songs != null)
               ? (songs.length != 0)
-                  ? ListView.builder(
-                      itemCount: songs.length,
-                      itemBuilder: (context, pos) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 20.0, left: 10.0),
-                          child: ListTile(
-                            onTap: () {
-                              //isPlayed = true;
-                              model.player.stop();
-                              model.currentSong = songs[pos];
-                              model.filterResults(
-                                  ""); //Reset the list. So we can change to next song.
-                              model.play();
-                            },
-                            leading: CircleAvatar(child: getImage(pos)),
-                            title: Text(
-                              songs[pos].title,
-                              style: Theme.of(context).textTheme.display3,
-                            ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                songs[pos].artist,
-                                style: Theme.of(context).textTheme.display2,
+                  ? Stack(children: <Widget>[
+                      ListView.builder(
+                        itemCount: songs.length,
+                        itemBuilder: (context, pos) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.only(top: 20.0, left: 10.0),
+                            child: ListTile(
+                              onTap: () {
+                                //isPlayed = true;
+                                model.player.stop();
+                                model.currentSong = songs[pos];
+                                model.filterResults(
+                                    ""); //Reset the list. So we can change to next song.
+                                model.play();
+                              },
+                              leading: CircleAvatar(child: getImage(pos)),
+                              title: Text(
+                                songs[pos].title,
+                                style: Theme.of(context).textTheme.display3,
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  songs[pos].artist,
+                                  style: Theme.of(context).textTheme.display2,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    )
+                          );
+                        },
+                      ),
+                      //showStatus()
+                    ])
                   : Center(
                       child: Text("No Songs"),
                     )
               : Center(
                   child: Text("Loading..."),
                 )),
-                
     );
   }
 
@@ -175,6 +140,7 @@ class _PLayListScreenState extends State<PLayListScreen> {
       return Icon(Icons.music_note);
     }
   }
+
   showStatus() {
     if (model.currentSong != null) {
       return Align(
@@ -248,6 +214,7 @@ class _PLayListScreenState extends State<PLayListScreen> {
           height: height * 0.1,
           width: width * 0.62,
         ),
-      );}else{}
-}
+      );
+    } else {}
+  }
 }

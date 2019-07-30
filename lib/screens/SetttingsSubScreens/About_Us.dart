@@ -18,18 +18,18 @@ class AboutUs extends StatelessWidget {
           ),
           backgroundColor: Theme.of(context).backgroundColor,
           leading: Padding(
-              padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
-              child: IconButton(
-                iconSize: 35.0,
-                icon: Icon(
-                  CustomIcons.arrow_circle_o_left,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+            padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
+            child: IconButton(
+              iconSize: 35.0,
+              icon: Icon(
+                CustomIcons.arrow_circle_o_left,
+                color: Colors.grey,
               ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
+          ),
         ),
         ListView(
           children: <Widget>[
@@ -125,6 +125,47 @@ class AboutUs extends StatelessWidget {
                             child: Icon(CustomIcons.google)),
                         title: Text("Gmail",
                             style: Theme.of(context).textTheme.display1),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: width * 0.07, top: height * 0.06),
+                      child: Text(
+                        "Credits to :",
+                        style: TextStyle(
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: width * 0.08, top: height * 0.02),
+                      child: Text("1. Pawan For The Flute Plugin",
+                          style: Theme.of(context).textTheme.display2),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: width * 0.08, top: height * 0.02),
+                      child: Text("2. Launcher Icon Made by Freepik from www.flaticon.com",
+                          style: Theme.of(context).textTheme.display2),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: width * 0.08, top: height * 0.02),
+                      child: Text("3.The Designer Behind the Images Used",
+                          style: Theme.of(context).textTheme.display2),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(40.0),
+                      child: Align(alignment: Alignment.center,
+                        child: Text(
+                          "Made In ❤️ With flutter",
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.blueAccent),
+                        ),
                       ),
                     )
                   ],

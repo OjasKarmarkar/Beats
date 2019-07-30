@@ -524,8 +524,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                     context: context,
                                     builder: (context) {
                                       return SimpleDialog(
+                                        backgroundColor: Theme.of(context).backgroundColor,
                                         children: <Widget>[
                                           Row(
+                                            
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: <Widget>[
@@ -539,7 +541,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                 height: 25,
                                                 width: 25,
                                                 child: FloatingActionButton(
-                                                  backgroundColor: Colors.white,
+                                                  backgroundColor: Theme.of(context).backgroundColor,
                                                   onPressed: () {
                                                     _displayDialog(
                                                         context, repo);
@@ -553,6 +555,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                             ],
                                           ),
                                           Container(
+                                            
                                             width: double.maxFinite,
                                             child: (repo.playlist.length != 0)
                                                 ? ListView.builder(
@@ -561,12 +564,17 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                         repo.playlist.length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return ListTile(
-                                                        onTap: () {
-                                                          PlaylistHelper(
-                                                            repo.playlist[index]).add(model.currentSong);
-                                                        },
-                                                        title: Text(repo.playlist[index]),
+                                                      return Padding(
+                                                        padding: EdgeInsets.only(left: 10.0),
+                                                        child: ListTile(
+                                                          onTap: () {
+                                                            PlaylistHelper(
+                                                              repo.playlist[index]).add(model.currentSong);
+                                                          },
+                                                          title: Text(repo.playlist[index] , style: Theme.of(context)
+                                                    .textTheme
+                                                    .display2,),
+                                                        ),
                                                       );
                                                     },
                                                   )

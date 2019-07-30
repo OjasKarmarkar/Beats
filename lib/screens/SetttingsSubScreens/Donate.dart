@@ -12,12 +12,15 @@ class _DonateState extends State<Donate> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      color: Theme.of(context).backgroundColor,
+      color: Colors.white,
       routes: {
         "/": (_) => new WebviewScaffold(
           url: "https://www.paypal.me/whatsnewofficial",
           withZoom: true,
           appBar: AppBar(
+            centerTitle: true,
+            title: Text("Donate!"),
+            
             leading: IconButton(
               iconSize: 35.0,
               icon: Icon(
