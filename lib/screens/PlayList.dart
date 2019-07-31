@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:beats/Models/const.dart';
 import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/PlayListHelper.dart';
@@ -90,6 +91,18 @@ class _PLayListScreenState extends State<PLayListScreen> {
                             padding:
                                 const EdgeInsets.only(top: 20.0, left: 10.0),
                             child: ListTile(
+                              trailing: IconButton(
+                                icon: Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () async {
+                                  model.player.stop();
+                                  await PlaylistHelper(name)
+                                      .deleteSong(songs[pos]);
+                                  initData();
+                                },
+                              ),
                               onTap: () {
                                 //isPlayed = true;
                                 model.player.stop();
@@ -144,74 +157,74 @@ class _PLayListScreenState extends State<PLayListScreen> {
   showStatus() {
     if (model.currentSong != null) {
       return Container(
-          decoration: BoxDecoration(
-            color: Colors.black,
-            border: Border.all(color: Colors.greenAccent),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40.0),
-                topRight: Radius.circular(10.0),
-                bottomRight: Radius.elliptical(10, 4)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: ListTile(
-              leading: CircleAvatar(
-                  child: ClipRRect(
-                borderRadius: BorderRadius.circular(40.0),
-                child: (model.currentSong.albumArt != null)
-                    ? Image.file(
-                        File.fromUri(Uri.parse(model.currentSong.albumArt)),
-                        width: 100,
-                        height: 100,
-                      )
-                    : Image.asset("assets/headphone.png"),
-              )),
-              title: Text(
-                model.currentSong.title,
-                maxLines: 1,
-                style: TextStyle(color: Colors.white, fontSize: 11.0),
-              ),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(left: 0, top: 5.0, bottom: 10.0),
-                child: Text(
-                  model.currentSong.artist,
-                  style: TextStyle(
-                      fontFamily: 'Sans', color: Colors.white, fontSize: 11.0),
-                ),
-              ),
-              trailing: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                    onTap: () {
-                      if (model.currentState == PlayerState.PAUSED ||
-                          model.currentState == PlayerState.STOPPED) {
-                        model.play();
-                      } else {
-                        model.pause();
-                      }
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      child: FloatingActionButton(
-                        child: (model.currentState == PlayerState.PAUSED ||
-                                model.currentState == PlayerState.STOPPED)
-                            ? Icon(
-                                CustomIcons.play,
-                                size: 20.0,
-                              )
-                            : Icon(
-                                CustomIcons.pause,
-                                size: 20.0,
-                              ),
-                      ),
-                    )),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          border: Border.all(color: Colors.greenAccent),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40.0),
+              topRight: Radius.circular(10.0),
+              bottomRight: Radius.elliptical(10, 4)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: ListTile(
+            leading: CircleAvatar(
+                child: ClipRRect(
+              borderRadius: BorderRadius.circular(40.0),
+              child: (model.currentSong.albumArt != null)
+                  ? Image.file(
+                      File.fromUri(Uri.parse(model.currentSong.albumArt)),
+                      width: 100,
+                      height: 100,
+                    )
+                  : Image.asset("assets/headphone.png"),
+            )),
+            title: Text(
+              model.currentSong.title,
+              maxLines: 1,
+              style: TextStyle(color: Colors.white, fontSize: 11.0),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(left: 0, top: 5.0, bottom: 10.0),
+              child: Text(
+                model.currentSong.artist,
+                style: TextStyle(
+                    fontFamily: 'Sans', color: Colors.white, fontSize: 11.0),
               ),
             ),
+            trailing: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                  onTap: () {
+                    if (model.currentState == PlayerState.PAUSED ||
+                        model.currentState == PlayerState.STOPPED) {
+                      model.play();
+                    } else {
+                      model.pause();
+                    }
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    child: FloatingActionButton(
+                      child: (model.currentState == PlayerState.PAUSED ||
+                              model.currentState == PlayerState.STOPPED)
+                          ? Icon(
+                              CustomIcons.play,
+                              size: 20.0,
+                            )
+                          : Icon(
+                              CustomIcons.pause,
+                              size: 20.0,
+                            ),
+                    ),
+                  )),
+            ),
           ),
-          height: height * 0.1,
-          width: width * 0.62,
-        );
+        ),
+        height: height * 0.1,
+        width: width * 0.62,
+      );
     } else {}
   }
 }

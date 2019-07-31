@@ -51,7 +51,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 width: width,
                                 height: height * 0.63,
                               )
-                            : Image.asset("assets/headphone.png" , alignment: Alignment.center,),
+                            : Image.asset(
+                                "assets/headphone.png",
+                                alignment: Alignment.center,
+                              ),
                       ),
                       Consumer<ProgressModel>(builder: (context, a, _) {
                         return Slider(
@@ -226,73 +229,102 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 ),
                               ),
                             ),
-                            Consumer<PlaylistRepo>(builder: (context, repo, _) {
-                              return IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return SimpleDialog(
-                                          children: <Widget>[
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: <Widget>[
-                                                Text(
-                                                  "Add to Playlist",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .display1,
-                                                ),
-                                                Container(
-                                                  height: 25,
-                                                  width: 25,
-                                                  child: FloatingActionButton(
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    onPressed: () {
-                                                      _displayDialog(
-                                                          context, repo);
-                                                    },
-                                                    child: Icon(
-                                                      Icons.add_circle_outline,
-                                                      color: Colors.greenAccent,
-                                                    ),
+                            Consumer<PlaylistRepo>(
+                              builder: (context, repo, _) {
+                                return IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return SimpleDialog(
+                                            backgroundColor: Theme.of(context)
+                                                .backgroundColor,
+                                            children: <Widget>[
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: <Widget>[
+                                                  Text(
+                                                    "Add to Playlist",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .display1,
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                            Container(
-                                              width: double.maxFinite,
-                                              child: (repo.playlist.length != 0)
-                                                  ? ListView.builder(
-                                                      shrinkWrap: true,
-                                                      itemCount:
-                                                          repo.playlist.length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return ListTile(
-                                                          title: Text(repo
-                                                              .playlist[index]),
-                                                        );
+                                                  Container(
+                                                    height: 25,
+                                                    width: 25,
+                                                    child: FloatingActionButton(
+                                                      backgroundColor:
+                                                          Theme.of(context)
+                                                              .backgroundColor,
+                                                      onPressed: () {
+                                                        _displayDialog(
+                                                            context, repo);
                                                       },
-                                                    )
-                                                  : Center(
-                                                      child:
-                                                          Text("No Playlist"),
+                                                      child: Icon(
+                                                        Icons
+                                                            .add_circle_outline,
+                                                        color:
+                                                            Colors.greenAccent,
+                                                      ),
                                                     ),
-                                            )
-                                          ],
-                                        );
-                                      });
-                                },
-                                icon: Icon(
-                                  Icons.playlist_add,
-                                  color: Colors.grey,
-                                  size: 35.0,
-                                ),
-                              );
-                            }),
+                                                  )
+                                                ],
+                                              ),
+                                              Container(
+                                                width: double.maxFinite,
+                                                child: (repo.playlist.length !=
+                                                        0)
+                                                    ? ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: repo
+                                                            .playlist.length,
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          return Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 10.0),
+                                                            child: ListTile(
+                                                              onTap: () {
+                                                                PlaylistHelper(
+                                                                        repo.playlist[
+                                                                            index])
+                                                                    .add(model
+                                                                        .currentSong);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              title: Text(
+                                                                repo.playlist[
+                                                                    index],
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .display2,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      )
+                                                    : Center(
+                                                        child:
+                                                            Text("No Playlist"),
+                                                      ),
+                                              )
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  icon: Icon(
+                                    Icons.playlist_add,
+                                    color: Colors.grey,
+                                    size: 35.0,
+                                  ),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       )
@@ -346,8 +378,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                           height: 100,
                                         )
                                       : Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 10.0 , vertical: 30.0),
-                                        child:Image.asset("assets/headphone.png")),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10.0, vertical: 30.0),
+                                          child: Image.asset(
+                                              "assets/headphone.png")),
                                 ),
                               ),
                             )),
@@ -524,10 +558,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                     context: context,
                                     builder: (context) {
                                       return SimpleDialog(
-                                        backgroundColor: Theme.of(context).backgroundColor,
+                                        backgroundColor:
+                                            Theme.of(context).backgroundColor,
                                         children: <Widget>[
                                           Row(
-                                            
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: <Widget>[
@@ -541,7 +575,9 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                 height: 25,
                                                 width: 25,
                                                 child: FloatingActionButton(
-                                                  backgroundColor: Theme.of(context).backgroundColor,
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .backgroundColor,
                                                   onPressed: () {
                                                     _displayDialog(
                                                         context, repo);
@@ -555,7 +591,6 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                             ],
                                           ),
                                           Container(
-                                            
                                             width: double.maxFinite,
                                             child: (repo.playlist.length != 0)
                                                 ? ListView.builder(
@@ -565,15 +600,27 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                     itemBuilder:
                                                         (context, index) {
                                                       return Padding(
-                                                        padding: EdgeInsets.only(left: 10.0),
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 10.0),
                                                         child: ListTile(
                                                           onTap: () {
                                                             PlaylistHelper(
-                                                              repo.playlist[index]).add(model.currentSong);
+                                                                    repo.playlist[
+                                                                        index])
+                                                                .add(model
+                                                                    .currentSong);
+                                                            Navigator.pop(
+                                                                context);
                                                           },
-                                                          title: Text(repo.playlist[index] , style: Theme.of(context)
-                                                    .textTheme
-                                                    .display2,),
+                                                          title: Text(
+                                                            repo.playlist[
+                                                                index],
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .display2,
+                                                          ),
                                                         ),
                                                       );
                                                     },
@@ -635,6 +682,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                   ),
                   onPressed: () {
                     validate(context, repo);
+                    Navigator.pop(context);
                   },
                 )
               ],
