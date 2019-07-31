@@ -7,12 +7,12 @@ import 'RecentsModel.dart';
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
 class SongsModel extends ChangeNotifier {
-
-
   // Thousands of stuff packed into this ChangeNotifier
   var songs = <Song>[];
   var duplicate = <Song>[]; // Duplicate of songs variable for Search function
   Song currentSong;
+  bool playlist = false;
+  var playlistSongs = <Song>[];
   var currentState;
   MusicFinder player;
   ProgressModel prog;
@@ -30,7 +30,7 @@ class SongsModel extends ChangeNotifier {
 
   fetchSongs() async {
     songs = await MusicFinder.allSongs();
-    if(songs.length == 0) songs = null;
+    if (songs.length == 0) songs = null;
     player = new MusicFinder();
     initValues();
     player.setPositionHandler((p) {
@@ -39,7 +39,7 @@ class SongsModel extends ChangeNotifier {
     songs?.forEach((item) {
       duplicate.add(item);
     });
-    
+
     notifyListeners();
   }
 
@@ -75,15 +75,14 @@ class SongsModel extends ChangeNotifier {
     player.setCompletionHandler(() {
       player.stop();
       if (repeat) {
-        random_Song();
+        current_Song();
       } else if (shuffle) {
         random_Song();
-      } else{
+      } else {
         next();
       }
-        play();
-      }
-    );
+      play();
+    });
   }
 
   seek(pos) {
@@ -105,19 +104,35 @@ class SongsModel extends ChangeNotifier {
   }
 
   next() {
-    if (currentSong == songs[songs.length - 1]) {
-      currentSong == songs[0];
+    if (playlist) {
+      if (currentSong == playlistSongs[playlistSongs.length - 1]) {
+        //currentSong = songs[0];
+      } else {
+        currentSong = playlistSongs[playlistSongs.indexOf(currentSong) + 1];
+      }
     } else {
-      currentSong = songs[songs.indexOf(currentSong) + 1];
+      if (currentSong == songs[songs.length - 1]) {
+        //currentSong = songs[0];
+      } else {
+        currentSong = songs[songs.indexOf(currentSong) + 1];
+      }
     }
     updateUI();
   }
 
   previous() {
-    if (currentSong == songs[0]) {
-      currentSong == songs[songs.length - 1];
+    if (playlist) {
+      if (currentSong == playlistSongs[0]) {
+        //currentSong = songs[songs.length - 1];
+      } else {
+        currentSong = playlistSongs[playlistSongs.indexOf(currentSong) - 1];
+      }
     } else {
-      currentSong = songs[songs.indexOf(currentSong) - 1];
+      if (currentSong == songs[0]) {
+        //currentSong = songs[songs.length - 1];
+      } else {
+        currentSong = songs[songs.indexOf(currentSong) - 1];
+      }
     }
     updateUI();
   }
@@ -133,19 +148,22 @@ class SongsModel extends ChangeNotifier {
   }
 
   current_Song() {
-    player.stop();
-    currentSong = songs[songs.indexOf(currentSong)];
-    player.play(currentSong.uri);
+    if(playlist){
+      currentSong = playlistSongs[playlistSongs.indexOf(currentSong)];
+    }else{
+      currentSong = songs[songs.indexOf(currentSong)];
+    }
     updateUI();
   }
 
   random_Song() {
-    int max = songs.length;
-    player.stop();
-    currentSong = songs[rnd.nextInt(max)];
-    player.play(currentSong.uri);
+    if(playlist){
+      int max = playlistSongs.length;
+      currentSong = playlistSongs[rnd.nextInt(max)];
+    }else{
+      int max = songs.length;
+      currentSong = songs[rnd.nextInt(max)];
+    }
     updateUI();
   }
-
-
 }

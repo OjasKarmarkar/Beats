@@ -75,8 +75,9 @@ class Bookmarks extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 20.0, left: 10.0),
                     child: ListTile(
                       onTap: () {
-                        isPlayed = true;
                         model.player.stop();
+                        model.playlist = true;
+                        model.playlistSongs = bm.bookmarks;
                         model.currentSong = bm.bookmarks[pos];
                         model.filterResults(
                             ""); //Reset the list. So we can change to next song.

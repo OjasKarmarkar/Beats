@@ -108,7 +108,10 @@ class _PLayListScreenState extends State<PLayListScreen> {
                               ),
                             ),
                           ),
-                          showStatus()
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: showStatus()
+                          )
                         ],
                       )
                     ],
@@ -129,6 +132,8 @@ class _PLayListScreenState extends State<PLayListScreen> {
                             onTap: () {
                               //isPlayed = true;
                               model.player.stop();
+                              model.playlist = true;
+                              model.playlistSongs = songs;
                               model.currentSong = songs[pos];
                               model.filterResults(
                                   ""); //Reset the list. So we can change to next song.
@@ -177,9 +182,7 @@ class _PLayListScreenState extends State<PLayListScreen> {
   }
   showStatus() {
     if (model.currentSong != null) {
-      return Align(
-        alignment: Alignment.bottomRight,
-        child: Container(
+      return Container(
           decoration: BoxDecoration(
             color: Colors.black,
             border: Border.all(color: Colors.greenAccent),
@@ -247,7 +250,6 @@ class _PLayListScreenState extends State<PLayListScreen> {
           ),
           height: height * 0.1,
           width: width * 0.62,
-        ),
-      );}else{}
+        );}else{}
 }
 }

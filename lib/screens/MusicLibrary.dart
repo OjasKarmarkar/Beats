@@ -84,7 +84,7 @@ class Library extends StatelessWidget {
               ));
   }
 
-  getLoading(model) {
+  getLoading(SongsModel model) {
     if (model.songs.length == 0) {
       return Expanded(
           child: Center(
@@ -119,6 +119,7 @@ class Library extends StatelessWidget {
               ),
               onTap: () {
                 model.player.stop();
+                model.playlist = false;
                 model.currentSong = model.songs[pos];
                 model.filterResults(
                     ""); //Reset the list. So we can change to next song.
@@ -249,6 +250,7 @@ class Library extends StatelessWidget {
   }
 
   choiceAction(String choice, BuildContext context) {
+    print("debug "+choice);
     if (choice == Constants.pl) {
       showDialog(
           context: context,
