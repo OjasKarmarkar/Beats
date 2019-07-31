@@ -21,6 +21,12 @@ class PlaylistRepo extends ChangeNotifier {
     return playlist;
   }
 
+  delete(String name)async{
+    playlist.remove(name);
+    await prefList.setStringList("playlist", playlist);
+    notifyListeners();
+  }
+
   updatePlayList(List<String> list) {
     if (list != null) {
       playlist.addAll(list);

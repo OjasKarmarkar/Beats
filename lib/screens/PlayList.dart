@@ -127,7 +127,8 @@ class _PLayListScreenState extends State<PLayListScreen> {
                           );
                         },
                       ),
-                      //showStatus()
+                      Align(alignment: Alignment.bottomRight,child: showStatus(),)
+                      
                     ])
                   : Center(
                       child: Text("No Songs"),

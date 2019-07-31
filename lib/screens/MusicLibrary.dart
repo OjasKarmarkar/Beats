@@ -16,7 +16,6 @@ class Library extends StatelessWidget {
   BookmarkModel b;
   ThemeChanger themeChanger;
   TextEditingController txt = TextEditingController();
-
   bool error = false;
 
   @override
@@ -101,7 +100,51 @@ class Library extends StatelessWidget {
                   Icons.more_vert,
                   color: Colors.grey,
                 ),
-                onSelected: choiceAction(Constants.choices.toString(), context),
+                onSelected: (String choice) {
+    print("debug "+choice);
+    if (choice == Constants.pl) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AlertDialog(
+                shape: Border.all(color: Colors.greenAccent),
+                backgroundColor: Theme.of(context).backgroundColor,
+                title: Text(
+                  'Add',
+                  style: Theme.of(context).textTheme.display2,
+                ),
+                content: TextFormField(
+                  controller: txt,
+                  decoration: InputDecoration(
+                      errorText: error ? "Name cant be null" : null,
+                      errorStyle: Theme.of(context).textTheme.display2,
+                      labelText: "Enter Name",
+                      labelStyle: Theme.of(context).textTheme.display2,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4))),
+                ),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text(
+                      'Create',
+                      style: Theme.of(context).textTheme.display2,
+                    ),
+                    onPressed: () {},
+                  )
+                ],
+              ),
+            );
+          });
+    } else if (choice == Constants.bm) {
+      if (!b.alreadyExists(model.currentSong)) {
+        b.add(model.currentSong);
+      } else {
+        b.remove(model.currentSong);
+      }
+    }
+  },
                 itemBuilder: (BuildContext context) {
                   return Constants.choices.map((String choice) {
                     return PopupMenuItem<String>(
@@ -249,49 +292,5 @@ class Library extends StatelessWidget {
     } else {}
   }
 
-  choiceAction(String choice, BuildContext context) {
-    print("debug "+choice);
-    if (choice == Constants.pl) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AlertDialog(
-                shape: Border.all(color: Colors.greenAccent),
-                backgroundColor: Theme.of(context).backgroundColor,
-                title: Text(
-                  'Add',
-                  style: Theme.of(context).textTheme.display2,
-                ),
-                content: TextFormField(
-                  controller: txt,
-                  decoration: InputDecoration(
-                      errorText: error ? "Name cant be null" : null,
-                      errorStyle: Theme.of(context).textTheme.display2,
-                      labelText: "Enter Name",
-                      labelStyle: Theme.of(context).textTheme.display2,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4))),
-                ),
-                actions: <Widget>[
-                  new FlatButton(
-                    child: new Text(
-                      'Create',
-                      style: Theme.of(context).textTheme.display2,
-                    ),
-                    onPressed: () {},
-                  )
-                ],
-              ),
-            );
-          });
-    } else if (choice == Constants.bm) {
-      if (!b.alreadyExists(model.currentSong)) {
-        b.add(model.currentSong);
-      } else {
-        b.remove(model.currentSong);
-      }
-    }
-  }
+  
 }

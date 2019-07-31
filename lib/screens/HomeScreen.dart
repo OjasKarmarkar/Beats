@@ -1,4 +1,5 @@
 import 'package:beats/Models/Username.dart';
+import 'package:beats/models/PlayListHelper.dart';
 import 'package:beats/screens/Recents.dart';
 import 'package:beats/models/PlaylistRepo.dart';
 //import 'package:beats/Models/playlist_repo.dart';
@@ -213,8 +214,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: IconButton(
-                                          icon: Icon(Icons.more_vert),
-                                          onPressed: () {},
+                                          icon: Icon(Icons.delete_outline),
+                                          onPressed: () async{
+                                            PlaylistHelper temp = await PlaylistHelper(playlistRepo.playlist[pos]);
+                                            temp.deletePlaylist();
+                                            playlistRepo.delete(playlistRepo.playlist[pos]);
+                                            playlistRepo.init();
+                                          },
                                         ),
                                       ),
                                     ),

@@ -21,7 +21,7 @@ class PlaylistHelper {
   }
   initDB() async {
     var documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = documentsDirectory.path + "playlist.db";
+    String path = documentsDirectory.path + tableName + ".db";
     return await openDatabase(path, version: 1, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE $tableName ("
@@ -36,19 +36,30 @@ class PlaylistHelper {
           ")");
     });
   }
+  alreadyExists(Song s) async{
+    List<Song> list = await getSongs();
+    for(Song song in list){
+      if(song.uri == s.uri){
+        return true;
+      }
+    }
+    return false;
+  }
   deletePlaylist() async{
     final db = await database;
-    await db.rawDelete("drop $tableName");
+    await db.execute("drop table $tableName");
   }
   deleteSong(Song s) async {
     final db = await database;
-    await db.rawDelete("delete from $tableName where uri = ${s.uri}");
+    await db.rawDelete("delete from $tableName where id = ${s.id}");
     //await db.rawDelete("delete from $tableName where rowid = (select max(rowid) from $tableName)");
   }
   add(Song s) async {
     final db = await database;
-    var res = await db.insert(tableName, toMap(s));
-    return res;
+    bool exists = await alreadyExists(s);
+    if(!exists){
+      var res = await db.insert(tableName, toMap(s));
+    }
   }
   getSongs() async {
     final db = await database;
