@@ -214,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: IconButton(
-                                          icon: Icon(Icons.delete_outline),
+                                          icon: Icon(Icons.delete_outline , color: Colors.white,),
                                           onPressed: () async{
                                             PlaylistHelper temp = await PlaylistHelper(playlistRepo.playlist[pos]);
                                             temp.deletePlaylist();
