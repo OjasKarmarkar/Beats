@@ -1,7 +1,9 @@
 import 'package:beats/Animations/transitions.dart';
+import 'package:beats/Models/PlayListHelper.dart';
+import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/ThemeModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
-import 'package:beats/Models/const.dart';
+import 'package:beats/models/const.dart';
 import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -94,86 +96,115 @@ class Library extends StatelessWidget {
         child: ListView.builder(
           itemCount: model.songs.length,
           itemBuilder: (context, pos) {
-            return ListTile(
-              trailing: PopupMenuButton<String>(
-                icon: Icon(
-                  Icons.more_vert,
-                  color: Colors.grey,
+            return Consumer<PlaylistRepo>(builder: (context, repo, _) {
+              return ListTile(
+                trailing: PopupMenuButton<String>(
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.grey,
+                  ),
+                  onSelected: (String choice) {
+                    print("debug " + choice);
+                    if (choice == Constants.pl) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return SimpleDialog(
+                               shape: RoundedRectangleBorder(
+                                      side: BorderSide(),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30.0)),
+                                    ),
+                              backgroundColor:
+                                  Theme.of(context).backgroundColor,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Add to Playlist",
+                                        style:
+                                            Theme.of(context).textTheme.display1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: double.maxFinite,
+                                  child: (repo.playlist.length != 0)
+                                      ? ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: repo.playlist.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 10.0),
+                                              child: ListTile(
+                                                onTap: () {
+                                                  PlaylistHelper(
+                                                          repo.playlist[index])
+                                                      .add(model.songs[pos]);
+                                                  Navigator.pop(context);
+                                                },
+                                                title: Text(
+                                                  repo.playlist[index],
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .display2,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      : Center(
+                                          child: Text("No Playlist"),
+                                        ),
+                                )
+                              ],
+                            );
+                          });
+                    } else if (choice == Constants.bm) {
+                      if (!b.alreadyExists(model.currentSong)) {
+                        b.add(model.currentSong);
+                      } else {
+                        b.remove(model.currentSong);
+                      }
+                    }
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return Constants.choices.map((String choice) {
+                      return PopupMenuItem<String>(
+                        value: choice,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            choice,
+                            style: Theme.of(context).textTheme.display2,
+                          ),
+                        ),
+                      );
+                    }).toList();
+                  },
                 ),
-                onSelected: (String choice) {
-    print("debug "+choice);
-    if (choice == Constants.pl) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AlertDialog(
-                shape: Border.all(color: Colors.greenAccent),
-                backgroundColor: Theme.of(context).backgroundColor,
+                onTap: () {
+                  model.player.stop();
+                  model.playlist = false;
+                  model.currentSong = model.songs[pos];
+                  model.filterResults(
+                      ""); //Reset the list. So we can change to next song.
+                  model.play();
+                },
+                leading: CircleAvatar(child: getImage(model, pos)),
                 title: Text(
-                  'Add',
+                  model.songs[pos].title,
+                   maxLines: 1,
                   style: Theme.of(context).textTheme.display2,
                 ),
-                content: TextFormField(
-                  controller: txt,
-                  decoration: InputDecoration(
-                      errorText: error ? "Name cant be null" : null,
-                      errorStyle: Theme.of(context).textTheme.display2,
-                      labelText: "Enter Name",
-                      labelStyle: Theme.of(context).textTheme.display2,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4))),
-                ),
-                actions: <Widget>[
-                  new FlatButton(
-                    child: new Text(
-                      'Create',
-                      style: Theme.of(context).textTheme.display2,
-                    ),
-                    onPressed: () {},
-                  )
-                ],
-              ),
-            );
-          });
-    } else if (choice == Constants.bm) {
-      if (!b.alreadyExists(model.currentSong)) {
-        b.add(model.currentSong);
-      } else {
-        b.remove(model.currentSong);
-      }
-    }
-  },
-                itemBuilder: (BuildContext context) {
-                  return Constants.choices.map((String choice) {
-                    return PopupMenuItem<String>(
-                      value: choice,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          choice,
-                          style: Theme.of(context).textTheme.display2,
-                        ),
-                      ),
-                    );
-                  }).toList();
-                },
-              ),
-              onTap: () {
-                model.player.stop();
-                model.playlist = false;
-                model.currentSong = model.songs[pos];
-                model.filterResults(
-                    ""); //Reset the list. So we can change to next song.
-                model.play();
-              },
-              leading: CircleAvatar(child: getImage(model, pos)),
-              title: Text(
-                model.songs[pos].title,
-                style: Theme.of(context).textTheme.display2,
-              ),
-            );
+              );
+            });
           },
         ),
       );
@@ -291,6 +322,4 @@ class Library extends StatelessWidget {
       );
     } else {}
   }
-
-  
 }

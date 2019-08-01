@@ -114,12 +114,14 @@ class _PLayListScreenState extends State<PLayListScreen> {
                               leading: CircleAvatar(child: getImage(pos)),
                               title: Text(
                                 songs[pos].title,
+                                maxLines: 1,
                                 style: Theme.of(context).textTheme.display3,
                               ),
                               subtitle: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   songs[pos].artist,
+                                  maxLines: 1,
                                   style: Theme.of(context).textTheme.display2,
                                 ),
                               ),

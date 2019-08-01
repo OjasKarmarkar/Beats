@@ -17,19 +17,7 @@ class AboutUs extends StatelessWidget {
                 Text("About Us", style: Theme.of(context).textTheme.display1),
           ),
           backgroundColor: Theme.of(context).backgroundColor,
-          leading: Padding(
-            padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
-            child: IconButton(
-              iconSize: 35.0,
-              icon: Icon(
-                CustomIcons.arrow_circle_o_left,
-                color: Colors.grey,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
+          
         ),
         ListView(
           children: <Widget>[

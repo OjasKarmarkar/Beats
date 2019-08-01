@@ -77,9 +77,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                         height: height * 0.03,
                         child: Padding(
                           padding: EdgeInsets.only(top: 0.1),
-                          child: Center(
+                          child: Align(
+                            alignment: Alignment.center,
                             child: Text(
                               model.currentSong.title,
+                               maxLines: 1,
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.grey,
@@ -95,6 +97,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                           child: Center(
                             child: Text(
                               model.currentSong.artist.toString(),
+                               maxLines: 1,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.grey,
@@ -396,6 +399,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                       child: Center(
                         child: Text(
                           model.currentSong.title,
+                           maxLines: 1,
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.grey,
@@ -411,6 +415,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                       child: Center(
                         child: Text(
                           model.currentSong.artist.toString(),
+                           maxLines: 1,
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.grey,
@@ -558,6 +563,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                     context: context,
                                     builder: (context) {
                                       return SimpleDialog(
+                                        shape: RoundedRectangleBorder(
+                                      side: BorderSide(),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30.0)),
+                                    ),
                                         backgroundColor:
                                             Theme.of(context).backgroundColor,
                                         children: <Widget>[

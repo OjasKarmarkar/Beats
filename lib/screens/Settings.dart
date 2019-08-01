@@ -122,9 +122,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   break;
 
                                 case 3:
-                                  Navigator.of(context).push(
-                                      new MaterialPageRoute(
-                                          builder: (context) => Donate()));
+                                  Navigator.push(
+                                      context, Scale(page: Donate()));
                                   break;
                               }
                             },
