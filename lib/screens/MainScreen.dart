@@ -18,6 +18,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       resizeToAvoidBottomInset: false,
           body: screens[index],
           bottomNavigationBar: ExpandingBottomBar(
             animationDuration: Duration(milliseconds: 500),

@@ -15,7 +15,7 @@ class _DonateState extends State<Donate> {
       color: Colors.white,
       routes: {
         "/": (_) => new WebviewScaffold(
-          url: "https://www.paypal.me/whatsnewofficial",
+          url: "https://www.paypal.me/beingmishra",
           withZoom: true,
           appBar: AppBar(
             centerTitle: true,

@@ -106,6 +106,8 @@ class _PLayListScreenState extends State<PLayListScreen> {
                               onTap: () {
                                 //isPlayed = true;
                                 model.player.stop();
+                                model.playlist = true;
+                                model.playlistSongs = songs;
                                 model.currentSong = songs[pos];
                                 model.filterResults(
                                     ""); //Reset the list. So we can change to next song.
@@ -114,12 +116,14 @@ class _PLayListScreenState extends State<PLayListScreen> {
                               leading: CircleAvatar(child: getImage(pos)),
                               title: Text(
                                 songs[pos].title,
+                                maxLines: 1,
                                 style: Theme.of(context).textTheme.display3,
                               ),
                               subtitle: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   songs[pos].artist,
+                                  maxLines: 1,
                                   style: Theme.of(context).textTheme.display2,
                                 ),
                               ),
@@ -189,6 +193,7 @@ class _PLayListScreenState extends State<PLayListScreen> {
               padding: const EdgeInsets.only(left: 0, top: 5.0, bottom: 10.0),
               child: Text(
                 model.currentSong.artist,
+                maxLines: 1,
                 style: TextStyle(
                     fontFamily: 'Sans', color: Colors.white, fontSize: 11.0),
               ),

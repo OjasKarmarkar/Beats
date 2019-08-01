@@ -47,6 +47,7 @@ class LastPlayed extends StatelessWidget {
                                       child: getImage(lastPlayed, pos)),
                                   title: Text(
                                     lastPlayed.recently[pos].title,
+                                    maxLines: 1,
                                     style: Theme.of(context).textTheme.display2,
                                   ),
                                 );

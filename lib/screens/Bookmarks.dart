@@ -154,6 +154,7 @@ class Bookmarks extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 0, top: 5.0, bottom: 10.0),
                 child: Text(
                   model.currentSong.artist,
+                  maxLines: 1,
                   style: TextStyle(
                       fontFamily: 'Sans', color: Colors.white, fontSize: 11.0),
                 ),
