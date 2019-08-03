@@ -224,6 +224,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(right: 30.0 , top: 8.0),
+                                        child: IconButton(
+                                          icon: Icon(Icons.edit, color: Colors.white,),
+                                          onPressed: () {
+                                            setState(() {
+                                              playlistRepo.playlist[pos] = "Fuck";
+                                            });
+                                            
+
+                                          },
+                                        ),
+                                      ),
+                                    ),
                                     Center(
                                         child: Text(playlistRepo.playlist[pos],
                                             style:
