@@ -106,13 +106,13 @@ class SongsModel extends ChangeNotifier {
   next() {
     if (playlist) {
       if (currentSong == playlistSongs[playlistSongs.length - 1]) {
-        //currentSong = songs[0];
+        currentSong = playlistSongs[0];
       } else {
         currentSong = playlistSongs[playlistSongs.indexOf(currentSong) + 1];
       }
     } else {
       if (currentSong == songs[songs.length - 1]) {
-        //currentSong = songs[0];
+        currentSong = songs[0];
       } else {
         currentSong = songs[songs.indexOf(currentSong) + 1];
       }
@@ -123,13 +123,13 @@ class SongsModel extends ChangeNotifier {
   previous() {
     if (playlist) {
       if (currentSong == playlistSongs[0]) {
-        //currentSong = songs[songs.length - 1];
+        currentSong = playlistSongs[playlistSongs.length - 1];
       } else {
         currentSong = playlistSongs[playlistSongs.indexOf(currentSong) - 1];
       }
     } else {
       if (currentSong == songs[0]) {
-        //currentSong = songs[songs.length - 1];
+        currentSong = songs[songs.length - 1];
       } else {
         currentSong = songs[songs.indexOf(currentSong) - 1];
       }
