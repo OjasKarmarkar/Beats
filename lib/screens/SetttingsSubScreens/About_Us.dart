@@ -32,7 +32,7 @@ class AboutUs extends StatelessWidget {
             ),
           ),
         Padding(
-          padding: EdgeInsets.only(top: height*0.067),
+          padding: EdgeInsets.only(top: height*0.07),
           child: ListView(
             children: <Widget>[
               Container(

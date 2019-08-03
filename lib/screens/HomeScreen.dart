@@ -183,6 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             margin: EdgeInsets.only(left: padd, right: 5.0),
                             elevation: 5,
                             shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.greenAccent),
                                 borderRadius: BorderRadius.circular(20)),
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),

@@ -50,7 +50,7 @@ signingConfigs {
        release {
            keyAlias keystoreProperties['keyAlias']
            keyPassword keystoreProperties['keyPassword']
-           storeFile file("/Users/selva/flutterProjects/Beats/android/app/key.jks")
+           storeFile file("key.jks")
            storePassword keystoreProperties['storePassword']
        }
    }

@@ -236,6 +236,7 @@ class Library extends StatelessWidget {
           itemCount: 1,
           itemBuilder: (context, pos) {
             return GestureDetector(
+              onTap: (){Navigator.push(context, Scale(page: PlayBackPage()));},
               onPanUpdate: (details) {
                 if (details.delta.dy < 0) {
                   push(context);

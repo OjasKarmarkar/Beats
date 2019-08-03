@@ -19,31 +19,31 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   Username username;
-      final subtitles = [
-      'Customize The Look and Accent Of The App',
-      "Change The Controls Of The Playing Screen",
-      "Know More About Us",
-      "Help Devs to Create Such Awesome Apps!"
-    ];
-    final titles = [
-      'Look ',
-      'Playback Screen',
-      'About Us',
-      'Donate us a Coffee!'
-    ];
-    final icons = [
-      CustomIcons.paint_brush,
-      CustomIcons.music,
-      CustomIcons.info_circle,
-      CustomIcons.coffee
-    ];
+  final subtitles = [
+    'Customize The Look and Accent Of The App',
+    "Change The Controls Of The Playing Screen",
+    "Know More About Us",
+    "Help Devs to Create Such Awesome Apps!"
+  ];
+  final titles = [
+    'Look ',
+    'Playback Screen',
+    'About Us',
+    'Donate us a Coffee!'
+  ];
+  final icons = [
+    CustomIcons.paint_brush,
+    CustomIcons.music,
+    CustomIcons.info_circle,
+    CustomIcons.coffee
+  ];
   ThemeChanger themeChanger;
   TextEditingController text = new TextEditingController();
   bool err = false;
   @override
   Widget build(BuildContext context) {
     username = Provider.of<Username>(context);
-    themeChanger  = Provider.of<ThemeChanger>(context);
+    themeChanger = Provider.of<ThemeChanger>(context);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -58,7 +58,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Colors.grey,
                   ),
                   onPressed: () {
-                    Share.share('Download this beautiful music player right now!');
+                    Share.share(
+                        'Download this beautiful music player right now!');
                   },
                 ),
               ),
@@ -73,7 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: Colors.grey,
                     ),
                     onPressed: () {
-                     _displayDialog(context);
+                      _displayDialog(context);
                     },
                   ),
                 )
@@ -95,11 +96,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     padding: const EdgeInsets.all(10.0),
                     child: Card(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(20)),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
                           side: BorderSide(
-                            width: 0.45, color: themeChanger.accentColor
-                            )),
+                              width: 0.45, color: themeChanger.accentColor)),
                       color: Theme.of(context).cardColor,
                       elevation: 5.0,
                       child: Container(
@@ -110,20 +109,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               switch (index) {
                                 case 0:
                                   Navigator.push(
-                                      context, Scale(page: Themes()));
+                                      context,
+                                      EnterExitRoute(
+                                          exitPage: SettingsScreen(),
+                                          enterPage: Themes()));
                                   break;
                                 case 1:
                                   Navigator.push(
-                                      context, Scale(page: PlayBack()));
+                                      context,
+                                      EnterExitRoute(
+                                          exitPage: SettingsScreen(),
+                                          enterPage: PlayBack()));
                                   break;
                                 case 2:
                                   Navigator.push(
-                                      context, Scale(page: AboutUs()));
+                                      context,
+                                      EnterExitRoute(
+                                          exitPage: SettingsScreen(),
+                                          enterPage: AboutUs()));
                                   break;
 
                                 case 3:
-                                  Navigator.push(
-                                      context, Scale(page: Donate()));
+                                 Navigator.push(
+                                      context,
+                                      EnterExitRoute(
+                                          exitPage: SettingsScreen(),
+                                          enterPage: Donate()));
                                   break;
                               }
                             },
@@ -194,6 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           );
         });
   }
+
   void validate(context) {
     setState(() {
       text.text.isEmpty ? err = true : err = false;
