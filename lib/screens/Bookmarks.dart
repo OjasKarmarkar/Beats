@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import '../custom_icons.dart';
-import 'HomeScreen.dart';
+import 'MusicLibrary.dart';
+
 
 class Bookmarks extends StatelessWidget {
   SongsModel model;
@@ -25,7 +26,7 @@ class Bookmarks extends StatelessWidget {
                 : (bm.bookmarks.length == 0 || bm.bookmarks.length == null)
                     ? Center(
                         child: Text(
-                        "No Bookmarks",
+                        "No Favourites",
                         style: Theme.of(context).textTheme.display1,
                       ))
                     : Container(

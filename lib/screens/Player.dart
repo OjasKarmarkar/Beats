@@ -8,8 +8,9 @@ import 'package:beats/models/Now_Playing.dart';
 import 'package:flutter/material.dart';
 import '../custom_icons.dart';
 import 'package:provider/provider.dart';
-import 'HomeScreen.dart';
 import 'package:beats/models/ProgressModel.dart';
+
+import 'MusicLibrary.dart';
 
 class PlayBackPage extends StatefulWidget {
   @override

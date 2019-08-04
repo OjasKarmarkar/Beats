@@ -5,9 +5,8 @@ import 'package:beats/models/PlaylistRepo.dart';
 //import 'package:beats/Models/playlist_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'MusicLibrary.dart';
 import 'PlayList.dart';
-
-double height, width;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -22,8 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     username = Provider.of<Username>(context);
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).backgroundColor,
@@ -60,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
               padding: EdgeInsets.only(top: height * 0.04),
               child: SizedBox(
-                height: height * 0.31,
+                height: height * 0.27,
                 child: Consumer<PlaylistRepo>(
                   builder: (context, playlistRepo, _) => ListView.builder(
                     itemCount: playlistRepo.playlist.length + 1,
@@ -183,19 +180,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             margin: EdgeInsets.only(left: padd, right: 5.0),
                             elevation: 5,
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.greenAccent),
+                                side: BorderSide(color: Colors.greenAccent),
                                 borderRadius: BorderRadius.circular(20)),
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Container(
                                     width: width * 0.4,
-                                    child: Center(child: Icon(Icons.add)))),
+                                    child: Center(
+                                        child: Icon(
+                                      Icons.add,
+                                      size: 25,
+                                    )))),
                           ),
                         );
                       } else {
                         return Card(
                           margin: EdgeInsets.only(left: padd, right: 5.0),
-                          elevation: 5,
+                          elevation: 20,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
                           child: GestureDetector(
@@ -208,15 +209,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(20),
                                 child: Container(
                                   width: width * 0.4,
-                                  color: Colors.blue,
+                                  decoration: BoxDecoration(
+                                    // Box decoration takes a gradient
+                                    gradient: LinearGradient(
+                                      // Where the linear gradient begins and ends
+                                      begin: Alignment.topRight,
+                                      end: Alignment.bottomLeft,
+                                      // Add one stop for each color. Stops should increase from 0 to 1
+                                      stops: [0.1, 0.5, 0.7, 0.9],
+                                      colors: pos % 2 == 0
+                                          ? [
+                                              Colors.lightBlue,
+                                              Colors.blue,
+                                              Colors.blueAccent,
+                                              Colors.blue,
+                                            ]
+                                          : [
+                                              Colors.pinkAccent,
+                                              Colors.pink,
+                                              Colors.pinkAccent,
+                                              Colors.pink,
+                                            ],
+                                    ),
+                                  ),
                                   child: Stack(children: <Widget>[
                                     Align(
                                       alignment: Alignment.topRight,
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
                                         child: IconButton(
                                           icon: Icon(
                                             Icons.delete_outline,
+                                            size: 17,
                                             color: Colors.white,
                                           ),
                                           onPressed: () async {
@@ -235,10 +260,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       alignment: Alignment.topRight,
                                       child: Padding(
                                         padding: const EdgeInsets.only(
-                                            right: 40.0, top: 8.0),
+                                            right: 30.0, top: 8.0),
                                         child: IconButton(
                                           icon: Icon(
                                             Icons.edit,
+                                            size: 17,
                                             color: Colors.white,
                                           ),
                                           onPressed: () {
@@ -340,12 +366,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ),
                                                           ),
                                                           InkWell(
-                                                            onTap: () async{
-                                                              await PlaylistHelper(playlistRepo.playlist[pos]).rename(txt.text);
-                                                              playlistRepo.playlist[pos] = txt.text;
-                                                              //PlaylistHelper(playlistRepo.playlist[pos]).rename(txt.text);
-                                                              playlistRepo.push();
-                                                              Navigator.pop(context);
+                                                            onTap: () async {
+                                                              await PlaylistHelper(
+                                                                      playlistRepo
+                                                                              .playlist[
+                                                                          pos])
+                                                                  .rename(
+                                                                      txt.text);
+                                                              setState(() {
+                                                                playlistRepo.playlist[
+                                                                        pos] =
+                                                                    txt.text;
+                                                                //PlaylistHelper(playlistRepo.playlist[pos]).rename(txt.text);
+                                                                playlistRepo
+                                                                    .push();
+                                                                Navigator.pop(
+                                                                    context);
+                                                              });
                                                             },
                                                             child: Container(
                                                               padding: EdgeInsets
@@ -404,10 +441,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )),
           Padding(
-            padding: EdgeInsets.only(top: height * 0.03, left: 20.0),
-            child: Text(
-              "Recently Played",
-              style: Theme.of(context).textTheme.display1,
+            padding: EdgeInsets.only(top: height * 0.06),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Recently Played",
+                style: Theme.of(context).textTheme.display1,
+              ),
             ),
           ),
           Expanded(

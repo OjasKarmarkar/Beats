@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:beats/Models/const.dart';
 import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/PlayListHelper.dart';
-import 'package:beats/screens/HomeScreen.dart';
+
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../custom_icons.dart';
+import 'MusicLibrary.dart';
 
 class PLayListScreen extends StatefulWidget {
   @override
@@ -131,8 +131,10 @@ class _PLayListScreenState extends State<PLayListScreen> {
                           );
                         },
                       ),
-                      Align(alignment: Alignment.bottomRight,child: showStatus(),)
-                      
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: showStatus(),
+                      )
                     ])
                   : Center(
                       child: Text("No Songs"),

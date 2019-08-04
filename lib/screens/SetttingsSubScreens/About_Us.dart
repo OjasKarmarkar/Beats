@@ -1,7 +1,7 @@
-import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import '../../custom_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../MusicLibrary.dart';
 
 class AboutUs extends StatelessWidget {
   @override

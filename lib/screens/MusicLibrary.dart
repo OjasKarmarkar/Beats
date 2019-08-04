@@ -4,7 +4,6 @@ import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/ThemeModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/const.dart';
-import 'package:beats/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:beats/models/SongsModel.dart';
@@ -12,6 +11,7 @@ import '../custom_icons.dart';
 import 'package:provider/provider.dart';
 import 'Player.dart';
 
+double height, width;
 class Library extends StatelessWidget {
   TextEditingController editingController;
   SongsModel model;
@@ -20,10 +20,13 @@ class Library extends StatelessWidget {
   TextEditingController txt = TextEditingController();
   bool error = false;
 
+
   @override
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
     b = Provider.of<BookmarkModel>(context);
+     height = MediaQuery.of(context).size.height;
+     width = MediaQuery.of(context).size.width;
     themeChanger = Provider.of<ThemeChanger>(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -167,10 +170,10 @@ class Library extends StatelessWidget {
                             );
                           });
                     } else if (choice == Constants.bm) {
-                      if (!b.alreadyExists(model.currentSong)) {
-                        b.add(model.currentSong);
+                      if (!b.alreadyExists(model.songs[pos])) {
+                        b.add(model.songs[pos]);
                       } else {
-                        b.remove(model.currentSong);
+                        b.remove(model.songs[pos]);
                       }
                     }
                   },

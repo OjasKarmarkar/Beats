@@ -1,5 +1,4 @@
 import 'package:beats/screens/Bookmarks.dart';
-import 'package:flute_music_player/flute_music_player.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:expanding_bottom_bar/expanding_bottom_bar.dart';
 import 'HomeScreen.dart';
@@ -12,7 +11,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver{
-  var index = 0;
+
+
+  var index = 1;
   var screens = [HomeScreen(), Library(), Bookmarks(), SettingsScreen()];
 
   @override
@@ -35,7 +36,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver{
                     selectedColor: Colors.deepPurpleAccent),
                     ExpandingBottomBarItem(
                     icon: Icons.favorite_border,
-                    text: "Bookmarks",
+                    text: "Favourites",
                     selectedColor: Colors.red),
                 ExpandingBottomBarItem(
                     icon: Icons.settings,

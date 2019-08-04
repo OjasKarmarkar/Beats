@@ -3,7 +3,7 @@ import '../../models/ThemeModel.dart';
 import 'package:flutter/material.dart';
 import '../../custom_icons.dart';
 import 'package:provider/provider.dart';
-import '../HomeScreen.dart';
+import '../MusicLibrary.dart';
 import 'package:beats/themes/Themes.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
