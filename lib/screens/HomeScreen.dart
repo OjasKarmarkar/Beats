@@ -340,8 +340,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ),
                                                           ),
                                                           InkWell(
-                                                            onTap: () {
-                                                              playlistRepo.playlist[pos] = "HI";
+                                                            onTap: () async{
+                                                              await PlaylistHelper(playlistRepo.playlist[pos]).rename(txt.text);
+                                                              playlistRepo.playlist[pos] = txt.text;
+                                                              //PlaylistHelper(playlistRepo.playlist[pos]).rename(txt.text);
+                                                              playlistRepo.push();
                                                               Navigator.pop(context);
                                                             },
                                                             child: Container(

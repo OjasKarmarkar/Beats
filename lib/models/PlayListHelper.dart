@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -36,6 +38,14 @@ class PlaylistHelper {
           ")");
     });
   }
+  rename(String s)async{
+    final db = await database;
+    await db.execute("ALTER TABLE $tableName RENAME TO $s");
+    await db.close();
+    var documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = documentsDirectory.path + tableName + ".db";
+    await File(path).rename(documentsDirectory.path + s + ".db");
+  }
   alreadyExists(Song s) async{
     List<Song> list = await getSongs();
     for(Song song in list){
@@ -46,8 +56,9 @@ class PlaylistHelper {
     return false;
   }
   deletePlaylist() async{
-    final db = await database;
-    await db.execute("drop table $tableName");
+    var documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = documentsDirectory.path + tableName + ".db";
+    await File(path).delete();
   }
   deleteSong(Song s) async {
     final db = await database;

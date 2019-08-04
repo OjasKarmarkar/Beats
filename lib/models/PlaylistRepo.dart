@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'PlayListHelper.dart';
+
 class PlaylistRepo extends ChangeNotifier {
 
   List<String> playlist = [];
@@ -15,6 +17,10 @@ class PlaylistRepo extends ChangeNotifier {
     prefList = await SharedPreferences.getInstance();
     List<String> list = prefList.getStringList("playlist");
     updatePlayList(list);
+  }
+
+  push()async {
+    prefList.setStringList("playlist", playlist);
   }
 
   getList() {
