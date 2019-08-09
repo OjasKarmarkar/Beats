@@ -4,10 +4,8 @@ import 'package:beats/models/ThemeModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'HomeScreen.dart';
 import '../custom_icons.dart';
 import 'MusicLibrary.dart';
-import 'SetttingsSubScreens/Donate.dart';
 import 'SetttingsSubScreens/Theme.dart';
 import 'SetttingsSubScreens/PlayBack.dart';
 import 'SetttingsSubScreens/About_Us.dart';
@@ -24,19 +22,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     'Customize The Look and Accent Of The App',
     "Change The Controls Of The Playing Screen",
     "Know More About Us",
-    "Help Devs to Create Such Awesome Apps!"
   ];
   final titles = [
     'Look ',
     'Playback Screen',
     'About Us',
-    'Donate us a Coffee!'
   ];
   final icons = [
     CustomIcons.paint_brush,
     CustomIcons.music,
     CustomIcons.info_circle,
-    CustomIcons.coffee
   ];
   ThemeChanger themeChanger;
   TextEditingController text = new TextEditingController();
@@ -60,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   onPressed: () {
                     Share.share(
-                        'Download this beautiful music player right now!');
+                        'https://play.google.com/store/apps/details?id=in.selvasoft.beats');
                   },
                 ),
               ),
@@ -130,13 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           enterPage: AboutUs()));
                                   break;
 
-                                case 3:
-                                 Navigator.push(
-                                      context,
-                                      EnterExitRoute(
-                                          exitPage: SettingsScreen(),
-                                          enterPage: Donate()));
-                                  break;
+                               
                               }
                             },
                             leading: Padding(

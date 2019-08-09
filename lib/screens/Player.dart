@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/ThemeModel.dart';
 import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/BookmarkModel.dart';
@@ -20,8 +21,22 @@ class PlayBackPage extends StatefulWidget {
 class _PlayBackPageState extends State<PlayBackPage> {
   SongsModel model;
   ThemeChanger themeChanger;
-
+  PageController pg;
   Now_Playing Play_Screen;
+  int currentPage = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    pg = PageController(
+        initialPage: currentPage, keepPage: true, viewportFraction: 0.85);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pg.dispose();
+  }
 
   TextEditingController txt = TextEditingController();
 
@@ -58,21 +73,24 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               ),
                       ),
                       Consumer<ProgressModel>(builder: (context, a, _) {
-                        return Slider(
-                          activeColor: themeChanger.accentColor,
-                          max: a.duration.toDouble(),
-                          onChanged: (double value) {
-                            if (value.toDouble() == a.duration.toDouble()) {
-                              model.player.stop();
-                              model.next();
-                              model.play();
-                            } else {
-                              a.setPosition(value);
-                              model.seek(value);
-                            }
-                          },
-                          value: a.position.toDouble(),
-                        );
+                        return SliderTheme(
+                            child: Slider(
+                              max: a.duration.toDouble(),
+                              onChanged: (double value) {
+                                if (value.toDouble() == a.duration.toDouble()) {
+                                  model.player.stop();
+                                  model.next();
+                                  model.play();
+                                } else {
+                                  a.setPosition(value);
+                                  model.seek(value);
+                                }
+                              },
+                              value: a.position.toDouble(),
+                            ),
+                            data: SliderTheme.of(context).copyWith(
+                                thumbColor: Color(0xfff1f2f6),
+                                activeTrackColor: themeChanger.accentColor));
                       }),
                       Container(
                         height: height * 0.03,
@@ -82,10 +100,13 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             alignment: Alignment.center,
                             child: Text(
                               model.currentSong.title,
-                               maxLines: 1,
+                              maxLines: 1,
                               style: TextStyle(
                                   fontSize: 20,
-                                  color: Colors.grey,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .color,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -98,7 +119,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                           child: Center(
                             child: Text(
                               model.currentSong.artist.toString(),
-                               maxLines: 1,
+                              maxLines: 1,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.grey,
@@ -132,7 +153,8 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               },
                               icon: Icon(
                                 CustomIcons.step_backward,
-                                color: Colors.grey,
+                                color:
+                                    Theme.of(context).textTheme.display1.color,
                                 size: 40.0,
                               ),
                             ),
@@ -147,17 +169,35 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                     model.pause();
                                   }
                                 },
-                                child: FloatingActionButton(
-                                  backgroundColor: themeChanger.accentColor,
-                                  child: (model.currentState ==
-                                              PlayerState.PAUSED ||
-                                          model.currentState ==
-                                              PlayerState.STOPPED)
-                                      ? Icon(
-                                          CustomIcons.play,
-                                          size: 30.0,
-                                        )
-                                      : Icon(CustomIcons.pause),
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(100.0)),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: <Color>[
+                                            Color(0xFF0D47A1),
+                                            Color(0xFF1976D2),
+                                            Color(0xFF42A5F5),
+                                          ],
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(70.0))),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 10, 20, 10),
+                                    child: (model.currentState ==
+                                                PlayerState.PAUSED ||
+                                            model.currentState ==
+                                                PlayerState.STOPPED)
+                                        ? Icon(
+                                            CustomIcons.play,
+                                            color: Colors.white,
+                                            size: 30.0,
+                                          )
+                                        : Icon(CustomIcons.pause,
+                                            size: 30, color: Colors.white),
+                                  ),
                                 )),
                             IconButton(
                               onPressed: () {
@@ -167,7 +207,8 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               },
                               icon: Icon(
                                 CustomIcons.step_forward,
-                                color: Colors.grey,
+                                color:
+                                    Theme.of(context).textTheme.display1.color,
                                 size: 40.0,
                               ),
                             ),
@@ -201,7 +242,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 iconSize: 35.0,
                                 icon: Icon(
                                   Icons.cancel,
-                                  color: Colors.grey,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .color,
                                 ),
                                 onPressed: () {
                                   Navigator.pop(context);
@@ -349,7 +393,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                   iconSize: 35.0,
                   icon: Icon(
                     CustomIcons.arrow_circle_o_left,
-                    color: Colors.grey,
+                    color: Theme.of(context).textTheme.display1.color,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -373,19 +417,29 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               child: SizedBox(
                                 height: 290,
                                 width: 290,
-                                child: ClipOval(
-                                  child: (model.currentSong.albumArt != null)
-                                      ? Image.file(
-                                          File.fromUri(Uri.parse(
-                                              model.currentSong.albumArt)),
-                                          width: 100,
-                                          height: 100,
-                                        )
-                                      : Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10.0, vertical: 30.0),
-                                          child: Image.asset(
-                                              "assets/headphone.png")),
+                                child: PageView.builder(
+                                  controller: pg,
+                                  onPageChanged: onPageChanged,
+                                  itemCount: model.songs.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ClipOval(
+                                      child: (model.currentSong.albumArt !=
+                                              null)
+                                          ? Image.file(
+                                              File.fromUri(Uri.parse(
+                                                  model.currentSong.albumArt)),
+                                              width: 100,
+                                              height: 100,
+                                            )
+                                          : Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.0,
+                                                  vertical: 30.0),
+                                              child: Image.asset(
+                                                  "assets/headphone.png")),
+                                    );
+                                  },
                                 ),
                               ),
                             )),
@@ -400,10 +454,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
                       child: Center(
                         child: Text(
                           model.currentSong.title,
-                           maxLines: 1,
+                          maxLines: 1,
                           style: TextStyle(
                               fontSize: 20,
-                              color: Colors.grey,
+                              color: Theme.of(context).textTheme.display1.color,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -416,7 +470,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                       child: Center(
                         child: Text(
                           model.currentSong.artist.toString(),
-                           maxLines: 1,
+                          maxLines: 1,
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.grey,
@@ -426,21 +480,24 @@ class _PlayBackPageState extends State<PlayBackPage> {
                     ),
                   ),
                   Consumer<ProgressModel>(builder: (context, a, _) {
-                    return Slider(
-                      activeColor: themeChanger.accentColor,
-                      max: a.duration.toDouble(),
-                      onChanged: (double value) {
-                        if (value.toDouble() == a.duration.toDouble()) {
-                          model.player.stop();
-                          model.next();
-                          model.play();
-                        } else {
-                          a.setPosition(value);
-                          model.seek(value);
-                        }
-                      },
-                      value: a.position.toDouble(),
-                    );
+                    return SliderTheme(
+                        child: Slider(
+                          max: a.duration.toDouble(),
+                          onChanged: (double value) {
+                            if (value.toDouble() == a.duration.toDouble()) {
+                              model.player.stop();
+                              model.next();
+                              model.play();
+                            } else {
+                              a.setPosition(value);
+                              model.seek(value);
+                            }
+                          },
+                          value: a.position.toDouble(),
+                        ),
+                        data: SliderTheme.of(context).copyWith(
+                            thumbColor: Color(0xfff1f2f6),
+                            activeTrackColor: themeChanger.accentColor));
                   }),
                   Padding(
                     padding:
@@ -456,8 +513,8 @@ class _PlayBackPageState extends State<PlayBackPage> {
                           },
                           icon: Icon(
                             CustomIcons.step_backward,
-                            color: Colors.grey,
-                            size: 40.0,
+                            color: Theme.of(context).textTheme.display1.color,
+                            size: 35.0,
                           ),
                         ),
                         Padding(
@@ -471,17 +528,35 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                   model.pause();
                                 }
                               },
-                              child: FloatingActionButton(
-                                backgroundColor: themeChanger.accentColor,
-                                child:
-                                    (model.currentState == PlayerState.PAUSED ||
-                                            model.currentState ==
-                                                PlayerState.STOPPED)
-                                        ? Icon(
-                                            CustomIcons.play,
-                                            size: 30.0,
-                                          )
-                                        : Icon(CustomIcons.pause),
+                              child: MaterialButton(
+                                elevation: 30,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100.0)),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: <Color>[
+                                          themeChanger.accentColor,
+                                          Color(0xFF1976D2),
+                                          Color(0xFF42A5F5),
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(100.0))),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                  child: (model.currentState ==
+                                              PlayerState.PAUSED ||
+                                          model.currentState ==
+                                              PlayerState.STOPPED)
+                                      ? Icon(
+                                          CustomIcons.play,
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        )
+                                      : Icon(CustomIcons.pause,
+                                          size: 30, color: Colors.white),
+                                ),
                               )),
                         ),
                         Padding(
@@ -494,8 +569,8 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             },
                             icon: Icon(
                               CustomIcons.step_forward,
-                              color: Colors.grey,
-                              size: 40.0,
+                              color: Theme.of(context).textTheme.display1.color,
+                              size: 35.0,
                             ),
                           ),
                         ),
@@ -565,10 +640,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                     builder: (context) {
                                       return SimpleDialog(
                                         shape: RoundedRectangleBorder(
-                                      side: BorderSide(),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0)),
-                                    ),
+                                          side: BorderSide(),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(30.0)),
+                                        ),
                                         backgroundColor:
                                             Theme.of(context).backgroundColor,
                                         children: <Widget>[
@@ -660,6 +735,15 @@ class _PlayBackPageState extends State<PlayBackPage> {
             )
           ]));
     }
+  }
+
+  onPageChanged(int index) {
+    setState(() {
+      currentPage = index;
+      model.player.stop();
+      model.previous();
+      model.play();
+    });
   }
 
   _displayDialog(BuildContext context, repo) async {

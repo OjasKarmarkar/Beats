@@ -73,7 +73,7 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
                 if (widget.pageModel.pageNumber == 1) {
                   print(widget.pageModel.pageNumber);
                   widget.pageController.nextPage(
-                    curve: Curves.linear,
+                    curve: Curves.easeInOut,
                     duration: Duration(milliseconds: 1000),
                   );
                 } else if (widget.pageModel.pageNumber == 2) {

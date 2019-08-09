@@ -4,6 +4,7 @@ import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/ThemeModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/const.dart';
+import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:beats/models/SongsModel.dart';
@@ -12,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'Player.dart';
 
 double height, width;
+
 class Library extends StatelessWidget {
   TextEditingController editingController;
   SongsModel model;
@@ -20,13 +22,12 @@ class Library extends StatelessWidget {
   TextEditingController txt = TextEditingController();
   bool error = false;
 
-
   @override
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
     b = Provider.of<BookmarkModel>(context);
-     height = MediaQuery.of(context).size.height;
-     width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     themeChanger = Provider.of<ThemeChanger>(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -38,54 +39,67 @@ class Library extends StatelessWidget {
                   style: Theme.of(context).textTheme.display1,
                 ),
               )
-            : Stack(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.04,
-                            right: width * 0.04,
-                            top: height * 0.03,
-                            bottom: height * 0.01),
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 20, left: 10),
-                          child: TextField(
-                              onChanged: (value) {
-                                model.filterResults(value);
-                              },
-                              controller: editingController,
-                              decoration: InputDecoration(
-                                  disabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide: BorderSide(
-                                          color: Colors.greenAccent)),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide: BorderSide(
-                                          color: Colors.greenAccent)),
-                                  hintStyle:
-                                      Theme.of(context).textTheme.display2,
-                                  hintText: "Search",
-                                  prefixIcon: Icon(
-                                    CustomIcons.search,
-                                    color: Colors.grey,
+            : NestedScrollView(
+                headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                      SliverOverlapAbsorber(
+                          child: SliverSafeArea(
+                            top: false,
+                            sliver: SliverAppBar(
+                              actions: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: IconButton(
+                                    icon: Icon(Icons.search,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .display1
+                                            .color),
+                                    onPressed: () {
+                                      showSearch(
+                                          context: context, delegate: Search());
+                                    },
                                   ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      borderSide: BorderSide(
-                                          color: Colors.greenAccent)))),
-                        ),
-                      ),
-                      getLoading(model),
+                                ),
+                              ],
+                              backgroundColor:
+                                  Theme.of(context).backgroundColor,
+                              expandedHeight: height * 0.11,
+                              pinned: true,
+                              flexibleSpace: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: width * 0.06),
+                                  child: Container(
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Songs",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .display1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          handle:
+                              NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                  context))
                     ],
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: showStatus(model),
-                  )
-                ],
-              ));
+                body: Stack(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[getLoading(model)],
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: showStatus(model),
+                    )
+                  ],
+                )));
   }
 
   getLoading(SongsModel model) {
@@ -113,11 +127,11 @@ class Library extends StatelessWidget {
                           context: context,
                           builder: (context) {
                             return SimpleDialog(
-                               shape: RoundedRectangleBorder(
-                                      side: BorderSide(),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0)),
-                                    ),
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0)),
+                              ),
                               backgroundColor:
                                   Theme.of(context).backgroundColor,
                               children: <Widget>[
@@ -129,8 +143,9 @@ class Library extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Add to Playlist",
-                                        style:
-                                            Theme.of(context).textTheme.display1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .display1,
                                       ),
                                     ),
                                   ],
@@ -203,7 +218,7 @@ class Library extends StatelessWidget {
                 leading: CircleAvatar(child: getImage(model, pos)),
                 title: Text(
                   model.songs[pos].title,
-                   maxLines: 1,
+                  maxLines: 1,
                   style: Theme.of(context).textTheme.display2,
                 ),
               );
@@ -221,7 +236,24 @@ class Library extends StatelessWidget {
           child:
               Image.file(File.fromUri(Uri.parse(model.songs[pos].albumArt))));
     } else {
-      return Icon(Icons.music_note);
+      return Container(
+          child: IconButton(
+            icon: Icon(
+              Icons.music_note,
+              color: Colors.white,
+            ),
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(70),
+            // Box decoration takes a gradient
+            gradient: LinearGradient(
+              colors: <Color>[
+                themeChanger.accentColor,
+                Color(0xFF1976D2),
+                Color(0xFF42A5F5),
+              ],
+            ),
+          ));
     }
   }
 
@@ -239,7 +271,9 @@ class Library extends StatelessWidget {
           itemCount: 1,
           itemBuilder: (context, pos) {
             return GestureDetector(
-              onTap: (){Navigator.push(context, Scale(page: PlayBackPage()));},
+              onTap: () {
+                Navigator.push(context, Scale(page: PlayBackPage()));
+              },
               onPanUpdate: (details) {
                 if (details.delta.dy < 0) {
                   push(context);
@@ -325,5 +359,79 @@ class Library extends StatelessWidget {
         ),
       );
     } else {}
+  }
+}
+
+class Search extends SearchDelegate<Song> {
+  SongsModel model;
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // actions
+    return [
+      IconButton(
+        onPressed: () {
+          query = "";
+        },
+        icon: Icon(
+          Icons.clear,
+          color: Colors.grey,
+        ),
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // Leading
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: Icon(
+         Icons.arrow_back,
+          color: Colors.grey,
+        ));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // show results
+    return null;
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    model = Provider.of<SongsModel>(context);
+    List<String> dummy = <String>[];
+    List<String> recents = <String>[];
+    for (int i = 0; i < model.songs.length; i++) {
+      dummy.add(model.songs[i].title);
+    }
+    for (int i = 0; i < 4; i++) {
+      recents.add(model.songs[i].title);
+    }
+   var suggestion = query.isEmpty?recents : dummy.where((p) => p.contains(query)).toList();
+    // hint when searches
+    return ListView.builder(
+      itemCount: suggestion.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListTile(
+            onTap: () {
+                  model.player.stop();
+                  model.playlist = false;
+                  model.play();
+                  close(context, null);
+                },
+            title: Text(
+              suggestion[index],
+              style: TextStyle(color: Colors.black , fontSize: 18),
+            ),
+            leading: CircleAvatar(child: Icon(Icons.music_note)),
+          ),
+        );
+      },
+    );
   }
 }

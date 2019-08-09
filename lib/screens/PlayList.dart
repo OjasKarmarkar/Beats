@@ -89,7 +89,7 @@ class _PLayListScreenState extends State<PLayListScreen> {
                         itemBuilder: (context, pos) {
                           return Padding(
                             padding:
-                                const EdgeInsets.only(top: 20.0, left: 10.0),
+                                const EdgeInsets.only(top: 0.0, left: 10.0),
                             child: ListTile(
                               trailing: IconButton(
                                 icon: Icon(
@@ -137,10 +137,10 @@ class _PLayListScreenState extends State<PLayListScreen> {
                       )
                     ])
                   : Center(
-                      child: Text("No Songs"),
+                      child: Text("No Songs" , style: Theme.of(context).textTheme.display2,),
                     )
               : Center(
-                  child: Text("Loading..."),
+                  child: Text("Loading..." , style: Theme.of(context).textTheme.display2,),
                 )),
     );
   }
