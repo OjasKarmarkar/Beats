@@ -18,16 +18,18 @@ class PlayBackPage extends StatefulWidget {
   _PlayBackPageState createState() => _PlayBackPageState();
 }
 
-class _PlayBackPageState extends State<PlayBackPage> {
+class _PlayBackPageState extends State<PlayBackPage> with TickerProviderStateMixin {
   SongsModel model;
   ThemeChanger themeChanger;
   PageController pg;
   Now_Playing Play_Screen;
+  AnimationController _animationController;
   int currentPage = 1;
 
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(vsync: this , duration: Duration(milliseconds: 500));
     pg = PageController(
         initialPage: currentPage, keepPage: true, viewportFraction: 0.85);
   }
@@ -36,6 +38,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
   void dispose() {
     super.dispose();
     pg.dispose();
+    _animationController.dispose();
   }
 
   TextEditingController txt = TextEditingController();
@@ -164,9 +167,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                           PlayerState.PAUSED ||
                                       model.currentState ==
                                           PlayerState.STOPPED) {
+                                    _animationController.forward();
                                     model.play();
                                   } else {
                                     model.pause();
+                                    _animationController.reverse();
                                   }
                                 },
                                 child: RaisedButton(
@@ -190,13 +195,15 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                                 PlayerState.PAUSED ||
                                             model.currentState ==
                                                 PlayerState.STOPPED)
-                                        ? Icon(
-                                            CustomIcons.play,
+                                        ? AnimatedIcon(
+                                           icon: AnimatedIcons.play_pause,
                                             color: Colors.white,
                                             size: 30.0,
+                                            progress: _animationController,
                                           )
-                                        : Icon(CustomIcons.pause,
-                                            size: 30, color: Colors.white),
+                                        : AnimatedIcon(
+                                           icon: AnimatedIcons.play_pause,
+                                            size: 30, color: Colors.white, progress: _animationController,),
                                   ),
                                 )),
                             IconButton(
@@ -520,44 +527,50 @@ class _PlayBackPageState extends State<PlayBackPage> {
                         Padding(
                           padding: EdgeInsets.only(top: height * 0.01),
                           child: InkWell(
-                              onTap: () {
-                                if (model.currentState == PlayerState.PAUSED ||
-                                    model.currentState == PlayerState.STOPPED) {
-                                  model.play();
-                                } else {
-                                  model.pause();
-                                }
-                              },
-                              child: MaterialButton(
-                                elevation: 30,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100.0)),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: <Color>[
-                                          themeChanger.accentColor,
-                                          Color(0xFF1976D2),
-                                          Color(0xFF42A5F5),
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(100.0))),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                  child: (model.currentState ==
-                                              PlayerState.PAUSED ||
-                                          model.currentState ==
-                                              PlayerState.STOPPED)
-                                      ? Icon(
-                                          CustomIcons.play,
-                                          color: Colors.white,
-                                          size: 30.0,
-                                        )
-                                      : Icon(CustomIcons.pause,
-                                          size: 30, color: Colors.white),
-                                ),
-                              )),
+                                onTap: () {
+                                  if (model.currentState ==
+                                          PlayerState.PAUSED ||
+                                      model.currentState ==
+                                          PlayerState.STOPPED) {
+                                    _animationController.forward();
+                                    model.play();
+                                  } else {
+                                    model.pause();
+                                    _animationController.reverse();
+                                  }
+                                },
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(100.0)),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: <Color>[
+                                            Color(0xFF0D47A1),
+                                            Color(0xFF1976D2),
+                                            Color(0xFF42A5F5),
+                                          ],
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(70.0))),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 10, 20, 10),
+                                    child: (model.currentState ==
+                                                PlayerState.PAUSED ||
+                                            model.currentState ==
+                                                PlayerState.STOPPED)
+                                        ? AnimatedIcon(
+                                           icon: AnimatedIcons.play_pause,
+                                            color: Colors.white,
+                                            size: 30.0,
+                                            progress: _animationController,
+                                          )
+                                        : AnimatedIcon(
+                                           icon: AnimatedIcons.play_pause,
+                                            size: 30, color: Colors.white, progress: _animationController,),
+                                  ),
+                                )),
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: width * 0.1),

@@ -10,166 +10,224 @@ class AboutUs extends StatelessWidget {
         body: Stack(
       children: <Widget>[
         AppBar(
-            leading: Padding(
-              padding: EdgeInsets.only(top: height * 0.01, left: width * 0.03),
-              child: IconButton(
-                iconSize: 35.0,
-                icon: Icon(
-                  CustomIcons.arrow_circle_o_left,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+          leading: Padding(
+            padding: EdgeInsets.only(top: height * 0.01, left: width * 0.03),
+            child: IconButton(
+              iconSize: 35.0,
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.grey,
               ),
-            ),
-            backgroundColor: Theme.of(context).backgroundColor,
-            centerTitle: true,
-            title: Padding(
-              padding: EdgeInsets.only(top: height * 0.022),
-              child:
-                  Text("Now Playing", style: Theme.of(context).textTheme.display1),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ),
+          backgroundColor: Theme.of(context).backgroundColor,
+          centerTitle: true,
+          title: Padding(
+            padding: EdgeInsets.only(top: height * 0.022),
+            child:
+                Text("About US", style: Theme.of(context).textTheme.display1),
+          ),
+        ),
         Padding(
-          padding: EdgeInsets.only(top: height*0.07),
+          padding: EdgeInsets.only(top: height * 0.07),
           child: ListView(
             children: <Widget>[
               Container(
                   height: height,
                   child: ListView(
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.07, top: height * 0.035),
-                        child: Text(
-                          "The Team",
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.02, top: height * 0.03),
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.person_outline,
-                            color: Colors.blueAccent,
+                      Align(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: height * 0.03),
+                          child: Card(
+                            elevation: 20.0,
+                            child: Container(
+                              height: height * 0.2,
+                              width: width * 0.9,
+                              decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: <Color>[
+                                      Color(0xFF0D47A1),
+                                      Color(0xFF1976D2),
+                                      Color(0xFF42A5F5),
+                                    ],
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              child: Stack(
+                                children: <Widget>[
+                                  Positioned(
+                                    left: width * 0.12,
+                                    top: height * 0.065,
+                                    child: CircleAvatar(
+                                      child: Icon(CustomIcons.user),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      left: width * 0.3,
+                                      top: height * 0.05,
+                                      child: Text.rich(TextSpan(
+                                          text: "Selva,\n",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                          ),
+                                          children: <TextSpan>[
+                                            new TextSpan(
+                                                text: 'Lead Developer',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 17))
+                                          ]))),
+                                  Positioned(
+                                    left: width * 0.27,
+                                    top: height * 0.135,
+                                    child: IconButton(
+                                      color: Colors.transparent,
+                                      icon: Icon(
+                                        CustomIcons.paper_plane,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: _launchTg,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          title: Text("Selva",
-                              style: Theme.of(context).textTheme.display1),
-                          subtitle: Text(
-                            "Lead Dev",
-                            style: Theme.of(context).textTheme.display2,
+                        ),
+                      ),
+                      Align(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: height * 0.03),
+                          child: Card(
+                            elevation: 15.0,
+                            child: Container(
+                              height: height * 0.2,
+                              width: width * 0.9,
+                              decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: <Color>[
+                                      Color(0xff007991),
+                                      Color(0xFF78ffd6),
+                                    ],
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              child: Stack(
+                                children: <Widget>[
+                                  Positioned(
+                                    left: width * 0.12,
+                                    top: height * 0.065,
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.green,
+                                      child: Icon(CustomIcons.user,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      left: width * 0.3,
+                                      top: height * 0.05,
+                                      child: Text.rich(TextSpan(
+                                          text: "OjasK,\n",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                          ),
+                                          children: <TextSpan>[
+                                            new TextSpan(
+                                                text: 'Lead Developer',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 17))
+                                          ]))),
+                                  Positioned(
+                                    left: width * 0.27,
+                                    top: height * 0.135,
+                                    child: IconButton(
+                                      color: Colors.transparent,
+                                      icon: Icon(
+                                        CustomIcons.instagram,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: _launchInsta,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: width * 0.35,
+                                    top: height * 0.135,
+                                    child: IconButton(
+                                      color: Colors.transparent,
+                                      icon: Icon(
+                                        CustomIcons.google,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: _launchGmail,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      Padding(
+                      Align(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: height * 0.03),
+                          child: Card(
+                            elevation: 10.0,
+                            child: Container(
+                              height: height * 0.3,
+                              width: width * 0.9,
+                              decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: <Color>[
+                                      Color(0xffFF5F6D),
+                                      Color(0xFFFFC371),
+                                    ],
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Special Thanks To:",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                  Padding(
                         padding: EdgeInsets.only(
-                            left: width * 0.02, top: height * 0.005),
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.person_outline,
-                            color: Colors.blueAccent,
-                          ),
-                          title: Text("OjasK",
-                              style: Theme.of(context).textTheme.display1),
-                          subtitle: Text(
-                            "Lead Dev",
-                            style: Theme.of(context).textTheme.display2,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.07, top: height * 0.02),
-                        child: Text(
-                          "Contact Us",
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.02, top: height * 0.03),
-                        child: ListTile(
-                          onTap: _launchTg,
-                          leading: CircleAvatar(
-                              backgroundColor: Theme.of(context).backgroundColor,
-                              child: Icon(CustomIcons.paper_plane)),
-                          title: Text("Telegram",
-                              style: Theme.of(context).textTheme.display1),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.02, top: height * 0.005),
-                        child: ListTile(
-                          onTap: _launchInsta,
-                          leading: CircleAvatar(
-                              backgroundColor: Theme.of(context).backgroundColor,
-                              child: Icon(CustomIcons.instagram)),
-                          title: Text("Instagram",
-                              style: Theme.of(context).textTheme.display1),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.02, top: height * 0.005),
-                        child: ListTile(
-                          onTap: _launchGmail,
-                          leading: CircleAvatar(
-                              backgroundColor: Theme.of(context).backgroundColor,
-                              child: Icon(CustomIcons.google)),
-                          title: Text("Gmail",
-                              style: Theme.of(context).textTheme.display1),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.07, top: height * 0.03),
-                        child: Text(
-                          "Credits to :",
-                          style: TextStyle(
-                              fontSize: 25.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.08, top: height * 0.02),
+                            left: width * 0.01, top: height * 0.02),
                         child: Text("1. Pawan For The Flute Plugin",
-                            style: Theme.of(context).textTheme.display2),
+                            style: TextStyle(
+                                          color: Colors.white, fontSize: 16),),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            left: width * 0.08, top: height * 0.02),
+                            left: width * 0.2, top: height * 0.02),
                         child: Text("2. Launcher Icon Made by Freepik from www.flaticon.com",
-                            style: Theme.of(context).textTheme.display2),
+                            style: TextStyle(
+                                          color: Colors.white, fontSize: 16),),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
                             left: width * 0.08, top: height * 0.02),
                         child: Text("3.The Designer Behind the Images Used",
-                            style: Theme.of(context).textTheme.display2),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(40.0),
-                        child: Align(alignment: Alignment.center,
-                          child: Text(
-                            "Made In ❤️ With flutter",
                             style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w300,
-                                color: Colors.blueAccent),
+                                          color: Colors.white, fontSize: 16),),
+                      ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ))
             ],

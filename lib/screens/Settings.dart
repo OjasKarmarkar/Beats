@@ -171,6 +171,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 style: Theme.of(context).textTheme.display2,
               ),
               content: TextFormField(
+                maxLength: 10,
                 controller: text,
                 decoration: InputDecoration(
                     errorText: err ? "Whats in a name?" : null,
@@ -178,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     labelText: "Enter Name",
                     labelStyle: Theme.of(context).textTheme.display2,
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4))),
+                        borderRadius: BorderRadius.circular(10))),
               ),
               actions: <Widget>[
                 new FlatButton(

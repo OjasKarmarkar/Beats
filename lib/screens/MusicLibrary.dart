@@ -74,9 +74,10 @@ class Library extends StatelessWidget {
                                       children: <Widget>[
                                         Text(
                                           "Songs",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .display1,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30,
+                                            color: Theme.of(context).textTheme.display1.color ),
                                         ),
                                       ],
                                     ),
@@ -274,11 +275,7 @@ class Library extends StatelessWidget {
               onTap: () {
                 Navigator.push(context, Scale(page: PlayBackPage()));
               },
-              onPanUpdate: (details) {
-                if (details.delta.dy < 0) {
-                  push(context);
-                }
-              },
+              
               child: Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).cardTheme.color,

@@ -460,10 +460,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void validate(context, repo) {
     setState(() {
-      txt.text.isEmpty ? error = true : error = false;
+      txt.text.toString().isEmpty ? error = true : error = false;
     });
-    if (txt.text.isNotEmpty) {
-      repo.add(txt.text);
+    if (txt.text.toString().isNotEmpty) {
+      repo.add(txt.text.toString());
       txt.clear();
       Navigator.of(context).pop();
     } else {}
