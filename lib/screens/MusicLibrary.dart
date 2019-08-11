@@ -75,9 +75,12 @@ class Library extends StatelessWidget {
                                         Text(
                                           "Songs",
                                           style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30,
-                                            color: Theme.of(context).textTheme.display1.color ),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 30,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .display1
+                                                  .color),
                                         ),
                                       ],
                                     ),
@@ -275,7 +278,6 @@ class Library extends StatelessWidget {
               onTap: () {
                 Navigator.push(context, Scale(page: PlayBackPage()));
               },
-              
               child: Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).cardTheme.color,
@@ -385,7 +387,7 @@ class Search extends SearchDelegate<Song> {
           close(context, null);
         },
         icon: Icon(
-         Icons.arrow_back,
+          Icons.arrow_back,
           color: Colors.grey,
         ));
   }
@@ -399,15 +401,19 @@ class Search extends SearchDelegate<Song> {
   @override
   Widget buildSuggestions(BuildContext context) {
     model = Provider.of<SongsModel>(context);
-    List<String> dummy = <String>[];
-    List<String> recents = <String>[];
+    List<Song> dummy = <Song>[];
+    List<Song> recents = <Song>[];
     for (int i = 0; i < model.songs.length; i++) {
-      dummy.add(model.songs[i].title);
+      dummy.add(model.songs[i]);
     }
-    for (int i = 0; i < 4; i++) {
-      recents.add(model.songs[i].title);
-    }
-   var suggestion = query.isEmpty?recents : dummy.where((p) => p.contains(query)).toList();
+    //for (int i = 0; i < 4; i++) {
+    // recents.add(model.songs[i].title);
+    //}
+    var suggestion = query.isEmpty
+        ? recents
+        : dummy
+            .where((p) => p.title.toLowerCase().startsWith(query.toLowerCase()))
+            .toList();
     // hint when searches
     return ListView.builder(
       itemCount: suggestion.length,
@@ -416,14 +422,14 @@ class Search extends SearchDelegate<Song> {
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
             onTap: () {
-                  model.player.stop();
-                  model.playlist = false;
-                  model.play();
-                  close(context, null);
-                },
+              model.player.stop();
+              model.playURI(suggestion[index].uri);
+              model.playlist = false;
+              close(context, null);
+            },
             title: Text(
-              suggestion[index],
-              style: TextStyle(color: Colors.black , fontSize: 18),
+              suggestion[index].title,
+              style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: CircleAvatar(child: Icon(Icons.music_note)),
           ),

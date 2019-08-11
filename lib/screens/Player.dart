@@ -48,6 +48,7 @@ class _PlayBackPageState extends State<PlayBackPage> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    model = Provider.of<SongsModel>(context);
     Play_Screen = Provider.of<Now_Playing>(context);
     themeChanger = Provider.of<ThemeChanger>(context);
 

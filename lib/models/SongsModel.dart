@@ -67,6 +67,19 @@ class SongsModel extends ChangeNotifier {
     }
   }
 
+  playURI(var uri1){
+    player.stop();
+    for(var song1 in songs){
+      print(song1.title);
+      if(song1.uri == uri1){
+        currentSong = song1;
+        print("correct");
+        play();
+        break;
+      }
+    }
+  }
+
   initValues() {
     player.setDurationHandler((d) {
       prog.setDuration(d.inSeconds);

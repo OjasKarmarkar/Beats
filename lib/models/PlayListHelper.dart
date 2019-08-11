@@ -26,7 +26,7 @@ class PlaylistHelper {
     String path = documentsDirectory.path + tableName + ".db";
     return await openDatabase(path, version: 1, onOpen: (db) {
     }, onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE $tableName ("
+      await db.execute("CREATE TABLE S$tableName ("
           "id INTEGER,"
           "artist TEXT,"
           "title TEXT,"
@@ -40,7 +40,7 @@ class PlaylistHelper {
   }
   rename(String s)async{
     final db = await database;
-    await db.execute("ALTER TABLE $tableName RENAME TO $s");
+    await db.execute("ALTER TABLE S$tableName RENAME TO S$s");
     await db.close();
     var documentsDirectory = await getApplicationDocumentsDirectory();
     String path = documentsDirectory.path + tableName + ".db";
@@ -62,19 +62,19 @@ class PlaylistHelper {
   }
   deleteSong(Song s) async {
     final db = await database;
-    await db.rawDelete("delete from $tableName where id = ${s.id}");
+    await db.rawDelete("delete from S$tableName where id = ${s.id}");
     //await db.rawDelete("delete from $tableName where rowid = (select max(rowid) from $tableName)");
   }
   add(Song s) async {
     final db = await database;
     bool exists = await alreadyExists(s);
     if(!exists){
-      var res = await db.insert(tableName, toMap(s));
+      var res = await db.insert("S"+tableName, toMap(s));
     }
   }
   getSongs() async {
     final db = await database;
-    var res = await db.query(tableName);
+    var res = await db.query("S"+tableName);
     List<Song> list =
         res.isNotEmpty ? res.map((c) => Song.fromMap(c)).toList() : [];
     return list;
