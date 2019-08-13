@@ -124,7 +124,7 @@ class Library extends StatelessWidget {
                     Icons.more_vert,
                     color: Colors.grey,
                   ),
-                  onSelected: (String choice) {
+                  onSelected: (String choice) async {
                     print("debug " + choice);
                     if (choice == Constants.pl) {
                       showDialog(
@@ -194,6 +194,9 @@ class Library extends StatelessWidget {
                       } else {
                         b.remove(model.songs[pos]);
                       }
+                    }else if(choice == Constants.de){
+                      await File(model.songs[pos].uri).delete();
+                      model.fetchSongs();
                     }
                   },
                   itemBuilder: (BuildContext context) {

@@ -753,10 +753,18 @@ class _PlayBackPageState extends State<PlayBackPage> with TickerProviderStateMix
 
   onPageChanged(int index) {
     setState(() {
-      currentPage = index;
-      model.player.stop();
-      model.previous();
-      model.play();
+      if(currentPage>index){
+        currentPage = index;
+        model.player.stop();
+        model.previous();
+        model.play();
+      }else if(currentPage<index){
+        currentPage = index;
+        model.player.stop();
+        model.next();
+        model.play();
+      }
+      
     });
   }
 

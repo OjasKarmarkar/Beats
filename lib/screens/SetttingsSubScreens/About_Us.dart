@@ -202,26 +202,25 @@ class AboutUs extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.01, top: height * 0.02),
-                        child: Text("1. Pawan For The Flute Plugin",
-                            style: TextStyle(
-                                          color: Colors.white, fontSize: 16),),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.2, top: height * 0.02),
-                        child: Text("2. Launcher Icon Made by Freepik from www.flaticon.com",
-                            style: TextStyle(
-                                          color: Colors.white, fontSize: 16),),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: width * 0.08, top: height * 0.02),
-                        child: Text("3.The Designer Behind the Images Used",
-                            style: TextStyle(
-                                          color: Colors.white, fontSize: 16),),
-                      ),
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.02),
+                                    child: Text(
+                                      "1. Pawan For The Flute Plugin\n\n2. Launcher Icon Made by Freepik from\n www.flaticon.com",
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.02),
+                                    child: Text(
+                                      "3.The Designer Behind the Images Used",
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
