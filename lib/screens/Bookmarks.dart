@@ -87,13 +87,20 @@ class Bookmarks extends StatelessWidget {
                       leading: CircleAvatar(child: getImage(bm, pos)),
                       title: Text(
                         bm.bookmarks[pos].title,
-                        style: Theme.of(context).textTheme.display3,
+                        style: TextStyle(
+                           fontSize: 17,
+                           fontWeight: FontWeight.bold,
+                           color: Theme.of(context).textTheme.display1.color
+                          ),
                       ),
                       subtitle: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           bm.bookmarks[pos].artist,
-                          style: Theme.of(context).textTheme.display2,
+                          style: TextStyle(
+                           fontSize: 14,
+                           color: Theme.of(context).textTheme.display1.color
+                          ),
                         ),
                       ),
                     ),

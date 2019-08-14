@@ -265,7 +265,7 @@ class Library extends StatelessWidget {
   }
 
   push(context) {
-    Navigator.push(context, Scale(page: PlayBackPage()));
+    Navigator.push(context, SlideRightRoute(page: PlayBackPage()));
   }
 
   showStatus(model) {

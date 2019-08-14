@@ -4,41 +4,37 @@ import 'package:beats/models/ThemeModel.dart';
 import 'package:beats/models/PlaylistRepo.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import 'package:beats/models/PlayListHelper.dart';
-import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/Now_Playing.dart';
+import 'package:beats/screens/MusicLibrary.dart';
 import 'package:flutter/material.dart';
 import '../custom_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:beats/models/ProgressModel.dart';
-
-import 'MusicLibrary.dart';
 
 class PlayBackPage extends StatefulWidget {
   @override
   _PlayBackPageState createState() => _PlayBackPageState();
 }
 
-class _PlayBackPageState extends State<PlayBackPage> with TickerProviderStateMixin {
+class _PlayBackPageState extends State<PlayBackPage> {
   SongsModel model;
   ThemeChanger themeChanger;
+  Library x;
   PageController pg;
   Now_Playing Play_Screen;
-  AnimationController _animationController;
   int currentPage = 1;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this , duration: Duration(milliseconds: 500));
     pg = PageController(
-        initialPage: currentPage, keepPage: true, viewportFraction: 0.85);
+        initialPage: currentPage, keepPage: true, viewportFraction: 0.95);
   }
 
   @override
   void dispose() {
     super.dispose();
     pg.dispose();
-    _animationController.dispose();
   }
 
   TextEditingController txt = TextEditingController();
@@ -163,50 +159,44 @@ class _PlayBackPageState extends State<PlayBackPage> with TickerProviderStateMix
                               ),
                             ),
                             InkWell(
-                                onTap: () {
-                                  if (model.currentState ==
-                                          PlayerState.PAUSED ||
-                                      model.currentState ==
-                                          PlayerState.STOPPED) {
-                                    _animationController.forward();
-                                    model.play();
-                                  } else {
-                                    model.pause();
-                                    _animationController.reverse();
-                                  }
-                                },
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(100.0)),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: <Color>[
-                                            Color(0xFF0D47A1),
-                                            Color(0xFF1976D2),
-                                            Color(0xFF42A5F5),
-                                          ],
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(70.0))),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20, 10, 20, 10),
-                                    child: (model.currentState ==
-                                                PlayerState.PAUSED ||
-                                            model.currentState ==
-                                                PlayerState.STOPPED)
-                                        ? AnimatedIcon(
-                                           icon: AnimatedIcons.play_pause,
-                                            color: Colors.white,
-                                            size: 30.0,
-                                            progress: _animationController,
-                                          )
-                                        : AnimatedIcon(
-                                           icon: AnimatedIcons.play_pause,
-                                            size: 30, color: Colors.white, progress: _animationController,),
-                                  ),
-                                )),
+                              onTap: () {
+                                if (model.currentState == PlayerState.PAUSED ||
+                                    model.currentState == PlayerState.STOPPED) {
+                                  model.play();
+                                } else {
+                                  model.pause();
+                                }
+                              },
+                              child: MaterialButton(
+                                elevation: 30,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100.0)),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: <Color>[
+                                          themeChanger.accentColor,
+                                          Color(0xFF1976D2),
+                                          Color(0xFF42A5F5),
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(100.0))),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                  child: (model.currentState ==
+                                              PlayerState.PAUSED ||
+                                          model.currentState ==
+                                              PlayerState.STOPPED)
+                                      ? Icon(
+                                          CustomIcons.play,
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        )
+                                      : Icon(CustomIcons.pause,
+                                          size: 30, color: Colors.white),
+                                ),
+                              )),
                             IconButton(
                               onPressed: () {
                                 model.player.stop();
@@ -528,50 +518,44 @@ class _PlayBackPageState extends State<PlayBackPage> with TickerProviderStateMix
                         Padding(
                           padding: EdgeInsets.only(top: height * 0.01),
                           child: InkWell(
-                                onTap: () {
-                                  if (model.currentState ==
-                                          PlayerState.PAUSED ||
-                                      model.currentState ==
-                                          PlayerState.STOPPED) {
-                                    _animationController.forward();
-                                    model.play();
-                                  } else {
-                                    model.pause();
-                                    _animationController.reverse();
-                                  }
-                                },
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(100.0)),
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: <Color>[
-                                            Color(0xFF0D47A1),
-                                            Color(0xFF1976D2),
-                                            Color(0xFF42A5F5),
-                                          ],
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(70.0))),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20, 10, 20, 10),
-                                    child: (model.currentState ==
-                                                PlayerState.PAUSED ||
-                                            model.currentState ==
-                                                PlayerState.STOPPED)
-                                        ? AnimatedIcon(
-                                           icon: AnimatedIcons.play_pause,
-                                            color: Colors.white,
-                                            size: 30.0,
-                                            progress: _animationController,
-                                          )
-                                        : AnimatedIcon(
-                                           icon: AnimatedIcons.play_pause,
-                                            size: 30, color: Colors.white, progress: _animationController,),
-                                  ),
-                                )),
+                              onTap: () {
+                                if (model.currentState == PlayerState.PAUSED ||
+                                    model.currentState == PlayerState.STOPPED) {
+                                  model.play();
+                                } else {
+                                  model.pause();
+                                }
+                              },
+                              child: MaterialButton(
+                                elevation: 30,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100.0)),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: <Color>[
+                                          themeChanger.accentColor,
+                                          Color(0xFF1976D2),
+                                          Color(0xFF42A5F5),
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(100.0))),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                  child: (model.currentState ==
+                                              PlayerState.PAUSED ||
+                                          model.currentState ==
+                                              PlayerState.STOPPED)
+                                      ? Icon(
+                                          CustomIcons.play,
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        )
+                                      : Icon(CustomIcons.pause,
+                                          size: 30, color: Colors.white),
+                                ),
+                              )),
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: width * 0.1),
@@ -753,18 +737,19 @@ class _PlayBackPageState extends State<PlayBackPage> with TickerProviderStateMix
 
   onPageChanged(int index) {
     setState(() {
-      if(currentPage>index){
+      if (currentPage > index) {
         currentPage = index;
         model.player.stop();
         model.previous();
         model.play();
-      }else if(currentPage<index){
+       
+      } else if (currentPage < index) {
         currentPage = index;
         model.player.stop();
         model.next();
         model.play();
-      }
       
+      }
     });
   }
 

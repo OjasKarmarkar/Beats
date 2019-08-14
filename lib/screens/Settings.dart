@@ -140,7 +140,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               padding: const EdgeInsets.only(top: 16.0),
                               child: Text(
                                 subtitles[index],
-                                style: Theme.of(context).textTheme.display2,
+                                style: TextStyle(
+                           fontSize: 14,
+                           color: Theme.of(context).textTheme.display1.color
+                          ),
                               ),
                             ),
                           ),
