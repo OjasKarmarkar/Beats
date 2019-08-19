@@ -15,102 +15,103 @@ class Bookmarks extends StatelessWidget {
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
     return Consumer<BookmarkModel>(
-      builder: (context, bm, _) => Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: Stack(
-          children: <Widget>[
-            (bm.bookmarks == null)
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : (bm.bookmarks.length == 0 || bm.bookmarks.length == null)
-                    ? Center(
-                        child: Text(
-                        "No Favourites",
-                        style: Theme.of(context).textTheme.display1,
-                      ))
-                    : Container(
-                        height: height * 0.2,
-                        width: width,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.redAccent,
+      builder: (context, bm, _) => WillPopScope(
+              child: Scaffold(
+          backgroundColor: Theme.of(context).backgroundColor,
+          body: Stack(
+            children: <Widget>[
+              (bm.bookmarks == null)
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : (bm.bookmarks.length == 0 || bm.bookmarks.length == null)
+                      ? Center(
+                          child: Text(
+                          "No Favourites",
+                          style: Theme.of(context).textTheme.display1,
+                        ))
+                      : Container(
+                          height: height * 0.2,
+                          width: width,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.redAccent,
+                                  ),
                                 ),
-                              ),
-                              Text("Liked Songs",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 30.0)),
-                            ],
+                                Text("Liked Songs",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 30.0)),
+                              ],
+                            ),
                           ),
-                        ),
-                        // Add box decoration
-                        decoration: BoxDecoration(
-                          // Box decoration takes a gradient
-                          gradient: LinearGradient(
-                            // Where the linear gradient begins and ends
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            // Add one stop for each color. Stops should increase from 0 to 1
-                            stops: [0.1, 0.5, 0.7, 0.9],
-                            colors: [
-                              Colors.lightBlue,
-                              Colors.blue,
-                              Colors.blueAccent,
-                              Colors.blue,
-                            ],
-                          ),
-                        )),
-            Padding(
-              padding: EdgeInsets.only(top: height * 0.2),
-              child: ListView.builder(
-                itemCount: bm.bookmarks.length,
-                itemBuilder: (context, pos) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 20.0, left: 10.0),
-                    child: ListTile(
-                      onTap: () {
-                        model.player.stop();
-                        model.playlist = true;
-                        model.playlistSongs = bm.bookmarks;
-                        model.currentSong = bm.bookmarks[pos];
-                        model.filterResults(
-                            ""); //Reset the list. So we can change to next song.
-                        model.play();
-                      },
-                      leading: CircleAvatar(child: getImage(bm, pos)),
-                      title: Text(
-                        bm.bookmarks[pos].title,
-                        style: TextStyle(
-                           fontSize: 17,
-                           fontWeight: FontWeight.bold,
-                           color: Theme.of(context).textTheme.display1.color
-                          ),
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          bm.bookmarks[pos].artist,
+                          // Add box decoration
+                          decoration: BoxDecoration(
+                            // Box decoration takes a gradient
+                            gradient: LinearGradient(
+                              // Where the linear gradient begins and ends
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              // Add one stop for each color. Stops should increase from 0 to 1
+                              stops: [0.1, 0.5, 0.7, 0.9],
+                              colors: [
+                                Colors.lightBlue,
+                                Colors.blue,
+                                Colors.blueAccent,
+                                Colors.blue,
+                              ],
+                            ),
+                          )),
+              Padding(
+                padding: EdgeInsets.only(top: height * 0.2),
+                child: ListView.builder(
+                  itemCount: bm.bookmarks.length,
+                  itemBuilder: (context, pos) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 20.0, left: 10.0),
+                      child: ListTile(
+                        onTap: () {
+                          model.player.stop();
+                          model.playlist = true;
+                          model.playlistSongs = bm.bookmarks;
+                          model.currentSong = bm.bookmarks[pos];
+                          
+                          model.play();
+                        },
+                        leading: CircleAvatar(child: getImage(bm, pos)),
+                        title: Text(
+                          bm.bookmarks[pos].title,
                           style: TextStyle(
-                           fontSize: 14,
-                           color: Theme.of(context).textTheme.display1.color
+                             fontSize: 17,
+                             fontWeight: FontWeight.bold,
+                             color: Theme.of(context).textTheme.display1.color
+                            ),
+                        ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            bm.bookmarks[pos].artist,
+                            style: TextStyle(
+                             fontSize: 14,
+                             color: Theme.of(context).textTheme.display1.color
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-            //showStatus(model)
-          ],
-        ),
+              //showStatus(model)
+            ],
+          ),
+        ), onWillPop: () {},
       ),
     );
   }

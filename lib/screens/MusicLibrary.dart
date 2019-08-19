@@ -29,81 +29,87 @@ class Library extends StatelessWidget {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     themeChanger = Provider.of<ThemeChanger>(context);
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Theme.of(context).backgroundColor,
-        body: (model.songs == null)
-            ? Center(
-                child: Text(
-                  "No Songs",
-                  style: Theme.of(context).textTheme.display1,
-                ),
-              )
-            : NestedScrollView(
-                headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                      SliverOverlapAbsorber(
-                          child: SliverSafeArea(
-                            top: false,
-                            sliver: SliverAppBar(
-                              actions: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 20),
-                                  child: IconButton(
-                                    icon: Icon(Icons.search,
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .display1
-                                            .color),
-                                    onPressed: () {
-                                      showSearch(
-                                          context: context, delegate: Search());
-                                    },
+    return WillPopScope(
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Theme.of(context).backgroundColor,
+          body: (model.songs == null)
+              ? Center(
+                  child: Text(
+                    "No Songs",
+                    style: Theme.of(context).textTheme.display1,
+                  ),
+                )
+              : NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                        SliverOverlapAbsorber(
+                            child: SliverSafeArea(
+                              top: false,
+                              sliver: SliverAppBar(
+                                actions: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: IconButton(
+                                      icon: Icon(Icons.search,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .display1
+                                              .color),
+                                      onPressed: () {
+                                        showSearch(
+                                            context: context,
+                                            delegate: Search());
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ],
-                              backgroundColor:
-                                  Theme.of(context).backgroundColor,
-                              expandedHeight: height * 0.11,
-                              pinned: true,
-                              flexibleSpace: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: width * 0.06),
-                                  child: Container(
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          "Songs",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 30,
-                                              color: Theme.of(context)
-                                                  .textTheme
-                                                  .display1
-                                                  .color),
-                                        ),
-                                      ],
+                                ],
+                                backgroundColor:
+                                    Theme.of(context).backgroundColor,
+                                expandedHeight: height * 0.11,
+                                pinned: true,
+                                flexibleSpace: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(left: width * 0.06),
+                                    child: Container(
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Text(
+                                            "Songs",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 30,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .display1
+                                                    .color),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          handle:
-                              NestedScrollView.sliverOverlapAbsorberHandleFor(
-                                  context))
+                            handle:
+                                NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                    context))
+                      ],
+                  body: Stack(
+                    children: <Widget>[
+                      
+                      Column(
+                        children: <Widget>[getLoading(model)],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: showStatus(model),
+                      )
                     ],
-                body: Stack(
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[getLoading(model)],
-                    ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: showStatus(model),
-                    )
-                  ],
-                )));
+                  ))),
+      onWillPop: () {},
+    );
   }
 
   getLoading(SongsModel model) {
@@ -194,7 +200,7 @@ class Library extends StatelessWidget {
                       } else {
                         b.remove(model.songs[pos]);
                       }
-                    }else if(choice == Constants.de){
+                    } else if (choice == Constants.de) {
                       await File(model.songs[pos].uri).delete();
                       model.fetchSongs();
                     }
@@ -218,8 +224,7 @@ class Library extends StatelessWidget {
                   model.player.stop();
                   model.playlist = false;
                   model.currentSong = model.songs[pos];
-                  model.filterResults(
-                      ""); //Reset the list. So we can change to next song.
+                  //Reset the list. So we can change to next song.
                   model.play();
                 },
                 leading: CircleAvatar(child: getImage(model, pos)),
@@ -430,8 +435,22 @@ class Search extends SearchDelegate<Song> {
               model.playlist = false;
               close(context, null);
             },
-            title: Text(
-              suggestion[index].title,
+            title: Text.rich(
+              TextSpan(
+                  text: suggestion[index].title + ",\n",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 19,
+                  ),
+                  children: <TextSpan>[
+                    new TextSpan(
+                        text: suggestion[index].artist,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w100))
+                  ]),
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: CircleAvatar(child: Icon(Icons.music_note)),

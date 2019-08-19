@@ -71,26 +71,21 @@ class _OnBoard_PageState extends State<OnBoard_Page> {
               child: Icon(Icons.arrow_forward_ios),
               onPressed: () async {
                 if (widget.pageModel.pageNumber == 1) {
-                  print(widget.pageModel.pageNumber);
+                 
                   widget.pageController.nextPage(
                     curve: Curves.easeInOut,
                     duration: Duration(milliseconds: 1000),
                   );
                 } else if (widget.pageModel.pageNumber == 2) {
-                  print(widget.pageModel.pageNumber);
-                  Map<PermissionGroup, PermissionStatus> permissions =
-                      await PermissionHandler()
-                          .requestPermissions([PermissionGroup.storage]);
-                  PermissionStatus permission = await PermissionHandler()
-                      .checkPermissionStatus(PermissionGroup.storage);
-                  if (permission == PermissionStatus.granted) {
+                  
+                  
                     SystemChrome.setEnabledSystemUIOverlays(
                         SystemUiOverlay.values);
                     Navigator.of(context).pushReplacement(new MaterialPageRoute(
                         builder: (context) => new MainScreen()));
                   }
                 }
-              },
+              ,
             ),
           ),
         ],

@@ -47,33 +47,11 @@ class SongsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  filterResults(String value) {
-    if (value.isNotEmpty) {
-      String low = value.toLowerCase();
-      List<Song> dummy = <Song>[];
-      duplicate.forEach((item) {
-        if (item.title.toLowerCase().startsWith(low)) {
-          // TODO: add regex to optimize search using letters in the middle
-          dummy.add(item);
-        }
-      });
-      songs.clear();
-      songs.addAll(dummy);
-      notifyListeners();
-    } else {
-      songs.clear();
-      songs.addAll(duplicate);
-      notifyListeners();
-    }
-  }
-
   playURI(var uri1){
     player.stop();
     for(var song1 in songs){
-      print(song1.title);
       if(song1.uri == uri1){
         currentSong = song1;
-        print("correct");
         play();
         break;
       }

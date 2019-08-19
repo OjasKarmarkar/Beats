@@ -40,123 +40,125 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     username = Provider.of<Username>(context);
     themeChanger = Provider.of<ThemeChanger>(context);
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          AppBar(
-              leading: Padding(
-                padding:
-                    EdgeInsets.only(top: height * 0.012, left: width * 0.03),
-                child: IconButton(
-                  iconSize: 35.0,
-                  icon: Icon(
-                    CustomIcons.share_alt,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    Share.share(
-                        'https://play.google.com/store/apps/details?id=in.selvasoft.beats');
-                  },
-                ),
-              ),
-              actions: <Widget>[
-                Padding(
+    return WillPopScope(
+          child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            AppBar(
+                leading: Padding(
                   padding:
                       EdgeInsets.only(top: height * 0.012, left: width * 0.03),
                   child: IconButton(
                     iconSize: 35.0,
                     icon: Icon(
-                      CustomIcons.user,
+                      CustomIcons.share_alt,
                       color: Colors.grey,
                     ),
                     onPressed: () {
-                      _displayDialog(context);
+                      Share.share(
+                          'https://play.google.com/store/apps/details?id=in.selvasoft.beats');
                     },
                   ),
-                )
-              ],
-              backgroundColor: Theme.of(context).backgroundColor,
-              centerTitle: true,
-              title: Padding(
-                padding: EdgeInsets.only(top: height * 0.022),
-                child: Text("Settings",
-                    style: Theme.of(context).textTheme.display1),
-              )),
-          Padding(
-            padding: EdgeInsets.only(top: 100.0),
-            child: Container(
-              child: ListView.builder(
-                itemCount: titles.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          side: BorderSide(
-                              width: 0.45, color: themeChanger.accentColor)),
-                      color: Theme.of(context).cardColor,
-                      elevation: 5.0,
-                      child: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: ListTile(
-                            onTap: () {
-                              switch (index) {
-                                case 0:
-                                  Navigator.push(
-                                      context,
-                                      EnterExitRoute(
-                                          exitPage: SettingsScreen(),
-                                          enterPage: Themes()));
-                                  break;
-                                case 1:
-                                  Navigator.push(
-                                      context,
-                                      EnterExitRoute(
-                                          exitPage: SettingsScreen(),
-                                          enterPage: PlayBack()));
-                                  break;
-                                case 2:
-                                  Navigator.push(
-                                      context,
-                                      EnterExitRoute(
-                                          exitPage: SettingsScreen(),
-                                          enterPage: AboutUs()));
-                                  break;
+                ),
+                actions: <Widget>[
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: height * 0.012, left: width * 0.03),
+                    child: IconButton(
+                      iconSize: 35.0,
+                      icon: Icon(
+                        CustomIcons.user,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        _displayDialog(context);
+                      },
+                    ),
+                  )
+                ],
+                backgroundColor: Theme.of(context).backgroundColor,
+                centerTitle: true,
+                title: Padding(
+                  padding: EdgeInsets.only(top: height * 0.022),
+                  child: Text("Settings",
+                      style: Theme.of(context).textTheme.display1),
+                )),
+            Padding(
+              padding: EdgeInsets.only(top: 100.0),
+              child: Container(
+                child: ListView.builder(
+                  itemCount: titles.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            side: BorderSide(
+                                width: 0.45, color: themeChanger.accentColor)),
+                        color: Theme.of(context).cardColor,
+                        elevation: 5.0,
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: ListTile(
+                              onTap: () {
+                                switch (index) {
+                                  case 0:
+                                    Navigator.push(
+                                        context,
+                                        EnterExitRoute(
+                                            exitPage: SettingsScreen(),
+                                            enterPage: Themes()));
+                                    break;
+                                  case 1:
+                                    Navigator.push(
+                                        context,
+                                        EnterExitRoute(
+                                            exitPage: SettingsScreen(),
+                                            enterPage: PlayBack()));
+                                    break;
+                                  case 2:
+                                    Navigator.push(
+                                        context,
+                                        EnterExitRoute(
+                                            exitPage: SettingsScreen(),
+                                            enterPage: AboutUs()));
+                                    break;
 
-                               
-                              }
-                            },
-                            leading: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Icon(icons[index], color: Colors.grey),
+                                 
+                                }
+                              },
+                              leading: Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Icon(icons[index], color: Colors.grey),
+                              ),
+                              title: Text(
+                                titles[index],
+                                style: Theme.of(context).textTheme.display3,
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: Text(
+                                  subtitles[index],
+                                  style: TextStyle(
+                             fontSize: 14,
+                             color: Theme.of(context).textTheme.display1.color
                             ),
-                            title: Text(
-                              titles[index],
-                              style: Theme.of(context).textTheme.display3,
-                            ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.only(top: 16.0),
-                              child: Text(
-                                subtitles[index],
-                                style: TextStyle(
-                           fontSize: 14,
-                           color: Theme.of(context).textTheme.display1.color
-                          ),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          )
-        ],
-      ),
+            )
+          ],
+        ),
+      ), onWillPop: () {},
     );
   }
 

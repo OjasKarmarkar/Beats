@@ -109,8 +109,7 @@ class _PLayListScreenState extends State<PLayListScreen> {
                                 model.playlist = true;
                                 model.playlistSongs = songs;
                                 model.currentSong = songs[pos];
-                                model.filterResults(
-                                    ""); //Reset the list. So we can change to next song.
+                               //Reset the list. So we can change to next song.
                                 model.play();
                               },
                               leading: CircleAvatar(child: getImage(pos)),
