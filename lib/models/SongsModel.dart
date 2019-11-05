@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'dart:math';
 import 'RecentsModel.dart';
 
@@ -47,10 +48,10 @@ class SongsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  playURI(var uri1){
+  playURI(var uri1) {
     player.stop();
-    for(var song1 in songs){
-      if(song1.uri == uri1){
+    for (var song1 in songs) {
+      if (song1.uri == uri1) {
         currentSong = song1;
         play();
         break;
@@ -139,19 +140,19 @@ class SongsModel extends ChangeNotifier {
   }
 
   current_Song() {
-    if(playlist){
+    if (playlist) {
       currentSong = playlistSongs[playlistSongs.indexOf(currentSong)];
-    }else{
+    } else {
       currentSong = songs[songs.indexOf(currentSong)];
     }
     updateUI();
   }
 
   random_Song() {
-    if(playlist){
+    if (playlist) {
       int max = playlistSongs.length;
       currentSong = playlistSongs[rnd.nextInt(max)];
-    }else{
+    } else {
       int max = songs.length;
       currentSong = songs[rnd.nextInt(max)];
     }

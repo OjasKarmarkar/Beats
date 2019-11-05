@@ -8,18 +8,29 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:beats/models/SongsModel.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import '../custom_icons.dart';
 import 'package:provider/provider.dart';
 import 'Player.dart';
 
 double height, width;
 
-class Library extends StatelessWidget {
+class Library extends StatefulWidget {
+  @override
+  _LibraryState createState() => _LibraryState();
+}
+
+class _LibraryState extends State<Library> {
   TextEditingController editingController;
+
   SongsModel model;
+
   BookmarkModel b;
+
   ThemeChanger themeChanger;
+
   TextEditingController txt = TextEditingController();
+
   bool error = false;
 
   @override
@@ -98,7 +109,6 @@ class Library extends StatelessWidget {
                       ],
                   body: Stack(
                     children: <Widget>[
-                      
                       Column(
                         children: <Widget>[getLoading(model)],
                       ),
@@ -108,7 +118,9 @@ class Library extends StatelessWidget {
                       )
                     ],
                   ))),
-      onWillPop: () {},
+      onWillPop: () {
+        return null;
+      },
     );
   }
 
@@ -194,16 +206,19 @@ class Library extends StatelessWidget {
                               ],
                             );
                           });
-                    } else if (choice == Constants.bm) {
-                      if (!b.alreadyExists(model.songs[pos])) {
-                        b.add(model.songs[pos]);
-                      } else {
-                        b.remove(model.songs[pos]);
-                      }
-                    } else if (choice == Constants.de) {
-                      await File(model.songs[pos].uri).delete();
-                      model.fetchSongs();
-                    }
+                    } // else if (choice == Constants.bm) {
+                    // if (!b.alreadyExists(model.songs[pos])) {
+                    //   b.add(model.songs[pos]);
+                    // } else {
+                    //    b.remove(model.songs[pos]);
+                    // }
+                    //} else if (choice == Constants.de) {
+
+                    //   model.fetchSongs();
+                    // }else if(choice == Constants.re){
+                    //   Directory x = await getExternalStorageDirectory();
+                    //   await File("${x.path}../../").rename(x.path);
+                    //}
                   },
                   itemBuilder: (BuildContext context) {
                     return Constants.choices.map((String choice) {
@@ -220,10 +235,19 @@ class Library extends StatelessWidget {
                     }).toList();
                   },
                 ),
-                onTap: () {
+                onTap: () async {
                   model.player.stop();
                   model.playlist = false;
                   model.currentSong = model.songs[pos];
+                  MediaNotification.showNotification(
+                      title: '${model.currentSong.title}',
+                      author: '${model.currentSong.artist}',
+                      isPlaying: true);
+                  MediaNotification.setListener('pause', () {
+                    setState(() {
+                      model.player.stop();
+                    });
+                  });
                   //Reset the list. So we can change to next song.
                   model.play();
                 },
@@ -231,7 +255,21 @@ class Library extends StatelessWidget {
                 title: Text(
                   model.songs[pos].title,
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.display2,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Sans'),
+                ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    model.songs[pos].artist,
+                    maxLines: 1,
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.display1.color,
+                        fontSize: 12,
+                        fontFamily: 'Sans'),
+                  ),
                 ),
               );
             });
@@ -250,6 +288,7 @@ class Library extends StatelessWidget {
     } else {
       return Container(
           child: IconButton(
+            onPressed: null,
             icon: Icon(
               Icons.music_note,
               color: Colors.white,
@@ -276,7 +315,14 @@ class Library extends StatelessWidget {
   showStatus(model) {
     if (model.currentSong != null) {
       return Container(
-        height: 45,
+        decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            border: Border(
+              top: BorderSide(
+                color: Theme.of(context).textTheme.display1.color,
+              ),
+            )),
+        height: height * 0.06,
         width: width,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -286,42 +332,50 @@ class Library extends StatelessWidget {
               onTap: () {
                 Navigator.push(context, Scale(page: PlayBackPage()));
               },
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).cardTheme.color,
-                    border: Border(top: BorderSide(color: Colors.greenAccent))),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Stack(
+                children: <Widget>[
+                  Row(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: width * 0.65,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: <Widget>[
-                              Text(
-                                model.currentSong.title,
-                                style: Theme.of(context).textTheme.display2,
-                              ),
-                            ],
+                      IconButton(
+                        color: Theme.of(context).textTheme.display1.color,
+                        icon: Icon(Icons.arrow_drop_up),
+                        onPressed: () {
+                          Navigator.push(context, Scale(page: PlayBackPage()));
+                        },
+                      ),
+                      Container(
+                        width: width * 0.75,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            model.currentSong.title,
+                            style: Theme.of(context).textTheme.display2,
+                            maxLines: 1,
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          model.player.stop();
-                          model.previous();
-                          model.play();
-                        },
-                        icon: Icon(
-                          CustomIcons.step_backward,
-                          color: Colors.grey,
-                          size: 25.0,
-                        ),
-                      ),
-                      InkWell(
-                          onTap: () {
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: IconButton(
+                          icon: model.currentState == PlayerState.PAUSED ||
+                                  model.currentState == PlayerState.STOPPED
+                              ? Icon(
+                                  CustomIcons.play,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .color,
+                                  size: 20.0,
+                                )
+                              : Icon(
+                                  CustomIcons.pause,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .color,
+                                  size: 20.0,
+                                ),
+                          onPressed: () {
                             if (model.currentState == PlayerState.PAUSED ||
                                 model.currentState == PlayerState.STOPPED) {
                               model.play();
@@ -329,37 +383,11 @@ class Library extends StatelessWidget {
                               model.pause();
                             }
                           },
-                          child: Container(
-                            height: 25,
-                            width: 25,
-                            child: FloatingActionButton(
-                              backgroundColor: themeChanger.accentColor,
-                              child: (model.currentState ==
-                                          PlayerState.PAUSED ||
-                                      model.currentState == PlayerState.STOPPED)
-                                  ? Icon(
-                                      CustomIcons.play,
-                                      size: 20.0,
-                                    )
-                                  : Icon(
-                                      CustomIcons.pause,
-                                      size: 20.0,
-                                    ),
-                            ),
-                          )),
-                      IconButton(
-                        onPressed: () {
-                          model.player.stop();
-                          model.next();
-                          model.play();
-                        },
-                        icon: Icon(
-                          CustomIcons.step_forward,
-                          color: Colors.grey,
-                          size: 25.0,
                         ),
                       ),
-                    ]),
+                    ],
+                  ),
+                ],
               ),
             );
           },
@@ -437,7 +465,7 @@ class Search extends SearchDelegate<Song> {
             },
             title: Text.rich(
               TextSpan(
-                  text: suggestion[index].title + ",\n",
+                  text: suggestion[index].title + "\n",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w800,

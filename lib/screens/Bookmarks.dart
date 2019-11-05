@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'package:beats/screens/Player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/BookmarkModel.dart';
 import '../custom_icons.dart';
 import 'MusicLibrary.dart';
-
+import 'package:beats/Animations/transitions.dart';
 
 class Bookmarks extends StatelessWidget {
   SongsModel model;
@@ -16,7 +17,7 @@ class Bookmarks extends StatelessWidget {
     model = Provider.of<SongsModel>(context);
     return Consumer<BookmarkModel>(
       builder: (context, bm, _) => WillPopScope(
-              child: Scaffold(
+        child: Scaffold(
           backgroundColor: Theme.of(context).backgroundColor,
           body: Stack(
             children: <Widget>[
@@ -81,26 +82,28 @@ class Bookmarks extends StatelessWidget {
                           model.playlist = true;
                           model.playlistSongs = bm.bookmarks;
                           model.currentSong = bm.bookmarks[pos];
-                          
+
                           model.play();
                         },
                         leading: CircleAvatar(child: getImage(bm, pos)),
                         title: Text(
                           bm.bookmarks[pos].title,
+                          maxLines: 1,
                           style: TextStyle(
-                             fontSize: 17,
-                             fontWeight: FontWeight.bold,
-                             color: Theme.of(context).textTheme.display1.color
-                            ),
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color:
+                                  Theme.of(context).textTheme.display1.color),
                         ),
                         subtitle: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             bm.bookmarks[pos].artist,
+                            maxLines: 1,
                             style: TextStyle(
-                             fontSize: 14,
-                             color: Theme.of(context).textTheme.display1.color
-                            ),
+                                fontSize: 12,
+                                color:
+                                    Theme.of(context).textTheme.display1.color),
                           ),
                         ),
                       ),
@@ -108,10 +111,11 @@ class Bookmarks extends StatelessWidget {
                   },
                 ),
               ),
-              //showStatus(model)
+              //showStatus(model , context)
             ],
           ),
-        ), onWillPop: () {},
+        ),
+        onWillPop: () {},
       ),
     );
   }
@@ -127,79 +131,85 @@ class Bookmarks extends StatelessWidget {
     }
   }
 
-  showStatus(model) {
-    if (isPlayed = true) {
-      return Align(
-        alignment: Alignment.bottomRight,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.black,
-            border: Border.all(color: Colors.greenAccent),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40.0),
-                topRight: Radius.circular(10.0),
-                bottomRight: Radius.elliptical(10, 4)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: ListTile(
-              leading: CircleAvatar(
-                  child: ClipRRect(
-                borderRadius: BorderRadius.circular(40.0),
-                child: (model.currentSong.albumArt != null)
-                    ? Image.file(
-                        File.fromUri(Uri.parse(model.currentSong.albumArt)),
-                        width: 100,
-                        height: 100,
-                      )
-                    : Image.asset("assets/headphone.png"),
-              )),
-              title: Text(
-                model.currentSong.title,
-                maxLines: 1,
-                style: TextStyle(color: Colors.white, fontSize: 11.0),
+  showStatus(model, context) {
+    if (model.currentSong != null) {
+      return Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).backgroundColor,
+            border: Border(
+              top: BorderSide(
+                color: Theme.of(context).textTheme.display1.color,
               ),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(left: 0, top: 5.0, bottom: 10.0),
-                child: Text(
-                  model.currentSong.artist,
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontFamily: 'Sans', color: Colors.white, fontSize: 11.0),
-                ),
-              ),
-              trailing: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                    onTap: () {
-                      if (model.currentState == PlayerState.PAUSED ||
-                          model.currentState == PlayerState.STOPPED) {
-                        model.play();
-                      } else {
-                        model.pause();
-                      }
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      child: FloatingActionButton(
-                        child: (model.currentState == PlayerState.PAUSED ||
-                                model.currentState == PlayerState.STOPPED)
-                            ? Icon(
-                                CustomIcons.play,
-                                size: 20.0,
-                              )
-                            : Icon(
-                                CustomIcons.pause,
-                                size: 20.0,
-                              ),
+            )),
+        height: height * 0.06,
+        width: width,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 1,
+          itemBuilder: (context, pos) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(context, Scale(page: PlayBackPage()));
+              },
+              child: Stack(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      IconButton(
+                        color: Theme.of(context).textTheme.display1.color,
+                        icon: Icon(Icons.arrow_drop_up),
+                        onPressed: () {
+                          Navigator.push(context, Scale(page: PlayBackPage()));
+                        },
                       ),
-                    )),
+                      Container(
+                        width: width * 0.75,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            model.currentSong.title,
+                            style: Theme.of(context).textTheme.display2,
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: IconButton(
+                          icon: model.currentState == PlayerState.PAUSED ||
+                                  model.currentState == PlayerState.STOPPED
+                              ? Icon(
+                                  CustomIcons.play,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .color,
+                                  size: 20.0,
+                                )
+                              : Icon(
+                                  CustomIcons.pause,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .color,
+                                  size: 20.0,
+                                ),
+                          onPressed: () {
+                            if (model.currentState == PlayerState.PAUSED ||
+                                model.currentState == PlayerState.STOPPED) {
+                              model.play();
+                            } else {
+                              model.pause();
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ),
-          height: height * 0.1,
-          width: width * 0.62,
+            );
+          },
         ),
       );
     } else {}
