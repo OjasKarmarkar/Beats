@@ -1,4 +1,5 @@
 import 'package:beats/models/SongsModel.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import '../../models/ThemeModel.dart';
 import 'package:flutter/material.dart';
 import '../../custom_icons.dart';
@@ -7,23 +8,66 @@ import '../MusicLibrary.dart';
 import 'package:beats/themes/Themes.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
-class Themes extends StatelessWidget {
+class Themes extends StatefulWidget {
+  @override
+  _ThemesState createState() => _ThemesState();
+}
+
+class _ThemesState extends State<Themes> {
   ThemeChanger themeChanger;
+
   SongsModel model;
-  
+
+  @override
+  void initState() {
+    MediaNotification.setListener('next', () {
+      setState(() {
+        model.player.stop();
+        model.next();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('prev', () {
+      setState(() {
+        model.player.stop();
+        model.previous();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('pause', () {
+      setState(() {
+        model.pause();
+      });
+    });
+    MediaNotification.setListener('play', () {
+      setState(() {
+        model.play();
+      });
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     themeChanger = Provider.of<ThemeChanger>(context);
+    model = Provider.of<SongsModel>(context);
     return Scaffold(
       body: Stack(
         children: <Widget>[
           AppBar(
             leading: Padding(
-              padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
+              padding: EdgeInsets.only(top: height * 0.016, left: width * 0.03),
               child: IconButton(
-                iconSize: 35.0,
+                iconSize: 25.0,
                 icon: Icon(
-                  CustomIcons.arrow_circle_o_left,
+                  Icons.arrow_back,
                   color: Colors.grey,
                 ),
                 onPressed: () {
@@ -35,8 +79,8 @@ class Themes extends StatelessWidget {
             centerTitle: true,
             title: Padding(
               padding: EdgeInsets.only(top: height * 0.022),
-              child:
-                  Text("Themes", style: Theme.of(context).textTheme.display1),
+              child: Text("Now Playing",
+                  style: Theme.of(context).textTheme.display1),
             ),
           ),
           Padding(
@@ -64,7 +108,6 @@ class Themes extends StatelessWidget {
                 circleSize: 25.0,
               ),
               onTap: () {
-                
                 showDialog(
                   context: context,
                   builder: (_) => Padding(
@@ -98,7 +141,6 @@ class Themes extends StatelessWidget {
                                 circleSize: 70,
                                 onMainColorChange: (ColorSwatch selectedColor) {
                                   themeChanger.setAccent(selectedColor);
-                               
                                 },
                               ),
                             ),

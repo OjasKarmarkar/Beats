@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
-import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'dart:math';
 import 'RecentsModel.dart';
 

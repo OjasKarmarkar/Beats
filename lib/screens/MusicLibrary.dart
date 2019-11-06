@@ -34,6 +34,42 @@ class _LibraryState extends State<Library> {
   bool error = false;
 
   @override
+  void initState() {
+    MediaNotification.setListener('next', () {
+      setState(() {
+        model.player.stop();
+        model.next();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('prev', () {
+      setState(() {
+        model.player.stop();
+        model.previous();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('pause', () {
+      setState(() {
+        model.pause();
+      });
+    });
+    MediaNotification.setListener('play', () {
+      setState(() {
+        model.play();
+      });
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
     b = Provider.of<BookmarkModel>(context);
@@ -243,11 +279,7 @@ class _LibraryState extends State<Library> {
                       title: '${model.currentSong.title}',
                       author: '${model.currentSong.artist}',
                       isPlaying: true);
-                  MediaNotification.setListener('pause', () {
-                    setState(() {
-                      model.player.stop();
-                    });
-                  });
+
                   //Reset the list. So we can change to next song.
                   model.play();
                 },
@@ -379,7 +411,20 @@ class _LibraryState extends State<Library> {
                             if (model.currentState == PlayerState.PAUSED ||
                                 model.currentState == PlayerState.STOPPED) {
                               model.play();
+                              setState(() {
+                                MediaNotification.showNotification(
+                                    title: model.currentSong.title,
+                                    author: model.currentSong.artist,
+                                    isPlaying: true);
+                              });
                             } else {
+                              setState(() {
+                                MediaNotification.showNotification(
+                                    title: model.currentSong.title,
+                                    author: model.currentSong.artist,
+                                    isPlaying: false);
+                              });
+
                               model.pause();
                             }
                           },

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Now_Playing extends ChangeNotifier {
+class NowPlaying extends ChangeNotifier {
   bool immersive;
-  SharedPreferences prefs_bool;
-  Now_Playing(this.immersive) {
+  SharedPreferences prefsBool;
+  NowPlaying(this.immersive) {
     init();
   }
 
   init() async {
-    prefs_bool = await SharedPreferences.getInstance();
-    bool x = prefs_bool.getBool("Immersive");
+    prefsBool = await SharedPreferences.getInstance();
+    bool x = prefsBool.getBool("Immersive");
     if (x == false) {
       update(false);
     }
@@ -24,16 +24,16 @@ class Now_Playing extends ChangeNotifier {
     notifyListeners();
   }
 
-  get_Screen() {
+  getScreen() {
     return immersive;
   }
 
-  set_Screen(bool check) {
+  setScreen(bool check) {
     immersive = check;
     if (immersive == false) {
-      prefs_bool.setBool("Immersive", false);
+      prefsBool.setBool("Immersive", false);
     } else if (immersive == true) {
-      prefs_bool.setBool("Immersive", true);
+      prefsBool.setBool("Immersive", true);
     }
     notifyListeners();
   }

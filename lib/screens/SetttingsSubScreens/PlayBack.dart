@@ -1,62 +1,107 @@
+import 'package:beats/models/SongsModel.dart';
 import 'package:beats/models/ThemeModel.dart';
 import 'package:beats/models/Now_Playing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'package:provider/provider.dart';
 import '../../custom_icons.dart';
 import '../MusicLibrary.dart';
 
-class PlayBack extends StatelessWidget {
+class PlayBack extends StatefulWidget {
+  @override
+  _PlayBackState createState() => _PlayBackState();
+}
 
-ThemeChanger themeChanger;
-Now_Playing Play_Screen;
+class _PlayBackState extends State<PlayBack> {
+  ThemeChanger themeChanger;
+
+  NowPlaying playScreen;
+
+  SongsModel model;
+
+  @override
+  void initState() {
+    MediaNotification.setListener('next', () {
+      setState(() {
+        model.player.stop();
+        model.next();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('prev', () {
+      setState(() {
+        model.player.stop();
+        model.previous();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('pause', () {
+      setState(() {
+        model.pause();
+      });
+    });
+    MediaNotification.setListener('play', () {
+      setState(() {
+        model.play();
+      });
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Play_Screen = Provider.of<Now_Playing>(context);
-    themeChanger  = Provider.of<ThemeChanger>(context);
+    playScreen = Provider.of<NowPlaying>(context);
+    themeChanger = Provider.of<ThemeChanger>(context);
+    model = Provider.of<SongsModel>(context);
     return Scaffold(
-       body: Stack(
-        children: <Widget>[
-          AppBar(
-            leading: Padding(
-              padding: EdgeInsets.only(top: height * 0.012, left: width * 0.03),
-              child: IconButton(
-                iconSize: 35.0,
-                icon: Icon(
-                  CustomIcons.arrow_circle_o_left,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+        body: Stack(children: <Widget>[
+      AppBar(
+        leading: Padding(
+          padding: EdgeInsets.only(top: height * 0.016, left: width * 0.03),
+          child: IconButton(
+            iconSize: 25.0,
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.grey,
             ),
-            backgroundColor: Theme.of(context).backgroundColor,
-            centerTitle: true,
-            title: Padding(
-              padding: EdgeInsets.only(top: height * 0.022),
-              child:
-                  Text("Now Playing", style: Theme.of(context).textTheme.display1),
-            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 120.0, left: width * 0.02),
-            child: ListTile(
-              leading: Icon(
-                Icons.play_circle_outline,
-                size: 27.0,
-                color: Colors.grey,
-              ),
-              title: Text("Change Look of Now Playing",
-                  style: Theme.of(context).textTheme.display2),
-              onTap: () {
-                _settingModalBottomSheet(context);
-                
-              },
-            ),
+        ),
+        backgroundColor: Theme.of(context).backgroundColor,
+        centerTitle: true,
+        title: Padding(
+          padding: EdgeInsets.only(top: height * 0.022),
+          child:
+              Text("Now Playing", style: Theme.of(context).textTheme.display1),
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(top: 120.0, left: width * 0.02),
+        child: ListTile(
+          leading: Icon(
+            Icons.play_circle_outline,
+            size: 27.0,
+            color: Colors.grey,
           ),
-        ]));
+          title: Text("Change Look of Now Playing",
+              style: Theme.of(context).textTheme.display2),
+          onTap: () {
+            _settingModalBottomSheet(context);
+          },
+        ),
+      ),
+    ]));
   }
+
   void _settingModalBottomSheet(context) {
     showModalBottomSheet(
         context: context,
@@ -75,10 +120,10 @@ Now_Playing Play_Screen;
                       style: Theme.of(context).textTheme.display2,
                     ),
                     onTap: () => {
-                  Play_Screen.set_Screen(true),
-                    Play_Screen.get_Screen(),
-                    Navigator.pop(context)
-                    }),
+                          playScreen.setScreen(true),
+                          playScreen.getScreen(),
+                          Navigator.pop(context)
+                        }),
                 new ListTile(
                   leading: new Icon(
                     Icons.details,
@@ -89,16 +134,14 @@ Now_Playing Play_Screen;
                     style: Theme.of(context).textTheme.display2,
                   ),
                   onTap: () => {
-                    Play_Screen.set_Screen(false),
-                    Play_Screen.get_Screen(),
+                    playScreen.setScreen(false),
+                    playScreen.getScreen(),
                     Navigator.pop(context)
                   },
                 ),
-               
               ],
             ),
           );
         });
   }
-  } 
-
+}

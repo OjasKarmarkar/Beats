@@ -6,6 +6,7 @@ import 'package:beats/models/PlayListHelper.dart';
 
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'package:provider/provider.dart';
 import '../custom_icons.dart';
 import 'MusicLibrary.dart';
@@ -21,6 +22,42 @@ class _PLayListScreenState extends State<PLayListScreen> {
   String name;
   TextEditingController editingController;
   List<Song> songs;
+
+  @override
+  void initState() {
+    MediaNotification.setListener('next', () {
+      setState(() {
+        model.player.stop();
+        model.next();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('prev', () {
+      setState(() {
+        model.player.stop();
+        model.previous();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('pause', () {
+      setState(() {
+        model.pause();
+      });
+    });
+    MediaNotification.setListener('play', () {
+      setState(() {
+        model.play();
+      });
+    });
+
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -109,7 +146,10 @@ class _PLayListScreenState extends State<PLayListScreen> {
                                 model.playlist = true;
                                 model.playlistSongs = songs;
                                 model.currentSong = songs[pos];
-                               //Reset the list. So we can change to next song.
+                                MediaNotification.showNotification(
+                                    title: model.currentSong.title,
+                                    author: model.currentSong.artist);
+                                //Reset the list. So we can change to next song.
                                 model.play();
                               },
                               leading: CircleAvatar(child: getImage(pos)),
@@ -136,10 +176,16 @@ class _PLayListScreenState extends State<PLayListScreen> {
                       )
                     ])
                   : Center(
-                      child: Text("No Songs" , style: Theme.of(context).textTheme.display2,),
+                      child: Text(
+                        "No Songs",
+                        style: Theme.of(context).textTheme.display2,
+                      ),
                     )
               : Center(
-                  child: Text("Loading..." , style: Theme.of(context).textTheme.display2,),
+                  child: Text(
+                    "Loading...",
+                    style: Theme.of(context).textTheme.display2,
+                  ),
                 )),
     );
   }

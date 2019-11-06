@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'Model.dart';
 
-class OnBoard_Page extends StatefulWidget {
+class OnBoardPage extends StatefulWidget {
   final OnBoardPageModel pageModel;
   final PageController pageController;
 
-  const OnBoard_Page(
+  const OnBoardPage(
       {Key key, @required this.pageModel, @required this.pageController})
       : super(key: key);
 
   @override
-  _OnBoard_PageState createState() => _OnBoard_PageState();
+  _OnBoardPageState createState() => _OnBoardPageState();
 }
 
-class _OnBoard_PageState extends State<OnBoard_Page> {
+class _OnBoardPageState extends State<OnBoardPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

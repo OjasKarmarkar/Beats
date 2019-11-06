@@ -26,7 +26,7 @@ void main(List<String> args) {
         ChangeNotifierProvider<ProgressModel>(builder: (context)=>prov,),
         ChangeNotifierProvider<SongsModel>(builder: (context) => SongsModel(prov,rec),),
         ChangeNotifierProvider<ThemeChanger>(builder: (context) => ThemeChanger()),
-        ChangeNotifierProvider<Now_Playing>(builder: (context)=> Now_Playing(false))
+        ChangeNotifierProvider<NowPlaying>(builder: (context)=> NowPlaying(false))
       ],
       child: MyApp()));
 }

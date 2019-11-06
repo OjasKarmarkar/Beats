@@ -41,7 +41,7 @@ class _OnBoardingState extends State<OnBoarding> {
               controller: pageController,
               itemCount: onboardData.length,
               itemBuilder: (BuildContext context, int index) {
-                return OnBoard_Page(
+                return OnBoardPage(
                   pageModel: onboardData[index],
                   pageController: pageController,
                 );

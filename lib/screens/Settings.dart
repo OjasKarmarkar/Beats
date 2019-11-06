@@ -3,8 +3,10 @@ import 'package:beats/Models/Username.dart';
 import 'package:beats/models/ThemeModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'package:provider/provider.dart';
 import '../custom_icons.dart';
+import 'package:beats/models/SongsModel.dart';
 import 'MusicLibrary.dart';
 import 'SetttingsSubScreens/Theme.dart';
 import 'SetttingsSubScreens/PlayBack.dart';
@@ -36,12 +38,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ThemeChanger themeChanger;
   TextEditingController text = new TextEditingController();
   bool err = false;
+  SongsModel model;
+
+  @override
+  void initState() {
+    MediaNotification.setListener('next', () {
+      setState(() {
+        model.player.stop();
+        model.next();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('prev', () {
+      setState(() {
+        model.player.stop();
+        model.previous();
+        MediaNotification.showNotification(
+            title: model.currentSong.title, author: model.currentSong.artist);
+        model.play();
+      });
+    });
+
+    MediaNotification.setListener('pause', () {
+      setState(() {
+        model.pause();
+      });
+    });
+    MediaNotification.setListener('play', () {
+      setState(() {
+        model.play();
+      });
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    model = Provider.of<SongsModel>(context);
     username = Provider.of<Username>(context);
     themeChanger = Provider.of<ThemeChanger>(context);
     return WillPopScope(
-          child: Scaffold(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: Stack(
           children: <Widget>[
             AppBar(
@@ -62,8 +105,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 actions: <Widget>[
                   Padding(
-                    padding:
-                        EdgeInsets.only(top: height * 0.012, left: width * 0.03),
+                    padding: EdgeInsets.only(
+                        top: height * 0.012, left: width * 0.03),
                     child: IconButton(
                       iconSize: 35.0,
                       icon: Icon(
@@ -83,6 +126,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Text("Settings",
                       style: Theme.of(context).textTheme.display1),
                 )),
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[],
+              ),
+            ),
             Padding(
               padding: EdgeInsets.only(top: 100.0),
               child: Container(
@@ -125,8 +173,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             exitPage: SettingsScreen(),
                                             enterPage: AboutUs()));
                                     break;
-
-                                 
                                 }
                               },
                               leading: Padding(
@@ -142,9 +188,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 child: Text(
                                   subtitles[index],
                                   style: TextStyle(
-                             fontSize: 14,
-                             color: Theme.of(context).textTheme.display1.color
-                            ),
+                                      fontSize: 14,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .display1
+                                          .color),
                                 ),
                               ),
                             ),
@@ -158,7 +206,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             )
           ],
         ),
-      ), onWillPop: () {},
+      ),
+      onWillPop: () {
+        return null;
+      },
     );
   }
 

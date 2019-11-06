@@ -7,6 +7,7 @@ import 'package:beats/models/PlayListHelper.dart';
 import 'package:beats/models/Now_Playing.dart';
 import 'package:beats/screens/MusicLibrary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import '../custom_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:beats/models/ProgressModel.dart';
@@ -21,12 +22,13 @@ class _PlayBackPageState extends State<PlayBackPage> {
   ThemeChanger themeChanger;
   Library x;
   PageController pg;
-  Now_Playing Play_Screen;
+  NowPlaying playScreen;
   int currentPage = 1;
 
   @override
   void initState() {
     super.initState();
+
     pg = PageController(
         initialPage: currentPage, keepPage: true, viewportFraction: 0.95);
   }
@@ -45,10 +47,10 @@ class _PlayBackPageState extends State<PlayBackPage> {
   @override
   Widget build(BuildContext context) {
     model = Provider.of<SongsModel>(context);
-    Play_Screen = Provider.of<Now_Playing>(context);
+    playScreen = Provider.of<NowPlaying>(context);
     themeChanger = Provider.of<ThemeChanger>(context);
 
-    if (Play_Screen.get_Screen() == true) {
+    if (playScreen.getScreen() == true) {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).backgroundColor,
@@ -80,6 +82,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 if (value.toDouble() == a.duration.toDouble()) {
                                   model.player.stop();
                                   model.next();
+                                  setState(() {
+                                    MediaNotification.showNotification(
+                                        title: model.currentSong.title,
+                                        author: model.currentSong.artist);
+                                  });
                                   model.play();
                                 } else {
                                   a.setPosition(value);
@@ -93,7 +100,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 activeTrackColor: themeChanger.accentColor));
                       }),
                       Container(
-                        height: height * 0.03,
+                        height: height * 0.035,
                         child: Padding(
                           padding: EdgeInsets.only(top: 0.1),
                           child: Align(
@@ -101,6 +108,9 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             child: Text(
                               model.currentSong.title,
                               maxLines: 1,
+                              textAlign: TextAlign.center,
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Theme.of(context)
@@ -120,6 +130,9 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             child: Text(
                               model.currentSong.artist.toString(),
                               maxLines: 1,
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.grey,
@@ -149,6 +162,12 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               onPressed: () {
                                 model.player.stop();
                                 model.previous();
+                                setState(() {
+                                  MediaNotification.showNotification(
+                                      title: model.currentSong.title,
+                                      author: model.currentSong.artist);
+                                });
+
                                 model.play();
                               },
                               icon: Icon(
@@ -159,48 +178,69 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               ),
                             ),
                             InkWell(
-                              onTap: () {
-                                if (model.currentState == PlayerState.PAUSED ||
-                                    model.currentState == PlayerState.STOPPED) {
-                                  model.play();
-                                } else {
-                                  model.pause();
-                                }
-                              },
-                              child: MaterialButton(
-                                elevation: 30,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100.0)),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: <Color>[
-                                          themeChanger.accentColor,
-                                          Color(0xFF1976D2),
-                                          Color(0xFF42A5F5),
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(100.0))),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                  child: (model.currentState ==
-                                              PlayerState.PAUSED ||
-                                          model.currentState ==
-                                              PlayerState.STOPPED)
-                                      ? Icon(
-                                          CustomIcons.play,
-                                          color: Colors.white,
-                                          size: 30.0,
-                                        )
-                                      : Icon(CustomIcons.pause,
-                                          size: 30, color: Colors.white),
-                                ),
-                              )),
+                                onTap: () {
+                                  if (model.currentState ==
+                                          PlayerState.PAUSED ||
+                                      model.currentState ==
+                                          PlayerState.STOPPED) {
+                                    model.play();
+                                    setState(() {
+                                      MediaNotification.showNotification(
+                                          title: model.currentSong.title,
+                                          author: model.currentSong.artist,
+                                          isPlaying: true);
+                                    });
+                                  } else {
+                                    model.pause();
+                                    setState(() {
+                                      MediaNotification.showNotification(
+                                          title: model.currentSong.title,
+                                          author: model.currentSong.artist,
+                                          isPlaying: false);
+                                    });
+                                  }
+                                },
+                                child: MaterialButton(
+                                  elevation: 30,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(100.0)),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: <Color>[
+                                            themeChanger.accentColor,
+                                            Color(0xFF1976D2),
+                                            Color(0xFF42A5F5),
+                                          ],
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(100.0))),
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 10, 20, 10),
+                                    child: (model.currentState ==
+                                                PlayerState.PAUSED ||
+                                            model.currentState ==
+                                                PlayerState.STOPPED)
+                                        ? Icon(
+                                            CustomIcons.play,
+                                            color: Colors.white,
+                                            size: 30.0,
+                                          )
+                                        : Icon(CustomIcons.pause,
+                                            size: 30, color: Colors.white),
+                                  ),
+                                )),
                             IconButton(
                               onPressed: () {
                                 model.player.stop();
                                 model.next();
+                                setState(() {
+                                  MediaNotification.showNotification(
+                                      title: model.currentSong.title,
+                                      author: model.currentSong.artist);
+                                });
+
                                 model.play();
                               },
                               icon: Icon(
@@ -453,6 +493,9 @@ class _PlayBackPageState extends State<PlayBackPage> {
                         child: Text(
                           model.currentSong.title,
                           maxLines: 1,
+                          softWrap: true,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.fade,
                           style: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context).textTheme.display1.color,
@@ -485,6 +528,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             if (value.toDouble() == a.duration.toDouble()) {
                               model.player.stop();
                               model.next();
+                              setState(() {
+                                MediaNotification.showNotification(
+                                    title: model.currentSong.title,
+                                    author: model.currentSong.artist);
+                              });
                               model.play();
                             } else {
                               a.setPosition(value);
@@ -507,6 +555,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                           onPressed: () {
                             model.player.stop();
                             model.previous();
+                            setState(() {
+                              MediaNotification.showNotification(
+                                  title: model.currentSong.title,
+                                  author: model.currentSong.artist);
+                            });
                             model.play();
                           },
                           icon: Icon(
@@ -522,7 +575,19 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 if (model.currentState == PlayerState.PAUSED ||
                                     model.currentState == PlayerState.STOPPED) {
                                   model.play();
+                                  setState(() {
+                                    MediaNotification.showNotification(
+                                        title: model.currentSong.title,
+                                        author: model.currentSong.artist,
+                                        isPlaying: true);
+                                  });
                                 } else {
+                                  setState(() {
+                                    MediaNotification.showNotification(
+                                        title: model.currentSong.title,
+                                        author: model.currentSong.artist,
+                                        isPlaying: false);
+                                  });
                                   model.pause();
                                 }
                               },
@@ -563,6 +628,11 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             onPressed: () {
                               model.player.stop();
                               model.next();
+                              setState(() {
+                                MediaNotification.showNotification(
+                                    title: model.currentSong.title,
+                                    author: model.currentSong.artist);
+                              });
                               model.play();
                             },
                             icon: Icon(
@@ -741,14 +811,20 @@ class _PlayBackPageState extends State<PlayBackPage> {
         currentPage = index;
         model.player.stop();
         model.previous();
+        setState(() {
+          MediaNotification.showNotification(
+              title: model.currentSong.title, author: model.currentSong.artist);
+        });
         model.play();
-       
       } else if (currentPage < index) {
         currentPage = index;
         model.player.stop();
         model.next();
+        setState(() {
+          MediaNotification.showNotification(
+              title: model.currentSong.title, author: model.currentSong.artist);
+        });
         model.play();
-      
       }
     });
   }
