@@ -7,49 +7,8 @@ import 'package:beats/screens/Player.dart';
 import 'package:beats/models/SongsModel.dart';
 import 'MusicLibrary.dart';
 
-class LastPlayed extends StatefulWidget {
-  @override
-  _LastPlayedState createState() => _LastPlayedState();
-}
-
-class _LastPlayedState extends State<LastPlayed> {
+class LastPlayed extends StatelessWidget {
   SongsModel model;
-
-  @override
-  void initState() {
-    MediaNotification.setListener('next', () {
-      setState(() {
-        model.player.stop();
-        model.next();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('prev', () {
-      setState(() {
-        model.player.stop();
-        model.previous();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('pause', () {
-      setState(() {
-        model.pause();
-      });
-    });
-    MediaNotification.setListener('play', () {
-      setState(() {
-        model.play();
-      });
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +40,7 @@ class _LastPlayedState extends State<LastPlayed> {
                               onTap: () {
                                 model.player.stop();
                                 model.currentSong = lastPlayed.recently[pos];
-                                MediaNotification.showNotification(
-                                    title: model.currentSong.title,
-                                    author: model.currentSong.artist);
+
                                 model.play();
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {

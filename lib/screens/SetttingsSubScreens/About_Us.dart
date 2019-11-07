@@ -1,6 +1,5 @@
 import 'package:beats/models/SongsModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'package:provider/provider.dart';
 import '../../custom_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,41 +12,6 @@ class AboutUs extends StatefulWidget {
 
 class _AboutUsState extends State<AboutUs> {
   SongsModel model;
-  @override
-  void initState() {
-    MediaNotification.setListener('next', () {
-      setState(() {
-        model.player.stop();
-        model.next();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('prev', () {
-      setState(() {
-        model.player.stop();
-        model.previous();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('pause', () {
-      setState(() {
-        model.pause();
-      });
-    });
-    MediaNotification.setListener('play', () {
-      setState(() {
-        model.play();
-      });
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -286,12 +250,12 @@ _launchInsta() async {
 }
 
 _launchTg() async {
-  const uri = 'https://telegram.me/selvasoft';
+  const uri = 'https://selvasoft.in/';
   if (await canLaunch(uri)) {
     await launch(uri);
   } else {
     // iOS
-    const uri = 'https://telegram.me/selvasoft';
+    const uri = 'https://selvasoft.in/';
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {

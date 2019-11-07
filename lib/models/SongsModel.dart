@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:beats/models/ProgressModel.dart';
+import 'package:flutter_media_notification/flutter_media_notification.dart';
 import 'dart:math';
 import 'RecentsModel.dart';
+import 'package:flutter/services.dart';
 
 enum PlayerState { PLAYING, PAUSED, STOPPED }
 
@@ -85,12 +87,20 @@ class SongsModel extends ChangeNotifier {
     player.play(song.uri, isLocal: true);
     currentState = PlayerState.PLAYING;
     recents.add(song);
+    showNotification(song.title, song.artist, true);
+    updateUI();
+  }
+
+  stop() {
+    currentState = PlayerState.STOPPED;
+    hideNotification();
     updateUI();
   }
 
   pause() {
     player?.pause();
     currentState = PlayerState.PAUSED;
+    showNotification(currentSong.title, currentSong.artist, false);
     updateUI();
   }
 
@@ -108,6 +118,7 @@ class SongsModel extends ChangeNotifier {
         currentSong = songs[songs.indexOf(currentSong) + 1];
       }
     }
+
     updateUI();
   }
 
@@ -125,6 +136,7 @@ class SongsModel extends ChangeNotifier {
         currentSong = songs[songs.indexOf(currentSong) - 1];
       }
     }
+
     updateUI();
   }
 
@@ -156,5 +168,18 @@ class SongsModel extends ChangeNotifier {
       currentSong = songs[rnd.nextInt(max)];
     }
     updateUI();
+  }
+
+  Future<void> hideNotification() async {
+    try {
+      await MediaNotification.hideNotification();
+    } on PlatformException {}
+  }
+
+  Future<void> showNotification(title, author, isPlaying) async {
+    try {
+      await MediaNotification.showNotification(
+          title: title, author: author, isPlaying: isPlaying);
+    } on PlatformException {}
   }
 }

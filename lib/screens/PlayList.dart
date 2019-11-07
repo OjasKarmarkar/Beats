@@ -23,41 +23,7 @@ class _PLayListScreenState extends State<PLayListScreen> {
   TextEditingController editingController;
   List<Song> songs;
 
-  @override
-  void initState() {
-    MediaNotification.setListener('next', () {
-      setState(() {
-        model.player.stop();
-        model.next();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('prev', () {
-      setState(() {
-        model.player.stop();
-        model.previous();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('pause', () {
-      setState(() {
-        model.pause();
-      });
-    });
-    MediaNotification.setListener('play', () {
-      setState(() {
-        model.play();
-      });
-    });
-
-    super.initState();
-  }
+  
 
   @override
   void didChangeDependencies() {
@@ -146,10 +112,7 @@ class _PLayListScreenState extends State<PLayListScreen> {
                                 model.playlist = true;
                                 model.playlistSongs = songs;
                                 model.currentSong = songs[pos];
-                                MediaNotification.showNotification(
-                                    title: model.currentSong.title,
-                                    author: model.currentSong.artist);
-                                //Reset the list. So we can change to next song.
+                             
                                 model.play();
                               },
                               leading: CircleAvatar(child: getImage(pos)),

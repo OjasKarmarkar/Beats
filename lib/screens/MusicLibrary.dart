@@ -8,19 +8,13 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:beats/models/SongsModel.dart';
-import 'package:flutter_media_notification/flutter_media_notification.dart';
 import '../custom_icons.dart';
 import 'package:provider/provider.dart';
 import 'Player.dart';
 
 double height, width;
 
-class Library extends StatefulWidget {
-  @override
-  _LibraryState createState() => _LibraryState();
-}
-
-class _LibraryState extends State<Library> {
+class Library extends StatelessWidget {
   TextEditingController editingController;
 
   SongsModel model;
@@ -32,42 +26,6 @@ class _LibraryState extends State<Library> {
   TextEditingController txt = TextEditingController();
 
   bool error = false;
-
-  @override
-  void initState() {
-    MediaNotification.setListener('next', () {
-      setState(() {
-        model.player.stop();
-        model.next();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('prev', () {
-      setState(() {
-        model.player.stop();
-        model.previous();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('pause', () {
-      setState(() {
-        model.pause();
-      });
-    });
-    MediaNotification.setListener('play', () {
-      setState(() {
-        model.play();
-      });
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,13 +108,11 @@ class _LibraryState extends State<Library> {
                       ),
                       Align(
                         alignment: Alignment.bottomLeft,
-                        child: showStatus(model),
+                        child: showStatus(model, context),
                       )
                     ],
                   ))),
-      onWillPop: () {
-        return null;
-      },
+      onWillPop: () {},
     );
   }
 
@@ -275,10 +231,7 @@ class _LibraryState extends State<Library> {
                   model.player.stop();
                   model.playlist = false;
                   model.currentSong = model.songs[pos];
-                  MediaNotification.showNotification(
-                      title: '${model.currentSong.title}',
-                      author: '${model.currentSong.artist}',
-                      isPlaying: true);
+                  
 
                   //Reset the list. So we can change to next song.
                   model.play();
@@ -344,7 +297,7 @@ class _LibraryState extends State<Library> {
     Navigator.push(context, SlideRightRoute(page: PlayBackPage()));
   }
 
-  showStatus(model) {
+  showStatus(model, BuildContext context) {
     if (model.currentSong != null) {
       return Container(
         decoration: BoxDecoration(
@@ -411,20 +364,10 @@ class _LibraryState extends State<Library> {
                             if (model.currentState == PlayerState.PAUSED ||
                                 model.currentState == PlayerState.STOPPED) {
                               model.play();
-                              setState(() {
-                                MediaNotification.showNotification(
-                                    title: model.currentSong.title,
-                                    author: model.currentSong.artist,
-                                    isPlaying: true);
-                              });
-                            } else {
-                              setState(() {
-                                MediaNotification.showNotification(
-                                    title: model.currentSong.title,
-                                    author: model.currentSong.artist,
-                                    isPlaying: false);
-                              });
 
+                            
+                            } else {
+                             
                               model.pause();
                             }
                           },

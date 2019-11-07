@@ -9,51 +9,10 @@ import '../custom_icons.dart';
 import 'MusicLibrary.dart';
 import 'package:beats/Animations/transitions.dart';
 
-class Bookmarks extends StatefulWidget {
-  @override
-  _BookmarksState createState() => _BookmarksState();
-}
-
-class _BookmarksState extends State<Bookmarks> {
+class Bookmarks extends StatelessWidget {
   SongsModel model;
 
   bool isPlayed = false;
-
-  @override
-  void initState() {
-    MediaNotification.setListener('next', () {
-      setState(() {
-        model.player.stop();
-        model.next();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('prev', () {
-      setState(() {
-        model.player.stop();
-        model.previous();
-        MediaNotification.showNotification(
-            title: model.currentSong.title, author: model.currentSong.artist);
-        model.play();
-      });
-    });
-
-    MediaNotification.setListener('pause', () {
-      setState(() {
-        model.pause();
-      });
-    });
-    MediaNotification.setListener('play', () {
-      setState(() {
-        model.play();
-      });
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +84,7 @@ class _BookmarksState extends State<Bookmarks> {
                           model.playlist = true;
                           model.playlistSongs = bm.bookmarks;
                           model.currentSong = bm.bookmarks[pos];
-                          MediaNotification.showNotification(
-                              title: model.currentSong.title,
-                              author: model.currentSong.artist);
+
                           model.play();
                         },
                         leading: CircleAvatar(child: getImage(bm, pos)),

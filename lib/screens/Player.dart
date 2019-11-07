@@ -82,11 +82,6 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 if (value.toDouble() == a.duration.toDouble()) {
                                   model.player.stop();
                                   model.next();
-                                  setState(() {
-                                    MediaNotification.showNotification(
-                                        title: model.currentSong.title,
-                                        author: model.currentSong.artist);
-                                  });
                                   model.play();
                                 } else {
                                   a.setPosition(value);
@@ -162,11 +157,6 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               onPressed: () {
                                 model.player.stop();
                                 model.previous();
-                                setState(() {
-                                  MediaNotification.showNotification(
-                                      title: model.currentSong.title,
-                                      author: model.currentSong.artist);
-                                });
 
                                 model.play();
                               },
@@ -184,20 +174,8 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                       model.currentState ==
                                           PlayerState.STOPPED) {
                                     model.play();
-                                    setState(() {
-                                      MediaNotification.showNotification(
-                                          title: model.currentSong.title,
-                                          author: model.currentSong.artist,
-                                          isPlaying: true);
-                                    });
                                   } else {
                                     model.pause();
-                                    setState(() {
-                                      MediaNotification.showNotification(
-                                          title: model.currentSong.title,
-                                          author: model.currentSong.artist,
-                                          isPlaying: false);
-                                    });
                                   }
                                 },
                                 child: MaterialButton(
@@ -235,11 +213,6 @@ class _PlayBackPageState extends State<PlayBackPage> {
                               onPressed: () {
                                 model.player.stop();
                                 model.next();
-                                setState(() {
-                                  MediaNotification.showNotification(
-                                      title: model.currentSong.title,
-                                      author: model.currentSong.artist);
-                                });
 
                                 model.play();
                               },
@@ -528,11 +501,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             if (value.toDouble() == a.duration.toDouble()) {
                               model.player.stop();
                               model.next();
-                              setState(() {
-                                MediaNotification.showNotification(
-                                    title: model.currentSong.title,
-                                    author: model.currentSong.artist);
-                              });
+
                               model.play();
                             } else {
                               a.setPosition(value);
@@ -555,11 +524,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                           onPressed: () {
                             model.player.stop();
                             model.previous();
-                            setState(() {
-                              MediaNotification.showNotification(
-                                  title: model.currentSong.title,
-                                  author: model.currentSong.artist);
-                            });
+
                             model.play();
                           },
                           icon: Icon(
@@ -575,19 +540,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                                 if (model.currentState == PlayerState.PAUSED ||
                                     model.currentState == PlayerState.STOPPED) {
                                   model.play();
-                                  setState(() {
-                                    MediaNotification.showNotification(
-                                        title: model.currentSong.title,
-                                        author: model.currentSong.artist,
-                                        isPlaying: true);
-                                  });
                                 } else {
-                                  setState(() {
-                                    MediaNotification.showNotification(
-                                        title: model.currentSong.title,
-                                        author: model.currentSong.artist,
-                                        isPlaying: false);
-                                  });
                                   model.pause();
                                 }
                               },
@@ -628,11 +581,7 @@ class _PlayBackPageState extends State<PlayBackPage> {
                             onPressed: () {
                               model.player.stop();
                               model.next();
-                              setState(() {
-                                MediaNotification.showNotification(
-                                    title: model.currentSong.title,
-                                    author: model.currentSong.artist);
-                              });
+
                               model.play();
                             },
                             icon: Icon(
@@ -811,19 +760,13 @@ class _PlayBackPageState extends State<PlayBackPage> {
         currentPage = index;
         model.player.stop();
         model.previous();
-        setState(() {
-          MediaNotification.showNotification(
-              title: model.currentSong.title, author: model.currentSong.artist);
-        });
+
         model.play();
       } else if (currentPage < index) {
         currentPage = index;
         model.player.stop();
         model.next();
-        setState(() {
-          MediaNotification.showNotification(
-              title: model.currentSong.title, author: model.currentSong.artist);
-        });
+
         model.play();
       }
     });
